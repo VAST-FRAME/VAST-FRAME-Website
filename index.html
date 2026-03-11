@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VASTFRAME — Independent Game Development</title>
+  <meta name="description" content="VASTFRAME is an independent game development studio. Currently developing SNOWFALL: Armistice." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      <!-- Swap this text for your logo image:
+      <img src="assets/logo.png" alt="VASTFRAME" />
+      -->
+      Vastframe
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" id="heroBg">
+      <!-- Replace assets/bg.jpg with your background image -->
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Independent Game Studio</p>
+      <h1 class="hero-title">Vast&shy;frame</h1>
+      <p class="hero-sub">
+        We build worlds defined by atmosphere, weight, and detail.
+        One studio. One vision.
+      </p>
+      <a href="games.html" class="hero-cta">See Our Games</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="about-strip">
+      <div>
+        <p class="section-label">About</p>
+        <h2 class="section-title">Built on craft,<br>not compromise</h2>
+      </div>
+      <div>
+        <p class="section-body">
+          VASTFRAME is an independent studio focused on single-player experiences
+          that demand your full attention. We don't chase trends — we chase the
+          feeling of a world that feels real enough to get lost in.
+        </p>
+        <p class="section-body" style="margin-top: 20px;">
+          Our current project, <strong style="color: var(--text); font-weight: 400;">SNOWFALL: Armistice</strong>,
+          is in active development.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CURRENT GAME TEASE -->
+  <section style="padding-top: 100px; padding-bottom: 120px;">
+    <p class="section-label">Current Project</p>
+    <h2 class="section-title" style="margin-bottom: 40px;">Snowfall:<br>Armistice</h2>
+    <a href="games.html" class="hero-cta" style="opacity: 1; animation: none;">Learn More</a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Vastframe</span>
+    <span class="footer-copy">&copy; 2026 VASTFRAME. All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Hero subtle parallax on bg
+    const hero = document.getElementById('hero');
+    const bg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        bg.style.transform = `translateY(${y * 0.25}px) scale(1)`;
+      }
+    });
+
+    // Trigger hero loaded state for bg zoom
+    window.addEventListener('load', () => {
+      hero.classList.add('loaded');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jobs — VASTFRAME</title>
+  <meta name="description" content="Open positions at VASTFRAME." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav" class="scrolled">
+    <a href="index.html" class="nav-logo">Vastframe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="jobs.html" class="active">Jobs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <section style="padding-top: 160px;" class="page-enter">
+
+    <div class="jobs-header">
+      <p class="section-label">Careers</p>
+      <h1 class="section-title">Join Vastframe</h1>
+      <p class="section-body">
+        We're a small, focused team. When we hire, we hire for the long haul —
+        people who care deeply about what they build, not just their output.
+      </p>
+    </div>
+
+    <!-- OPEN ROLES — uncomment and duplicate rows when you have openings -->
+    <!--
+    <div class="job-row">
+      <span class="job-title-text">Senior Environment Artist</span>
+      <span class="job-tag">Full-Time · Remote</span>
+    </div>
+    <div class="job-row">
+      <span class="job-title-text">Gameplay Programmer</span>
+      <span class="job-tag">Full-Time · Remote</span>
+    </div>
+    -->
+
+    <!-- NO OPENINGS STATE -->
+    <p class="no-openings">
+      No open positions right now. Check back, or reach out speculatively via
+      <a href="contact.html" style="color: var(--accent); text-decoration: none;">contact</a>.
+    </p>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="margin-top: 120px;">
+    <span class="footer-brand">Vastframe</span>
+    <span class="footer-copy">&copy; 2026 VASTFRAME. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — VASTFRAME</title>
+  <meta name="description" content="Get in touch with VASTFRAME." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav" class="scrolled">
+    <a href="index.html" class="nav-logo">Vastframe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <section style="padding-top: 160px;" class="page-enter">
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <p class="section-label">Contact</p>
+        <h1 class="section-title">Get in Touch</h1>
+        <p class="section-body">
+          Whether it's press, business, or a speculative job inquiry —
+          we read everything.
+        </p>
+
+        <div class="contact-links">
+
+          <!-- GENERAL -->
+          <a href="mailto:hello@vastframe.com" class="contact-link-row">
+            <span class="contact-link-label">General</span>
+            <span class="contact-link-value">hello@vastframe.com</span>
+          </a>
+
+          <!-- PRESS -->
+          <a href="mailto:press@vastframe.com" class="contact-link-row">
+            <span class="contact-link-label">Press</span>
+            <span class="contact-link-value">press@vastframe.com</span>
+          </a>
+
+          <!-- BUSINESS -->
+          <a href="mailto:biz@vastframe.com" class="contact-link-row">
+            <span class="contact-link-label">Business</span>
+            <span class="contact-link-value">biz@vastframe.com</span>
+          </a>
+
+          <!-- SOCIAL — swap URLs as needed -->
+          <a href="https://twitter.com/vastframe" target="_blank" rel="noopener" class="contact-link-row">
+            <span class="contact-link-label">Twitter/X</span>
+            <span class="contact-link-value">@vastframe</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Right col — empty for breathing room, or add a map / image -->
+      <div style="padding-top: 80px;">
+        <p class="section-body" style="font-size: 13px; line-height: 2; color: rgba(232,232,236,0.3);">
+          VASTFRAME<br>
+          Independent Game Studio<br>
+          vastframe.com
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="margin-top: 160px;">
+    <span class="footer-brand">Vastframe</span>
+    <span class="footer-copy">&copy; 2026 VASTFRAME. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+</body>
+</html>
