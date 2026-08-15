@@ -1,58 +1,48 @@
 # VASTFRAME Website
 
-Static site for VASTFRAME.com — hosted on GitHub Pages.
+The public VASTFRAME studio website and private developer Workbench.
 
-## File Structure
+## Product shape
 
+- Public routes present VASTFRAME as a game studio. Splinterheart is the only listed game.
+- The SDK route introduces Threshold, Eclipse, Firmament, and Causality as technology built beneath the games.
+- Development updates belong on Steam rather than a studio-owned blog.
+- The Workbench owns private lore editing, revision history and restore, relationships, archiving, membership authorization, audit records, and portable lore backups.
+
+The public site never depends on Workbench data to render. Authentication identifies a visitor; an active `studio_members` row authorizes Workbench access.
+
+## Development
+
+Requirements: Node.js 22.13 or newer and pnpm.
+
+```bash
+pnpm install
+pnpm dev
+pnpm test
 ```
-vastframe/
-├── index.html          ← Home
-├── games.html          ← Games
-├── jobs.html           ← Jobs
-├── contact.html        ← Contact
-├── css/
-│   └── style.css       ← All styles
-└── assets/
-    ├── bg.jpg          ← Hero background image (you provide)
-    └── logo.png        ← Logo image (optional, you provide)
-```
 
-## Assets to Add
+The site uses the Sites-compatible Vinext starter and Cloudflare D1. `.openai/hosting.json` declares the logical `DB` binding. Drizzle schema lives in `db/schema.ts`; generated migrations live in `drizzle/`.
 
-1. **`assets/bg.jpg`** — Hero background image on the home page.
-   Recommended: 1920×1080 or larger, dark/atmospheric.
+Hosted previews use the `SITE_ACCESS_PASSWORD` secret as a lightweight whole-site sharing gate. Successful entry creates a signed, HttpOnly, seven-day cookie; rotating the secret invalidates existing cookies. When the secret is absent, such as ordinary local development, the gate is disabled. This sharing password is intentionally separate from Workbench identity and membership authorization.
 
-2. **`assets/logo.png`** — Optional. If you have a logo image,
-   uncomment the `<img>` tag in each nav and remove the text "Vastframe".
+Local development exposes a clearly labeled preview identity so the Workbench can be reviewed without production credentials. Production builds never grant that identity. Administrators invite collaborators by verified email; the invitation activates on first successful sign-in.
 
-## Updating Content
+Lore records support search, type/canon/archive filters, optimistic revision checks, immutable history, snapshot inspection and restore, archive/restore revisions, and directed relationships. Viewers are read-only; contributors can write; editors can manage record lifecycle; administrators also manage membership, audit review, and export.
 
-- **Emails on Contact page**: Edit `contact.html`, swap `hello@vastframe.com` etc.
-- **Game description**: Edit `games.html`
-- **Job openings**: In `jobs.html`, uncomment the `.job-row` blocks and fill in titles.
-- **Studio description**: Edit the `<p class="section-body">` paragraphs in `index.html`
+Every Workbench mutation requires an application-only same-origin request marker and creates an attributable audit event. See `Documentation/Workbench-Operations.md` for first-administrator bootstrap, roles, backup, and incident guidance.
 
-## Deploying to GitHub Pages
+## Placeholder media
 
-1. Create a new repo on GitHub (e.g. `vastframe-website`)
-2. Push this entire folder to the repo
-3. Go to repo Settings → Pages
-4. Set source to "Deploy from a branch" → `main` → `/ (root)`
-5. GitHub will give you a `username.github.io/vastframe-website` URL
+All unfinished imagery uses the shared `MediaPlaceholder` component. Each slot carries a stable identifier and aspect ratio. Grey, pink, and checkerboard blocks are deliberate pre-publication assets, not simulated gameplay screenshots.
 
-## Connecting Your GoDaddy Domain
+Before making the public deployment reachable, replace all required slots and add final social-preview and favicon assets.
 
-1. In your GitHub repo → Settings → Pages → Custom domain
-   → Enter `vastframe.com` and save
-2. In GoDaddy DNS settings, add these records:
-   ```
-   Type: A     Name: @    Value: 185.199.108.153
-   Type: A     Name: @    Value: 185.199.109.153
-   Type: A     Name: @    Value: 185.199.110.153
-   Type: A     Name: @    Value: 185.199.111.153
-   Type: CNAME Name: www  Value: yourgithubusername.github.io
-   ```
-3. Wait 10–30 mins for DNS to propagate
-4. Check "Enforce HTTPS" in GitHub Pages settings (free SSL!)
+The current build also emits crawler blocks because VASTFRAME intends to keep the site private until those assets are ready. Crawler directives are not a substitute for private hosting.
 
-That's it. Total cost: $20/yr for the domain.
+## Operations
+
+This is the authoritative `VAST-FRAME-Website` repository. The Sites project ID, D1 binding declaration, and generated migrations travel with the source; passwords and other runtime values stay in hosted secrets.
+
+See `Documentation/Architecture.md` for the public/private boundary, `Documentation/Workbench-Operations.md` for Workbench guidance, and `Documentation/Handoff.md` for deployment and domain operations.
+
+Current desktop and mobile review captures live in `Documentation/Screenshots/`.
