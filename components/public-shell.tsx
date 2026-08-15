@@ -1,4 +1,4 @@
-import Link from "next/link";
+/* eslint-disable @next/next/no-html-link-for-pages -- Full document navigation is intentional behind the preview access gateway. */
 import type { ReactNode } from "react";
 import { publicNavigation } from "@/lib/site-data";
 
@@ -12,27 +12,27 @@ export function PublicShell({ active, children, inverted = false }: PublicShellP
   return (
     <div className={inverted ? "site site--paper" : "site"}>
       <header className="site-header">
-        <Link href="/" className="wordmark" aria-label="VASTFRAME home">
+        <a href="/" className="wordmark" aria-label="VASTFRAME home">
           VAST<span>FRAME</span>
-        </Link>
+        </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
           {publicNavigation.map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
               aria-current={active === item.href ? "page" : undefined}
             >
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
         <details className="mobile-nav">
           <summary aria-label="Open navigation">Menu</summary>
           <nav aria-label="Mobile navigation">
             {publicNavigation.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <a key={item.href} href={item.href}>
                 {item.label}
-              </Link>
+              </a>
             ))}
           </nav>
         </details>
@@ -46,11 +46,11 @@ export function PublicShell({ active, children, inverted = false }: PublicShellP
           <p>Independent games. Deeply built worlds.</p>
         </div>
         <div className="site-footer__links">
-          <Link href="/games">Games</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/workbench" className="quiet-link">
+          <a href="/games">Games</a>
+          <a href="/contact">Contact</a>
+          <a href="/workbench" className="quiet-link">
             Workbench
-          </Link>
+          </a>
         </div>
         <p className="site-footer__legal">© 2026 VASTFRAME</p>
       </footer>
@@ -78,9 +78,9 @@ export function PageIntro({
 
 export function ArrowLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <Link href={href} className="arrow-link">
+    <a href={href} className="arrow-link">
       <span>{children}</span>
       <span aria-hidden="true">↗</span>
-    </Link>
+    </a>
   );
 }

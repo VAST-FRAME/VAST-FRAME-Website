@@ -1,4 +1,4 @@
-import Link from "next/link";
+/* eslint-disable @next/next/no-html-link-for-pages -- Full document navigation is intentional behind the preview access gateway. */
 import type { ReactNode } from "react";
 import type { WorkbenchAccess } from "@/lib/workbench/auth";
 
@@ -21,27 +21,27 @@ export function WorkbenchShell({
   return (
     <div className="workbench">
       <aside className="workbench-sidebar">
-        <Link href="/workbench" className="workbench-brand">
+        <a href="/workbench" className="workbench-brand">
           <span>VF</span>
           <strong>Workbench</strong>
-        </Link>
+        </a>
         <nav aria-label="Workbench navigation">
           {navigation.map((item) => (
-            <Link
+            <a
               key={item.href}
               href={item.href}
               aria-current={active === item.href ? "page" : undefined}
             >
               <span>{item.index}</span>
               {item.label}
-            </Link>
+            </a>
           ))}
         </nav>
         <div className="workbench-sidebar__foot">
           {access.preview ? <span className="preview-flag">Local preview</span> : null}
           <strong>{access.identity.displayName}</strong>
           <span>{access.role}</span>
-          <Link href="/">Public site ↗</Link>
+          <a href="/">Public site ↗</a>
         </div>
       </aside>
       <div className="workbench-main">
@@ -72,7 +72,7 @@ export function WorkbenchAccessScreen({ signedIn }: { signedIn: boolean }) {
             Continue to secure sign-in
           </a>
         ) : null}
-        <Link href="/" className="access-screen__back">← Return to vastframe.com</Link>
+        <a href="/" className="access-screen__back">← Return to vastframe.com</a>
       </div>
     </main>
   );

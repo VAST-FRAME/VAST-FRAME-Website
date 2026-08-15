@@ -242,7 +242,7 @@ const worker = {
 
     const headers = new Headers(response.headers);
     headers.set("cache-control", "private, no-store, max-age=0");
-    headers.set("vary", "Cookie");
+    headers.append("vary", "Cookie");
     headers.set("x-robots-tag", "noindex, nofollow, noarchive");
     return new Response(response.body, {
       status: response.status,

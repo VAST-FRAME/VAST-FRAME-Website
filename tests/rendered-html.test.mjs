@@ -204,6 +204,8 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   );
   assert.equal(response.status, 200);
   assert.match(response.headers.get("cache-control"), /no-store/i);
+  assert.match(response.headers.get("vary"), /RSC/i);
+  assert.match(response.headers.get("vary"), /Cookie/i);
   assert.match(await response.text(), /Splinterheart/);
 });
 
