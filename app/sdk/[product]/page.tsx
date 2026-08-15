@@ -26,7 +26,7 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
   if (!product) notFound();
 
   return (
-    <PublicShell active="/sdk">
+    <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
         <header className="technology-hero frame-grid">
           <p className="eyebrow">VASTFRAME SDK / {product.index}</p>

@@ -3,10 +3,17 @@ export type MediaTone = "neutral" | "turquoise" | "checker";
 export const publicNavigation = [
   { href: "/", label: "Home" },
   { href: "/games", label: "Games" },
-  { href: "/sdk", label: "SDK" },
-  { href: "/docs", label: "Docs" },
   { href: "/jobs", label: "Jobs" },
   { href: "/contact", label: "Contact" },
+] as const;
+
+export const sdkNavigation = [
+  { href: "/sdk", label: "Overview" },
+  { href: "/sdk/threshold", label: "Threshold" },
+  { href: "/sdk/atrium", label: "Atrium" },
+  { href: "/sdk/eclipse", label: "Eclipse" },
+  { href: "/sdk/causality", label: "Causality" },
+  { href: "/docs", label: "Documentation" },
 ] as const;
 
 export const splinterheart = {

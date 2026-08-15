@@ -36,6 +36,10 @@ test("renders the game-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   assert.match(html, /HOME_HERO/);
   assert.match(html, /updates will live on Steam/i);
+  assert.match(html, /aria-label="SDK navigation"/i);
+  for (const href of ["/sdk", "/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
+    assert.match(html, new RegExp(`href="${href}"`));
+  }
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
@@ -72,10 +76,11 @@ test("publishes a public SDK documentation home without Workbench identity", asy
   const response = await render("/docs");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Read the system/);
-  assert.match(html, /Public by design/);
+  assert.match(html, /<h1>Documentation\.<\/h1>/i);
+  assert.match(html, /Technical reference for Threshold, Atrium, Eclipse, and Causality/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Atrium/);
+  assert.doesNotMatch(html, /Read the system|Publication policy|Public by design|Explicitly published|eventually complete/i);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
 });
 

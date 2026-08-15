@@ -11,10 +11,9 @@ export default async function DocsHomePage() {
   return (
     <DocsShell>
       <header className="docs-home-hero">
-        <p className="eyebrow">Public technical documentation</p>
-        <h1>Read the system<br />before you buy it.</h1>
-        <p>Architecture, capability boundaries, evaluation guidance, and eventually complete API reference for the technology behind VASTFRAME games.</p>
-        <span className="status-chip">0.x documentation</span>
+        <p className="eyebrow">VASTFRAME SDK</p>
+        <h1>Documentation.</h1>
+        <p>Technical reference for Threshold, Atrium, Eclipse, and Causality, covering system architecture, capabilities, integration guidance, and APIs.</p>
       </header>
       <section className="docs-product-grid">
         {sdkProducts.map((product) => (
@@ -22,14 +21,9 @@ export default async function DocsHomePage() {
             <span className="mono">{product.index} / {product.kind}</span>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            <small>{documents.filter((document) => document.productKey === product.slug).length} published articles →</small>
+            <small>{documents.filter((document) => document.productKey === product.slug).length} articles →</small>
           </a>
         ))}
-      </section>
-      <section className="docs-home-note">
-        <p className="eyebrow">Publication policy</p>
-        <h2>Public by design.<br />Explicitly published.</h2>
-        <p>Documentation is readable without an account. Drafts, reviews, internal notes, and the studio wiki remain inside the authenticated Workbench until an editor deliberately publishes a revision.</p>
       </section>
     </DocsShell>
   );
