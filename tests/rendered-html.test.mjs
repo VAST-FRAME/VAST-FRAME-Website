@@ -179,7 +179,11 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
     "/__access/unlock",
     {
       method: "POST",
-      headers: { "content-type": "application/x-www-form-urlencoded" },
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        origin: "https://public-preview.example",
+        "sec-fetch-site": "same-origin",
+      },
       body: "password=test-preview-password&return_to=%2Fgames",
     },
     protectedEnvironment,
@@ -201,4 +205,22 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(await response.text(), /Splinterheart/);
+});
+
+test("rejects cross-site preview unlock submissions", async () => {
+  const response = await render(
+    "/__access/unlock",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-fetch-site": "cross-site",
+      },
+      body: "password=test-preview-password&return_to=%2Fgames",
+    },
+    protectedEnvironment,
+  );
+
+  assert.equal(response.status, 403);
+  assert.equal(await response.text(), "Forbidden");
 });

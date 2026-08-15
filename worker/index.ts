@@ -172,8 +172,10 @@ async function enforceSiteAccess(request: Request, env: Env): Promise<Response |
   }
 
   if (url.pathname === "/__access/unlock" && request.method === "POST") {
-    const origin = request.headers.get("origin");
-    if (origin && origin !== url.origin) return new Response("Forbidden", { status: 403 });
+    const fetchSite = request.headers.get("sec-fetch-site");
+    if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
+      return new Response("Forbidden", { status: 403 });
+    }
 
     const body = await request.text();
     if (body.length > 4096) return new Response("Request too large", { status: 413 });
