@@ -1,4 +1,6 @@
 import { env } from "cloudflare:workers";
+import { knowledgeSpaces } from "@/lib/knowledge/model";
+import { sdkDocuments } from "@/lib/knowledge/sdk-documents";
 
 const schemaStatements = [
   `CREATE TABLE IF NOT EXISTS studio_members (
@@ -58,6 +60,70 @@ const schemaStatements = [
     UNIQUE(source_entry_id, target_entry_id, relationship)
   )`,
   `CREATE INDEX IF NOT EXISTS idx_lore_links_target ON lore_links(target_entry_id)`,
+  `CREATE TABLE IF NOT EXISTS knowledge_spaces (
+    id TEXT PRIMARY KEY,
+    key TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL DEFAULT '',
+    visibility TEXT NOT NULL CHECK (visibility IN ('private','public')),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  )`,
+  `CREATE UNIQUE INDEX IF NOT EXISTS idx_knowledge_spaces_key ON knowledge_spaces(key)`,
+  `CREATE TABLE IF NOT EXISTS knowledge_entries (
+    id TEXT PRIMARY KEY,
+    space_id TEXT NOT NULL,
+    slug TEXT NOT NULL,
+    parent_id TEXT,
+    product_key TEXT,
+    entry_type TEXT NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL DEFAULT '',
+    body TEXT NOT NULL DEFAULT '',
+    version_label TEXT NOT NULL DEFAULT '0.x / development',
+    publication_status TEXT NOT NULL CHECK (publication_status IN ('draft','review','published','archived')),
+    nav_order INTEGER NOT NULL DEFAULT 100,
+    revision INTEGER NOT NULL DEFAULT 1,
+    published_revision INTEGER,
+    created_by TEXT NOT NULL,
+    updated_by TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(space_id, slug)
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_knowledge_entries_space_status_order ON knowledge_entries(space_id, publication_status, nav_order)`,
+  `CREATE INDEX IF NOT EXISTS idx_knowledge_entries_product_status ON knowledge_entries(product_key, publication_status)`,
+  `CREATE INDEX IF NOT EXISTS idx_knowledge_entries_parent ON knowledge_entries(parent_id)`,
+  `CREATE TABLE IF NOT EXISTS knowledge_entry_revisions (
+    id TEXT PRIMARY KEY,
+    entry_id TEXT NOT NULL,
+    revision INTEGER NOT NULL,
+    slug TEXT NOT NULL,
+    parent_id TEXT,
+    product_key TEXT,
+    entry_type TEXT NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    body TEXT NOT NULL,
+    version_label TEXT NOT NULL,
+    publication_status TEXT NOT NULL,
+    nav_order INTEGER NOT NULL,
+    change_kind TEXT NOT NULL CHECK (change_kind IN ('create','edit','submit_review','publish','archive','revision_restore')),
+    authored_by TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(entry_id, revision)
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_knowledge_revisions_created_at ON knowledge_entry_revisions(created_at)`,
+  `CREATE TABLE IF NOT EXISTS knowledge_links (
+    id TEXT PRIMARY KEY,
+    source_entry_id TEXT NOT NULL,
+    target_entry_id TEXT NOT NULL,
+    relationship TEXT NOT NULL,
+    created_by TEXT NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(source_entry_id, target_entry_id, relationship)
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_knowledge_links_target ON knowledge_links(target_entry_id)`,
   `CREATE TABLE IF NOT EXISTS workbench_audit_events (
     id TEXT PRIMARY KEY,
     actor_id TEXT NOT NULL,
@@ -76,6 +142,48 @@ const schemaStatements = [
 
 let schemaReady: Promise<void> | null = null;
 
+async function seedKnowledge(database: D1Database): Promise<void> {
+  const seedStatements: D1PreparedStatement[] = knowledgeSpaces.map((space) =>
+    database.prepare(
+      `INSERT OR IGNORE INTO knowledge_spaces (id, key, title, description, visibility)
+       VALUES (?1, ?2, ?3, ?4, ?5)`,
+    ).bind(space.id, space.key, space.title, space.description, space.visibility),
+  );
+
+  const documentByPath = new Map(sdkDocuments.map((document) => [`${document.productKey}/${document.slug}`, document]));
+  for (const document of sdkDocuments) {
+    const fullSlug = `${document.productKey}/${document.slug}`;
+    const parent = document.parentSlug ? documentByPath.get(`${document.productKey}/${document.parentSlug}`) : null;
+    seedStatements.push(
+      database.prepare(
+        `INSERT OR IGNORE INTO knowledge_entries (
+          id, space_id, slug, parent_id, product_key, entry_type, title, summary, body,
+          version_label, publication_status, nav_order, revision, published_revision, created_by, updated_by
+        ) VALUES (?1, 'space-sdk-docs', ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, 'published', ?10, 1, 1, 'system-seed', 'system-seed')`,
+      ).bind(document.id, fullSlug, parent?.id ?? null, document.productKey, document.entryType, document.title, document.summary, document.body, document.versionLabel, document.navOrder),
+      database.prepare(
+        `INSERT OR IGNORE INTO knowledge_entry_revisions (
+          id, entry_id, revision, slug, parent_id, product_key, entry_type, title, summary, body,
+          version_label, publication_status, nav_order, change_kind, authored_by
+        ) VALUES (?1, ?2, 1, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, 'published', ?11, 'publish', 'system-seed')`,
+      ).bind(`revision-${document.id}-1`, document.id, fullSlug, parent?.id ?? null, document.productKey, document.entryType, document.title, document.summary, document.body, document.versionLabel, document.navOrder),
+    );
+  }
+
+  await database.batch(seedStatements);
+  await database.prepare(
+    `INSERT OR IGNORE INTO knowledge_entries (
+      id, space_id, slug, parent_id, product_key, entry_type, title, summary, body,
+      version_label, publication_status, nav_order, revision, published_revision, created_by, updated_by,
+      created_at, updated_at
+    )
+    SELECT id, 'space-splinterheart-lore', slug, NULL, project_key, 'lore', title, summary, body,
+      'internal', CASE WHEN record_status = 'archived' THEN 'archived' ELSE 'draft' END,
+      100, revision, NULL, created_by, updated_by, created_at, updated_at
+    FROM lore_entries`,
+  ).run();
+}
+
 export function getD1(): D1Database {
   if (!env.DB) throw new Error("Workbench database binding is unavailable.");
   return env.DB;
@@ -86,6 +194,7 @@ export async function ensureWorkbenchSchema(): Promise<void> {
     schemaReady = (async () => {
       const database = getD1();
       await database.batch(schemaStatements.map((statement) => database.prepare(statement)));
+      await seedKnowledge(database);
       await database.prepare("PRAGMA optimize").run();
     })().catch((error) => {
       schemaReady = null;
@@ -96,26 +205,26 @@ export async function ensureWorkbenchSchema(): Promise<void> {
 }
 
 export type WorkbenchMetrics = {
-  activeEntries: number;
-  canonEntries: number;
-  relationships: number;
+  privateEntries: number;
+  publishedDocs: number;
+  docDrafts: number;
   activeMembers: number;
 };
 
 export async function getWorkbenchMetrics(): Promise<WorkbenchMetrics> {
   await ensureWorkbenchSchema();
   const database = getD1();
-  const [activeEntries, canonEntries, relationships, activeMembers] = await database.batch([
-    database.prepare("SELECT COUNT(*) AS count FROM lore_entries WHERE record_status = 'active'"),
-    database.prepare("SELECT COUNT(*) AS count FROM lore_entries WHERE record_status = 'active' AND canon_status = 'canon'"),
-    database.prepare("SELECT COUNT(*) AS count FROM lore_links"),
+  const [privateEntries, publishedDocs, docDrafts, activeMembers] = await database.batch([
+    database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-splinterheart-lore' AND publication_status != 'archived'"),
+    database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-sdk-docs' AND publication_status = 'published'"),
+    database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-sdk-docs' AND publication_status IN ('draft','review')"),
     database.prepare("SELECT COUNT(*) AS count FROM studio_members WHERE status = 'active'"),
   ]);
 
   return {
-    activeEntries: Number((activeEntries.results[0] as { count?: number } | undefined)?.count ?? 0),
-    canonEntries: Number((canonEntries.results[0] as { count?: number } | undefined)?.count ?? 0),
-    relationships: Number((relationships.results[0] as { count?: number } | undefined)?.count ?? 0),
+    privateEntries: Number((privateEntries.results[0] as { count?: number } | undefined)?.count ?? 0),
+    publishedDocs: Number((publishedDocs.results[0] as { count?: number } | undefined)?.count ?? 0),
+    docDrafts: Number((docDrafts.results[0] as { count?: number } | undefined)?.count ?? 0),
     activeMembers: Number((activeMembers.results[0] as { count?: number } | undefined)?.count ?? 0),
   };
 }

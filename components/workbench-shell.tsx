@@ -4,7 +4,7 @@ import type { WorkbenchAccess } from "@/lib/workbench/auth";
 
 const navigation = [
   { href: "/workbench", label: "Overview", index: "01" },
-  { href: "/workbench/wiki", label: "Lore bible", index: "02" },
+  { href: "/workbench/wiki", label: "Knowledge", index: "02" },
   { href: "/workbench/members", label: "Members", index: "03" },
   { href: "/workbench/operations", label: "Operations", index: "04" },
 ] as const;

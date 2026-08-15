@@ -29,23 +29,23 @@ export default async function OperationsPage() {
       <div className="workbench-page operations-page">
         <header className="workbench-page__header">
           <div><span className="workbench-kicker">Operations</span><h1>Recoverable by design.</h1></div>
-          <p>Export the complete Splinterheart lore history, inspect consequential changes, and keep the Workbench understandable under pressure.</p>
+          <p>Export every knowledge space and revision, inspect consequential changes, and keep the Workbench understandable under pressure.</p>
         </header>
 
         <section className="operations-grid">
           <article className="operations-card operations-card--backup">
             <span className="workbench-kicker">Portable backup</span>
-            <h2>Take the lore with you.</h2>
-            <p>The download contains every entry, historical revision, and relationship in a plain, versioned JSON document. Membership data is deliberately excluded.</p>
-            <a className="workbench-button workbench-button--primary" href="/api/workbench/export/lore">Download lore backup</a>
+            <h2>Take the knowledge with you.</h2>
+            <p>The download contains private lore, documentation drafts, published entries, revisions, and relationships in a versioned JSON document. Membership data is deliberately excluded.</p>
+            <a className="workbench-button workbench-button--primary" href="/api/workbench/export/lore">Download knowledge backup</a>
           </article>
           <article className="operations-card">
             <span className="workbench-kicker">Role boundaries</span>
             <dl className="permission-list">
-              <div><dt>Admin</dt><dd>Members, backups, audit, all lore operations</dd></div>
-              <div><dt>Editor</dt><dd>Lore edits, archive, restore, relationships</dd></div>
-              <div><dt>Contributor</dt><dd>Lore edits and relationships</dd></div>
-              <div><dt>Viewer</dt><dd>Read-only lore access</dd></div>
+              <div><dt>Admin</dt><dd>Members, backups, audit, editing, and publication</dd></div>
+              <div><dt>Editor</dt><dd>Knowledge editing and public documentation publication</dd></div>
+              <div><dt>Contributor</dt><dd>Draft and revision authoring without publication</dd></div>
+              <div><dt>Viewer</dt><dd>Read-only access to every Workbench knowledge space</dd></div>
             </dl>
           </article>
         </section>

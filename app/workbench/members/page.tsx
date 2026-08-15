@@ -14,7 +14,7 @@ export default async function MembersPage() {
         <div className="workbench-page">
           <header className="workbench-page__header">
             <div><span className="workbench-kicker">Membership</span><h1>Administrators only.</h1></div>
-            <p>Your role can use the lore bible, but it cannot invite people or alter studio access.</p>
+            <p>Your role can use the knowledge workspace, but it cannot invite people or alter studio access.</p>
           </header>
         </div>
       </WorkbenchShell>

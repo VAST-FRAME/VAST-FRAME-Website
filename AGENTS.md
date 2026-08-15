@@ -5,7 +5,8 @@ This repository owns the public VASTFRAME studio website and its private develop
 ## Product boundaries
 
 - The public site is games-first. Splinterheart is the only publicly listed game until the studio explicitly announces another.
-- Threshold, Eclipse, Firmament, and Causality appear as technology made in service of VASTFRAME games.
+- Threshold, Atrium, Eclipse, and Causality appear as technology made in service of VASTFRAME games.
+- Atrium is the canonical sky-system name. Do not preserve or surface superseded names in copy, routes, metadata, redirects, seed content, or media identifiers.
 - The Workbench is a separate authenticated surface. Never expose drafts, lore, membership data, internal notes, or unpublished media through public routes or client bundles.
 - Public publication must be an explicit state transition. `draft`, `review`, and `scheduled` records are private.
 - Authentication identifies a person; the Workbench membership table authorizes access. Never equate a valid external identity with studio membership.

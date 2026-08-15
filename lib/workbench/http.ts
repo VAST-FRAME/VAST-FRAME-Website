@@ -12,11 +12,6 @@ export function requireWorkbenchMutation(request: Request): void {
     throw new WorkbenchRequestError("Workbench mutation header required.", 403);
   }
 
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
-    throw new WorkbenchRequestError("Cross-origin Workbench mutations are not allowed.", 403);
-  }
-
   const fetchSite = request.headers.get("sec-fetch-site");
   if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
     throw new WorkbenchRequestError("Cross-origin Workbench mutations are not allowed.", 403);

@@ -31,8 +31,9 @@ test("renders the game-first VASTFRAME home page", async () => {
   assert.match(html, /Splinterheart/);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
-  assert.match(html, /Firmament/);
+  assert.match(html, /Atrium/);
   assert.match(html, /Causality/);
+  assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   assert.match(html, /HOME_HERO/);
   assert.match(html, /updates will live on Steam/i);
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
@@ -47,6 +48,54 @@ test("lists only Splinterheart on the public games route", async () => {
   const html = await response.text();
   assert.match(html, /Splinterheart/);
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
+});
+
+for (const [slug, name, slot] of [
+  ["threshold", "Threshold", "THRESHOLD_SHADOW_ARCHITECTURE_HERO"],
+  ["atrium", "Atrium", "ATRIUM_ATMOSPHERE_HERO"],
+  ["eclipse", "Eclipse", "ECLIPSE_SCENE_PIPELINE_HERO"],
+  ["causality", "Causality", "CAUSALITY_CHAIN_REACTION_HERO"],
+]) {
+  test(`renders the ${name} SDK showcase with an opinionated capture plan`, async () => {
+    const response = await render(`/sdk/${slug}`);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, new RegExp(name));
+    assert.match(html, new RegExp(slot));
+    assert.match(html, /Every image has a job/);
+    assert.match(html, new RegExp(`/docs/${slug}`));
+    assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
+  });
+}
+
+test("publishes a public SDK documentation home without Workbench identity", async () => {
+  const response = await render("/docs");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Read the system/);
+  assert.match(html, /Public by design/);
+  assert.match(html, /Threshold/);
+  assert.match(html, /Atrium/);
+  assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
+});
+
+test("renders public product documentation and deep-linked technical articles", async () => {
+  const overview = await render("/docs/threshold");
+  assert.equal(overview.status, 200);
+  assert.match(await overview.text(), /What Threshold owns/);
+  const article = await render("/docs/threshold/shadow-architecture");
+  assert.equal(article.status, 200);
+  const html = await article.text();
+  assert.match(html, /Percentage-closer soft shadows/);
+  assert.match(html, /id="validation-checklist"/);
+});
+
+test("searches only the published SDK documentation corpus", async () => {
+  const response = await render("/docs/search?q=lightning");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Clouds and distant phenomena/);
+  assert.match(html, /published article/);
 });
 
 test("does not expose a studio blog route", async () => {
@@ -118,6 +167,7 @@ test("rejects cross-origin Workbench mutations", async () => {
       "content-type": "application/json",
       "x-vastframe-workbench": "1",
       origin: "https://attacker.example",
+      "sec-fetch-site": "cross-site",
     },
     body: JSON.stringify({}),
   });
@@ -131,6 +181,24 @@ test("rejects anonymous lore exports", async () => {
   assert.equal(response.status, 403);
   const body = await response.json();
   assert.match(body.error, /membership required/i);
+});
+
+test("rejects anonymous reads from every Workbench knowledge space", async () => {
+  const response = await render("/api/workbench/knowledge?space=sdk-docs");
+  assert.equal(response.status, 403);
+  const body = await response.json();
+  assert.match(body.error, /membership required/i);
+});
+
+test("requires the Workbench mutation contract before creating knowledge", async () => {
+  const response = await render("/api/workbench/knowledge", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ title: "Private draft" }),
+  });
+  assert.equal(response.status, 403);
+  const body = await response.json();
+  assert.match(body.error, /mutation header required/i);
 });
 
 test("keeps the private preview out of search indexes", async () => {

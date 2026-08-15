@@ -7,24 +7,26 @@ export async function GET() {
     const { ensureWorkbenchSchema, getD1 } = await import("@/lib/workbench/database");
     await ensureWorkbenchSchema();
     const database = getD1();
-    const [entries, revisions, relationships] = await Promise.all([
-      database.prepare("SELECT * FROM lore_entries ORDER BY project_key, title, id").all(),
-      database.prepare("SELECT * FROM lore_entry_revisions ORDER BY entry_id, revision").all(),
-      database.prepare("SELECT * FROM lore_links ORDER BY source_entry_id, target_entry_id, relationship").all(),
+    const [spaces, entries, revisions, relationships] = await Promise.all([
+      database.prepare("SELECT * FROM knowledge_spaces ORDER BY key").all(),
+      database.prepare("SELECT * FROM knowledge_entries ORDER BY space_id, nav_order, title, id").all(),
+      database.prepare("SELECT * FROM knowledge_entry_revisions ORDER BY entry_id, revision").all(),
+      database.prepare("SELECT * FROM knowledge_links ORDER BY source_entry_id, target_entry_id, relationship").all(),
     ]);
     const exportedAt = new Date().toISOString();
-    const filename = `vastframe-lore-${exportedAt.slice(0, 10)}.json`;
+    const filename = `vastframe-knowledge-${exportedAt.slice(0, 10)}.json`;
     const backup = {
-      format: "vastframe-workbench-lore",
-      schemaVersion: 1,
+      format: "vastframe-workbench-knowledge",
+      schemaVersion: 2,
       exportedAt,
       exportedBy: access.identity.email,
-      projects: ["splinterheart"],
       counts: {
+        spaces: spaces.results.length,
         entries: entries.results.length,
         revisions: revisions.results.length,
         relationships: relationships.results.length,
       },
+      spaces: spaces.results,
       entries: entries.results,
       revisions: revisions.results,
       relationships: relationships.results,

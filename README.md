@@ -5,7 +5,8 @@ The public VASTFRAME studio website and private developer Workbench.
 ## Product shape
 
 - Public routes present VASTFRAME as a game studio. Splinterheart is the only listed game.
-- The SDK route introduces Threshold, Eclipse, Firmament, and Causality as technology built beneath the games.
+- The SDK routes showcase Threshold, Atrium, Eclipse, and Causality as technology built beneath the games.
+- Public SDK documentation is available under `/docs`; authoring and deliberate publication happen in the private Workbench knowledge editor.
 - Development updates belong on Steam rather than a studio-owned blog.
 - The Workbench owns private lore editing, revision history and restore, relationships, archiving, membership authorization, audit records, and portable lore backups.
 

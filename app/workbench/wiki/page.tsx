@@ -1,6 +1,6 @@
 import { getWorkbenchAccess, getWorkbenchIdentity } from "@/lib/workbench/auth";
 import { WorkbenchAccessScreen, WorkbenchShell } from "@/components/workbench-shell";
-import { LoreWorkspace } from "@/components/lore-workspace";
+import { KnowledgeWorkspace } from "@/components/knowledge-workspace";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ export default async function WikiPage() {
 
   return (
     <WorkbenchShell access={access} active="/workbench/wiki">
-      <LoreWorkspace role={access.role} />
+      <KnowledgeWorkspace role={access.role} />
     </WorkbenchShell>
   );
 }

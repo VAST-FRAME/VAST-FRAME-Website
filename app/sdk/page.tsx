@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro, PublicShell } from "@/components/public-shell";
+import { ArrowLink, PageIntro, PublicShell } from "@/components/public-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { sdkProducts } from "@/lib/site-data";
 
@@ -18,7 +18,8 @@ export default function SdkPage() {
       />
       <section className="sdk-hero section-rule">
         <MediaPlaceholder slot="SDK_SYSTEM_REEL" ratio="21 / 8" tone="checker">
-          <span className="placeholder-title">Threshold / Eclipse / Firmament / Causality</span>
+          <span className="placeholder-title">Threshold / Atrium / Eclipse / Causality</span>
+          <span className="placeholder-note">Four systems / one production stack</span>
         </MediaPlaceholder>
       </section>
       <section className="sdk-product-list section-rule">
@@ -30,7 +31,10 @@ export default function SdkPage() {
               <h2>{product.name}</h2>
             </div>
             <p>{product.description}</p>
-            <span className="status-chip">In development</span>
+            <div className="sdk-product__actions">
+              <span className="status-chip">In development</span>
+              <ArrowLink href={`/sdk/${product.slug}`}>Explore {product.name}</ArrowLink>
+            </div>
           </article>
         ))}
       </section>
@@ -49,6 +53,7 @@ export default function SdkPage() {
       <section className="sdk-principle frame-grid section-rule">
         <p className="eyebrow">The principle</p>
         <p className="manifesto__statement">The technology serves the frame. The frame serves the game.</p>
+        <div className="sdk-principle__action"><ArrowLink href="/docs">Read the documentation</ArrowLink></div>
       </section>
     </PublicShell>
   );
