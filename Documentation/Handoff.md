@@ -14,7 +14,7 @@ Changing `SITE_ACCESS_PASSWORD` immediately invalidates previously issued access
 
 ## Workbench readiness
 
-After the first production deployment, generate and review the first-administrator SQL described in `Workbench-Operations.md`, then execute it against the production D1 database. Valid external identity alone must never create studio membership.
+Configure `WORKBENCH_BOOTSTRAP_EMAIL` before the first production sign-in. Its verified owner may claim the first administrator role only while the membership table is empty. The reviewed SQL procedure in `Workbench-Operations.md` remains the recovery path. Valid external identity alone must never create studio membership.
 
 Before schema changes or risky editorial work, download a lore backup from Workbench Operations. Never copy `.wrangler` local state into production.
 

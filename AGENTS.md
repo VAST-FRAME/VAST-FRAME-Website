@@ -11,6 +11,7 @@ This repository owns the public VASTFRAME studio website and its private develop
 - Authentication identifies a person; the Workbench membership table authorizes access. Never equate a valid external identity with studio membership.
 - GitHub organization membership is not an authentication or authorization requirement.
 - Keep the optional shared preview password at the Worker boundary and in the hosted `SITE_ACCESS_PASSWORD` secret. Never commit it or treat it as Workbench identity.
+- Keep first-administrator bootstrap constrained to the verified `WORKBENCH_BOOTSTRAP_EMAIL` and an empty membership table; all later access uses explicit invitations.
 
 ## Content and media
 

@@ -27,6 +27,8 @@ Hosted previews use the `SITE_ACCESS_PASSWORD` secret as a lightweight whole-sit
 
 Local development exposes a clearly labeled preview identity so the Workbench can be reviewed without production credentials. Production builds never grant that identity. Administrators invite collaborators by verified email; the invitation activates on first successful sign-in.
 
+On a fresh production database only, the verified email in the `WORKBENCH_BOOTSTRAP_EMAIL` secret may claim the first administrator membership. Once any membership exists, the bootstrap path closes and all additional access must be created by an administrator.
+
 Lore records support search, type/canon/archive filters, optimistic revision checks, immutable history, snapshot inspection and restore, archive/restore revisions, and directed relationships. Viewers are read-only; contributors can write; editors can manage record lifecycle; administrators also manage membership, audit review, and export.
 
 Every Workbench mutation requires an application-only same-origin request marker and creates an attributable audit event. See `Documentation/Workbench-Operations.md` for first-administrator bootstrap, roles, backup, and incident guidance.

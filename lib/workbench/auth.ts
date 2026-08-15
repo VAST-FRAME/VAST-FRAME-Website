@@ -47,10 +47,11 @@ export async function getWorkbenchAccess(): Promise<WorkbenchAccess | null> {
     return { identity, role: "admin", preview: true };
   }
 
+  const { env } = await import("cloudflare:workers");
   const { ensureWorkbenchSchema, getD1 } = await import("./database");
   await ensureWorkbenchSchema();
   const database = getD1();
-  const member = await database
+  let member = await database
     .prepare(
       `SELECT id, role, status FROM studio_members
        WHERE email = ?1 AND status IN ('active', 'invited')
@@ -58,6 +59,38 @@ export async function getWorkbenchAccess(): Promise<WorkbenchAccess | null> {
     )
     .bind(identity.email)
     .first<{ id: string; role: WorkbenchRole; status: "active" | "invited" }>();
+
+  const bootstrapEmail = env.WORKBENCH_BOOTSTRAP_EMAIL?.trim().toLowerCase();
+  if (!member && bootstrapEmail && identity.email === bootstrapEmail) {
+    const membershipCount = await database
+      .prepare("SELECT COUNT(*) AS count FROM studio_members")
+      .first<{ count: number }>();
+    if (Number(membershipCount?.count) === 0) {
+      const memberId = crypto.randomUUID();
+      const bootstrapAccess: WorkbenchAccess = {
+        identity,
+        role: "admin",
+        preview: false,
+      };
+      await database.batch([
+        database
+          .prepare(
+            `INSERT INTO studio_members (
+              id, email, display_name, role, status, invited_by, last_seen_at
+            ) VALUES (?1, ?2, ?3, 'admin', 'active', 'bootstrap', CURRENT_TIMESTAMP)`,
+          )
+          .bind(memberId, identity.email, identity.displayName),
+        prepareAuditEvent(database, bootstrapAccess, {
+          action: "member.bootstrap",
+          entityType: "studio_member",
+          entityId: memberId,
+          summary: `${identity.email} claimed the first Workbench administrator membership.`,
+          metadata: { email: identity.email, role: "admin", status: "active" },
+        }),
+      ]);
+      member = { id: memberId, role: "admin", status: "active" };
+    }
+  }
 
   if (!member) return null;
   const access: WorkbenchAccess = { identity, role: member.role, preview: false };

@@ -4,6 +4,10 @@
 
 Authentication proves an email address; it never grants studio access on its own. After the D1 migration is applied, generate the one-time bootstrap statement locally:
 
+For a new Sites deployment, the preferred path is to configure `WORKBENCH_BOOTSTRAP_EMAIL` as a hosted secret before publishing. That verified email becomes the first administrator on its first Workbench sign-in only while the membership table is empty. The bootstrap path closes permanently once any membership exists.
+
+The operator-controlled SQL path remains available for recovery or deployments that do not use that secret:
+
 ```bash
 pnpm workbench:admin-sql -- admin@example.com "Administrator Name"
 ```
