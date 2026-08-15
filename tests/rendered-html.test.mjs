@@ -51,7 +51,25 @@ test("lists only Splinterheart on the public games route", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Splinterheart/);
+  assert.match(html, /Worlds that/);
+  assert.match(html, /100% free of external investors, publishers, or backers/i);
+  assert.match(html, /Tiny Man is out for revenge/i);
+  assert.match(html, /Release date/i);
+  assert.match(html, /October 2027/);
+  assert.match(html, /Platforms/);
+  assert.match(html, /Steam/);
+  assert.doesNotMatch(html, /Named projects|In development|Announced dates|Made to stay|Status<\/dt>/i);
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
+});
+
+test("keeps Splinterheart release facts consistent on its detail page", async () => {
+  const response = await render("/games/splinterheart");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Tiny Man is out for revenge/i);
+  assert.match(html, /October 2027/);
+  assert.match(html, /Steam/);
+  assert.doesNotMatch(html, /keeping its shape close|In development/i);
 });
 
 test("presents candid careers copy and welcomes unsolicited work", async () => {

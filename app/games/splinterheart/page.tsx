@@ -5,7 +5,7 @@ import { splinterheart } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "Splinterheart",
-  description: "Splinterheart, a game in development at VASTFRAME.",
+  description: splinterheart.statement,
 };
 
 export default function SplinterheartPage() {
@@ -17,7 +17,7 @@ export default function SplinterheartPage() {
           <span className="project-wordmark">Splinterheart</span>
         </MediaPlaceholder>
         <div className="project-hero__caption">
-          <span className="eyebrow">In development</span>
+          <span className="eyebrow">{splinterheart.releaseDate} / {splinterheart.platforms}</span>
           <span className="mono">Image slot 01 / Key art</span>
         </div>
       </section>

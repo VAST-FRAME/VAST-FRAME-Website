@@ -47,7 +47,7 @@ export default function Home() {
         <div className="section-heading frame-grid">
           <p className="eyebrow">Now in development</p>
           <h2 className="display display--section">{splinterheart.name}</h2>
-          <span className="status-chip">{splinterheart.status}</span>
+          <span className="status-chip">{splinterheart.releaseDate}</span>
         </div>
         <div className="featured-game__body frame-grid">
           <MediaPlaceholder slot="SPLINTERHEART_WIDE_01" ratio="21 / 9" tone="checker" />

@@ -19,10 +19,10 @@ export const sdkNavigation = [
 export const splinterheart = {
   name: "Splinterheart",
   slug: "splinterheart",
-  status: "In development",
-  platform: "To be announced",
+  releaseDate: "October 2027",
+  platforms: "Steam",
   statement:
-    "A new game from VASTFRAME. We are keeping its shape close until it is ready to be seen.",
+    "They killed his wife and burned down his home. Now Tiny Man is out for revenge.",
 };
 
 export { sdkProducts } from "./sdk-data";
