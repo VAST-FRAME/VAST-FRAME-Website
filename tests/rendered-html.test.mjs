@@ -54,6 +54,25 @@ test("lists only Splinterheart on the public games route", async () => {
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
 });
 
+test("presents candid careers copy and welcomes unsolicited work", async () => {
+  const response = await render("/jobs");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /VASTFRAME,/);
+  assert.match(html, /people who like making cool things/i);
+  assert.match(html, /whether or not there are any listed jobs/i);
+  assert.doesNotMatch(html, /Serious craft|care about the whole work|résumé collection funnel/i);
+});
+
+test("uses one public studio contact address", async () => {
+  const response = await render("/contact");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<h1[^>]*>Contact<br\/><em>us\.<\/em><\/h1>/i);
+  assert.match(html, /mailto:contact@vastframe\.com/i);
+  assert.doesNotMatch(html, /hello@vastframe\.com|press@vastframe\.com|biz@vastframe\.com|Start a/i);
+});
+
 for (const [slug, name, slot] of [
   ["threshold", "Threshold", "THRESHOLD_SHADOW_ARCHITECTURE_HERO"],
   ["atrium", "Atrium", "ATRIUM_ATMOSPHERE_HERO"],

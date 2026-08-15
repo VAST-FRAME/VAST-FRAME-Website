@@ -11,16 +11,15 @@ export default function JobsPage() {
     <PublicShell active="/jobs">
       <PageIntro
         eyebrow="Careers"
-        title={<>Small team.<br />Serious craft.</>}
-        body="When we hire, we look for people who care about the whole work: the player, the detail, the system, and the result."
+        title={<>VASTFRAME,<br />small team.</>}
+        body="We look for people who like making cool things. If this describes you, we'd love to see your work, whether or not there are any listed jobs."
       />
       <section className="empty-state section-rule frame-grid">
         <p className="eyebrow">Open roles / 00</p>
         <h2>No openings right now.</h2>
-        <p>We will post roles here when there is a real position to fill. No evergreen listings, no résumé collection funnel.</p>
-        <ArrowLink href="/contact">Contact the studio</ArrowLink>
+        <p>There are no listed roles at the moment, but you can still introduce yourself and show us what you make.</p>
+        <ArrowLink href="/contact">Contact us</ArrowLink>
       </section>
     </PublicShell>
   );
 }
-
