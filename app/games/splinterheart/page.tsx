@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ArrowLink, PublicShell } from "@/components/public-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { splinterheart } from "@/lib/site-data";
+import { getWorkbenchAccess } from "@/lib/workbench/auth";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Splinterheart",
   description: splinterheart.statement,
 };
 
-export default function SplinterheartPage() {
+export default async function SplinterheartPage() {
+  if (!await getWorkbenchAccess()) notFound();
+
   return (
     <PublicShell active="/games">
       <section className="project-hero">

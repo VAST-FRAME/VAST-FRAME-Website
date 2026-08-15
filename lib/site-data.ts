@@ -2,9 +2,12 @@ export type MediaTone = "neutral" | "turquoise" | "checker";
 
 export const publicNavigation = [
   { href: "/", label: "Home" },
-  { href: "/games", label: "Games" },
   { href: "/jobs", label: "Jobs" },
   { href: "/contact", label: "Contact" },
+] as const;
+
+export const developerNavigation = [
+  { href: "/games", label: "Games" },
 ] as const;
 
 export const sdkNavigation = [

@@ -41,6 +41,7 @@ export function WorkbenchShell({
           {access.preview ? <span className="preview-flag">Local preview</span> : null}
           <strong>{access.identity.displayName}</strong>
           <span>{access.role}</span>
+          <a href="/games">Games preview ↗</a>
           <a href="/">Public site ↗</a>
         </div>
       </aside>

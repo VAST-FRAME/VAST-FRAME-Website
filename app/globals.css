@@ -321,11 +321,6 @@ button, input, textarea, select { font: inherit; }
 .section-heading .section-note { grid-column: 11 / 13; align-self: end; margin: 0; }
 .section-note { color: var(--muted); font-size: 0.8rem; }
 
-.featured-game__body { padding-bottom: clamp(5rem, 9vw, 9rem); }
-.featured-game__body .media-placeholder { grid-column: 1 / 13; }
-.featured-game__body .lede { grid-column: 2 / 8; margin-top: 2.5rem; }
-.featured-game__body .arrow-link { grid-column: 10 / 13; align-self: end; margin-top: 2.5rem; }
-
 .product-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); }
 .product-tile { position: relative; min-height: 24rem; padding: 1.35rem; border-right: 1px solid var(--line-dark); }
 .product-tile:last-child { border-right: 0; }
@@ -333,13 +328,6 @@ button, input, textarea, select { font: inherit; }
 .product-tile h3 { margin: 1rem 0; font-family: var(--condensed); font-size: clamp(2.5rem, 4vw, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
 .product-tile p { max-width: 24rem; margin: 0; color: var(--muted); font-size: 0.85rem; }
 .section-action { display: flex; justify-content: flex-end; padding: 2rem var(--page-pad) clamp(5rem, 9vw, 9rem); }
-
-.steam-note { align-items: start; padding-top: clamp(5rem, 9vw, 8rem); padding-bottom: clamp(5rem, 9vw, 8rem); }
-.steam-note > .eyebrow { grid-column: 1 / 4; }
-.steam-note__index { grid-column: 11 / 13; justify-self: end; color: var(--muted); }
-.steam-note h2 { grid-column: 3 / 10; margin: 3rem 0 1.5rem; font-family: var(--serif); font-size: clamp(3rem, 6vw, 6.5rem); font-weight: 400; letter-spacing: -0.06em; line-height: 0.9; }
-.steam-note > p:not(.eyebrow):not(.steam-note__index) { grid-column: 4 / 9; margin: 0 0 2rem; color: var(--muted); }
-.steam-note .arrow-link { grid-column: 10 / 13; grid-row: 3 / 5; align-self: end; }
 
 .page-intro { min-height: min(52rem, calc(100svh - var(--header-height))); align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
 .page-intro .eyebrow { grid-column: 1 / 4; }
@@ -945,14 +933,6 @@ button, input, textarea, select { font: inherit; }
   .section-heading .display,
   .section-heading .status-chip,
   .section-heading .section-note,
-  .featured-game__body .media-placeholder,
-  .featured-game__body .lede,
-  .featured-game__body .arrow-link,
-  .steam-note > .eyebrow,
-  .steam-note__index,
-  .steam-note h2,
-  .steam-note > p:not(.eyebrow):not(.steam-note__index),
-  .steam-note .arrow-link,
   .page-intro .eyebrow,
   .page-intro .display,
   .page-intro .lede,
@@ -975,8 +955,6 @@ button, input, textarea, select { font: inherit; }
   .product-strip { grid-template-columns: 1fr; }
   .product-tile { min-height: 20rem; border-right: 0; border-bottom: 1px solid var(--line-dark); }
   .product-tile__index { margin-bottom: 4rem; }
-  .steam-note { row-gap: 1.5rem; }
-  .steam-note h2 { margin: 1rem 0 0; }
   .page-intro { min-height: auto; padding-top: 5rem; padding-bottom: 5rem; }
   .page-intro .display { margin: 3rem 0; }
   .project-hero { padding: 1rem; }

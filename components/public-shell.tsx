@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- Full document navigation is intentional behind the preview access gateway. */
 import type { ReactNode } from "react";
-import { publicNavigation, sdkNavigation } from "@/lib/site-data";
+import { developerNavigation, publicNavigation, sdkNavigation } from "@/lib/site-data";
+import { getWorkbenchAccess } from "@/lib/workbench/auth";
 
 type PublicShellProps = {
   active?: string;
@@ -8,10 +9,14 @@ type PublicShellProps = {
   inverted?: boolean;
 };
 
-export function PublicShell({ active, children, inverted = false }: PublicShellProps) {
+export async function PublicShell({ active, children, inverted = false }: PublicShellProps) {
+  const developerAccess = await getWorkbenchAccess();
   const sdkIsActive = active?.startsWith("/sdk") || active?.startsWith("/docs");
-  const leadingNavigation = publicNavigation.slice(0, 2);
-  const trailingNavigation = publicNavigation.slice(2);
+  const leadingNavigation = [
+    publicNavigation[0],
+    ...(developerAccess ? developerNavigation : []),
+  ];
+  const trailingNavigation = publicNavigation.slice(1);
 
   return (
     <div className={inverted ? "site site--paper" : "site"}>
@@ -82,10 +87,9 @@ export function PublicShell({ active, children, inverted = false }: PublicShellP
           <span className="wordmark wordmark--footer">
             VAST<span>FRAME</span>
           </span>
-          <p>Independent games. Deeply built worlds.</p>
         </div>
         <div className="site-footer__links">
-          <a href="/games">Games</a>
+          {developerAccess ? <a href="/games">Games</a> : null}
           <a href="/contact">Contact</a>
           <a href="/workbench" className="quiet-link">
             Workbench

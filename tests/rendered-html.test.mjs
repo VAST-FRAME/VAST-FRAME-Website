@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/", init = {}, envOverrides = {}) {
@@ -21,21 +22,20 @@ async function render(pathname = "/", init = {}, envOverrides = {}) {
 
 const protectedEnvironment = { SITE_ACCESS_PASSWORD: "test-preview-password" };
 
-test("renders the game-first VASTFRAME home page", async () => {
+test("renders an SDK-first VASTFRAME home page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
 
-  assert.match(html, /<title>VASTFRAME — Independent Game Studio<\/title>/i);
-  assert.match(html, /Worlds with/);
-  assert.match(html, /Splinterheart/);
+  assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
+  assert.match(html, /Real-time systems/);
+  assert.match(html, /Built together/);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
   assert.match(html, /Atrium/);
   assert.match(html, /Causality/);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
-  assert.match(html, /HOME_HERO/);
-  assert.match(html, /updates will live on Steam/i);
+  assert.match(html, /SDK_SYSTEMS_HERO/);
   assert.match(html, /aria-label="SDK navigation"/i);
   for (const href of ["/sdk", "/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
@@ -43,33 +43,30 @@ test("renders the game-first VASTFRAME home page", async () => {
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
-  assert.doesNotMatch(html, /devlog|publishing/i);
+  assert.doesNotMatch(html, /devlog|publishing|Splinterheart|Worlds with weight|News, when there is news|Independent games|href="\/games/i);
 });
 
-test("lists only Splinterheart on the public games route", async () => {
+test("hides the Games index from anonymous visitors", async () => {
   const response = await render("/games");
-  assert.equal(response.status, 200);
-  const html = await response.text();
-  assert.match(html, /Splinterheart/);
-  assert.match(html, /Worlds that/);
-  assert.match(html, /100% free of external investors, publishers, or backers/i);
-  assert.match(html, /Tiny Man is out for revenge/i);
-  assert.match(html, /Release date/i);
-  assert.match(html, /October 2027/);
-  assert.match(html, /Platforms/);
-  assert.match(html, /Steam/);
-  assert.doesNotMatch(html, /Named projects|In development|Announced dates|Made to stay|Status<\/dt>/i);
-  assert.doesNotMatch(html, /Snowfall|Backrooms/i);
+  assert.equal(response.status, 404);
+  assert.doesNotMatch(await response.text(), /Splinterheart|October 2027|Steam/i);
 });
 
-test("keeps Splinterheart release facts consistent on its detail page", async () => {
+test("hides the Splinterheart detail route from anonymous visitors", async () => {
   const response = await render("/games/splinterheart");
-  assert.equal(response.status, 200);
-  const html = await response.text();
-  assert.match(html, /Tiny Man is out for revenge/i);
-  assert.match(html, /October 2027/);
-  assert.match(html, /Steam/);
-  assert.doesNotMatch(html, /keeping its shape close|In development/i);
+  assert.equal(response.status, 404);
+  assert.doesNotMatch(await response.text(), /Tiny Man is out for revenge|October 2027|Steam/i);
+});
+
+test("retains the hidden Games pages behind Workbench membership checks", async () => {
+  const indexSource = await readFile(new URL("../app/games/page.tsx", import.meta.url), "utf8");
+  const detailSource = await readFile(new URL("../app/games/splinterheart/page.tsx", import.meta.url), "utf8");
+  for (const source of [indexSource, detailSource]) {
+    assert.match(source, /getWorkbenchAccess\(\)/);
+    assert.match(source, /notFound\(\)/);
+  }
+  assert.match(indexSource, /Worlds that/);
+  assert.match(detailSource, /splinterheart\.statement/);
 });
 
 test("presents candid careers copy and welcomes unsolicited work", async () => {
@@ -105,6 +102,7 @@ for (const [slug, name, slot] of [
     assert.match(html, new RegExp(slot));
     assert.match(html, /Every image has a job/);
     assert.match(html, new RegExp(`/docs/${slug}`));
+    assert.doesNotMatch(html, /Splinterheart|href="\/games/i);
     assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   });
 }
@@ -296,12 +294,12 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
         origin: "https://public-preview.example",
         "sec-fetch-site": "same-origin",
       },
-      body: "password=test-preview-password&return_to=%2Fgames",
+      body: "password=test-preview-password&return_to=%2Fsdk",
     },
     protectedEnvironment,
   );
   assert.equal(unlock.status, 303);
-  assert.equal(unlock.headers.get("location"), "http://localhost/games");
+  assert.equal(unlock.headers.get("location"), "http://localhost/sdk");
   const setCookie = unlock.headers.get("set-cookie");
   assert.match(setCookie, /__Host-vastframe_access=/);
   assert.match(setCookie, /HttpOnly/i);
@@ -310,7 +308,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
 
   const cookie = setCookie.split(";", 1)[0];
   const response = await render(
-    "/games",
+    "/sdk",
     { headers: { cookie } },
     protectedEnvironment,
   );
@@ -318,7 +316,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(response.headers.get("vary"), /RSC/i);
   assert.match(response.headers.get("vary"), /Cookie/i);
-  assert.match(await response.text(), /Splinterheart/);
+  assert.match(await response.text(), /VASTFRAME SDK/);
 });
 
 test("rejects cross-site preview unlock submissions", async () => {

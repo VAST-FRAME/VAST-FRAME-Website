@@ -1,66 +1,53 @@
 import type { Metadata } from "next";
 import { ArrowLink, PublicShell } from "@/components/public-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
-import { sdkProducts, splinterheart } from "@/lib/site-data";
+import { sdkProducts } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: { absolute: "VASTFRAME — Independent Game Studio" },
+  title: { absolute: "VASTFRAME — Real-Time Technology Studio" },
   description:
-    "Independent games, deeply built worlds, and the technology beneath them.",
+    "Rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
 };
 
 export default function Home() {
   return (
     <PublicShell active="/">
       <section className="home-hero frame-grid">
-        <p className="eyebrow home-hero__eyebrow">Independent game studio</p>
+        <p className="eyebrow home-hero__eyebrow">VASTFRAME / Technology studio</p>
         <h1 className="display home-hero__title">
-          Worlds with{" "}
+          Real-time systems.
           <br />
-          <em>weight.</em>
+          <em>Built together.</em>
         </h1>
         <p className="home-hero__intro">
-          VASTFRAME makes games with atmosphere, consequence, and machinery you can feel beneath the surface.
+          VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.
         </p>
         <div className="home-hero__actions">
-          <ArrowLink href="/games/splinterheart">Enter Splinterheart</ArrowLink>
-          <ArrowLink href="/sdk">Explore the technology</ArrowLink>
+          <ArrowLink href="/sdk">Explore the SDK</ArrowLink>
+          <ArrowLink href="/docs">Read the documentation</ArrowLink>
         </div>
-        <MediaPlaceholder slot="HOME_HERO" ratio="4 / 5" tone="turquoise" className="home-hero__media">
-          <span className="placeholder-title">Splinterheart</span>
-          <span className="placeholder-note">Final key art pending</span>
+        <MediaPlaceholder slot="SDK_SYSTEMS_HERO" ratio="4 / 5" tone="turquoise" className="home-hero__media">
+          <span className="placeholder-title">Threshold / Atrium / Eclipse / Causality</span>
+          <span className="placeholder-note">Technical capture pending</span>
         </MediaPlaceholder>
         <p className="home-hero__index mono">VF / 001</p>
       </section>
 
       <section className="manifesto frame-grid section-rule">
-        <p className="eyebrow">What we care about</p>
+        <p className="eyebrow">The studio</p>
         <p className="manifesto__statement">
-          We build strange places, tactile systems, and stories that trust the player to look closer.
+          We build foundational technology for worlds that need more than off-the-shelf answers.
         </p>
         <p className="manifesto__aside">
-          The tools are part of the craft. When the game asks for something new, we build the technology to meet it.
+          Threshold, Atrium, Eclipse, and Causality are developed as one production stack.
         </p>
-      </section>
-
-      <section className="featured-game section-rule">
-        <div className="section-heading frame-grid">
-          <p className="eyebrow">Now in development</p>
-          <h2 className="display display--section">{splinterheart.name}</h2>
-          <span className="status-chip">{splinterheart.releaseDate}</span>
-        </div>
-        <div className="featured-game__body frame-grid">
-          <MediaPlaceholder slot="SPLINTERHEART_WIDE_01" ratio="21 / 9" tone="checker" />
-          <p className="lede">{splinterheart.statement}</p>
-          <ArrowLink href="/games/splinterheart">View the game</ArrowLink>
-        </div>
       </section>
 
       <section className="technology section-rule">
         <div className="section-heading frame-grid">
-          <p className="eyebrow">Technology by VASTFRAME</p>
-          <h2 className="display display--section">Built beneath the game.</h2>
-          <p className="section-note">Four focused systems. One connected production stack.</p>
+          <p className="eyebrow">VASTFRAME SDK</p>
+          <h2 className="display display--section">Four systems. One stack.</h2>
+          <p className="section-note">Rendering, atmosphere, scene processing, and simulation.</p>
         </div>
         <div className="product-strip">
           {sdkProducts.map((product) => (
@@ -73,14 +60,6 @@ export default function Home() {
           ))}
         </div>
         <div className="section-action"><ArrowLink href="/sdk">Explore the SDK</ArrowLink></div>
-      </section>
-
-      <section className="steam-note section-rule frame-grid">
-        <p className="eyebrow">Development updates</p>
-        <p className="mono steam-note__index">VF / STEAM</p>
-        <h2>News, when there is news.</h2>
-        <p>Splinterheart updates will live on Steam once its store page is ready. Until then, we are concentrating on the game.</p>
-        <ArrowLink href="/games/splinterheart">See Splinterheart</ArrowLink>
       </section>
     </PublicShell>
   );

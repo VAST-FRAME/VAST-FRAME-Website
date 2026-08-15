@@ -86,10 +86,10 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
         </section>
 
         <section className="technology-proof frame-grid section-rule">
-          <p className="eyebrow">Built for a real game</p>
-          <h2>Proven inside<br /><em>Splinterheart.</em></h2>
-          <p>The SDK exists to solve production problems encountered while building VASTFRAME worlds. As public captures become available, this section will connect the system directly to its use in Splinterheart.</p>
-          <ArrowLink href="/games/splinterheart">See Splinterheart</ArrowLink>
+          <p className="eyebrow">Built for production</p>
+          <h2>Made for<br /><em>real worlds.</em></h2>
+          <p>The SDK exists to solve production problems encountered in complex real-time projects. Each system is designed to work as part of one coherent stack.</p>
+          <ArrowLink href={`/docs/${product.slug}`}>Read the documentation</ArrowLink>
         </section>
 
         <nav className="technology-next section-rule" aria-label="SDK products">

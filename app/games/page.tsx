@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ArrowLink, PageIntro, PublicShell } from "@/components/public-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { splinterheart } from "@/lib/site-data";
+import { getWorkbenchAccess } from "@/lib/workbench/auth";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Games",
   description: "Games from VASTFRAME.",
 };
 
-export default function GamesPage() {
+export default async function GamesPage() {
+  if (!await getWorkbenchAccess()) notFound();
+
   return (
     <PublicShell active="/games">
       <PageIntro

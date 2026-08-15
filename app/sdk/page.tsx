@@ -5,7 +5,7 @@ import { sdkProducts } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: "SDK",
-  description: "The rendering, lighting, sky, and simulation technology beneath VASTFRAME games.",
+  description: "Rendering, atmosphere, scene-pipeline, and simulation technology from VASTFRAME.",
 };
 
 export default function SdkPage() {
@@ -13,8 +13,8 @@ export default function SdkPage() {
     <PublicShell active="/sdk">
       <PageIntro
         eyebrow="VASTFRAME SDK"
-        title={<>Tools shaped<br />by the games.</>}
-        body="We build technology when the work demands it. Four product identities carry the rendering and simulation systems beneath VASTFRAME worlds."
+        title={<>Systems shaped<br />by production.</>}
+        body="Four product identities carry VASTFRAME's rendering, atmosphere, scene-pipeline, and simulation technology."
       />
       <section className="sdk-hero section-rule">
         <MediaPlaceholder slot="SDK_SYSTEM_REEL" ratio="21 / 8" tone="checker">
