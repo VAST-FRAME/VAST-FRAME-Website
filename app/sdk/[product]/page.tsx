@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { ArrowLink, PublicShell } from "@/components/public-shell";
 import { getSdkProduct, sdkProducts } from "@/lib/sdk-data";
+import { sdkNavigation } from "@/lib/site-data";
 
 type ProductPageProps = { params: Promise<{ product: string }> };
 
@@ -28,6 +29,14 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
   return (
     <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
+        <nav className="technology-subnav" aria-label="SDK product navigation">
+          {sdkNavigation.map((item) => (
+            <a href={item.href} aria-current={item.href === `/sdk/${product.slug}` ? "page" : undefined} key={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
         <header className="technology-hero frame-grid">
           <p className="eyebrow">VASTFRAME SDK / {product.index}</p>
           <p className="mono technology-hero__kind">{product.kind}</p>
@@ -69,8 +78,7 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
         <section className="technology-gallery section-rule" aria-label={`${product.name} planned screenshots`}>
           <header className="technology-gallery__header frame-grid">
             <p className="eyebrow">Visual proof plan</p>
-            <h2>Every image has a job.</h2>
-            <p>These are production capture briefs—not decorative boxes. Each slot names the exact proof the final screenshot must provide.</p>
+            <h2>Rendering showcase</h2>
           </header>
           <div className="technology-gallery__grid">
             {product.media.slice(1).map((media, index) => (

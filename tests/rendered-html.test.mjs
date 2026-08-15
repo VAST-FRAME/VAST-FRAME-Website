@@ -62,6 +62,12 @@ test("uses one safe line-height for oversized display headings", async () => {
   assert.doesNotMatch(css, /line-height:\s*0\.79/);
 });
 
+test("keeps emphasized display text in the surrounding typeface", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.display em\s*\{[^}]*font-family:\s*inherit[^}]*font-style:\s*italic/s);
+  assert.match(css, /\.technology-proof h2 em\s*\{[^}]*font-family:\s*inherit[^}]*font-style:\s*italic/s);
+});
+
 test("hides the Games index from anonymous visitors", async () => {
   const response = await render("/games");
   assert.equal(response.status, 404);
@@ -116,7 +122,10 @@ for (const [slug, name, slot] of [
     const html = await response.text();
     assert.match(html, new RegExp(name));
     assert.match(html, new RegExp(slot));
-    assert.match(html, /Every image has a job/);
+    assert.match(html, /Rendering showcase/);
+    assert.match(html, /class="technology-subnav"/);
+    assert.match(html, /aria-label="SDK product navigation"/);
+    assert.doesNotMatch(html, /Every image has a job|production capture briefs|decorative boxes/i);
     assert.match(html, new RegExp(`/docs/${slug}`));
     assert.doesNotMatch(html, /Splinterheart|href="\/games/i);
     assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
