@@ -26,7 +26,7 @@ export default function Home() {
           <ArrowLink href="/games/splinterheart">Enter Splinterheart</ArrowLink>
           <ArrowLink href="/sdk">Explore the technology</ArrowLink>
         </div>
-        <MediaPlaceholder slot="HOME_HERO" ratio="4 / 5" tone="pink" className="home-hero__media">
+        <MediaPlaceholder slot="HOME_HERO" ratio="4 / 5" tone="turquoise" className="home-hero__media">
           <span className="placeholder-title">Splinterheart</span>
           <span className="placeholder-note">Final key art pending</span>
         </MediaPlaceholder>

@@ -226,6 +226,8 @@ test("renders a no-store, noindex password screen", async () => {
   const html = await response.text();
   assert.match(html, /Step inside/);
   assert.match(html, /name="return_to" type="hidden" value="\/sdk"/);
+  assert.match(html, /#069d9f/i);
+  assert.doesNotMatch(html, /#ff3fa6/i);
 });
 
 test("rejects an incorrect preview password", async () => {

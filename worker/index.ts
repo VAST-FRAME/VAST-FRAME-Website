@@ -103,7 +103,7 @@ function accessPage(returnTo: string, invalid = false): Response {
     :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; background: #0d0d10; color: #ededf1; }
     * { box-sizing: border-box; }
     body { min-height: 100svh; margin: 0; display: grid; grid-template-columns: minmax(5rem, 0.32fr) minmax(0, 1fr); background: #0d0d10; }
-    .brand { display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; border-right: 1px solid #303038; color: #ff3fa6; font: 900 clamp(2.5rem, 6vw, 6rem)/0.8 Arial, sans-serif; letter-spacing: -0.09em; writing-mode: vertical-rl; transform: rotate(180deg); }
+    .brand { display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; border-right: 1px solid #303038; color: #069d9f; font: 900 clamp(2.5rem, 6vw, 6rem)/0.8 Arial, sans-serif; letter-spacing: -0.09em; writing-mode: vertical-rl; transform: rotate(180deg); }
     main { display: grid; place-items: center; padding: clamp(1.5rem, 5vw, 5rem); }
     section { width: min(100%, 38rem); }
     .kicker { margin: 0 0 2rem; color: #9999a2; font: 0.68rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -112,9 +112,9 @@ function accessPage(returnTo: string, invalid = false): Response {
     form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.65rem; }
     label { grid-column: 1 / -1; color: #9999a2; font: 0.62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; }
     input { min-width: 0; min-height: 3.25rem; padding: 0 1rem; border: 1px solid #4a4a54; border-radius: 0; background: #15151a; color: #fff; font: inherit; }
-    input:focus { outline: 2px solid #ff3fa6; outline-offset: 2px; }
-    button { min-height: 3.25rem; padding: 0 1.25rem; border: 1px solid #ff3fa6; background: #ff3fa6; color: #0d0d10; font: 800 0.65rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; }
-    .error { margin: 1rem 0 0; color: #ff9bcf; font-size: 0.8rem; }
+    input:focus { outline: 2px solid #069d9f; outline-offset: 2px; }
+    button { min-height: 3.25rem; padding: 0 1.25rem; border: 1px solid #069d9f; background: #069d9f; color: #0d0d10; font: 800 0.65rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer; }
+    .error { margin: 1rem 0 0; color: #82e7e8; font-size: 0.8rem; }
     .note { margin: 2rem 0 0; color: #6f6f78; font: 0.6rem/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; }
     @media (max-width: 620px) {
       body { grid-template-columns: 1fr; }

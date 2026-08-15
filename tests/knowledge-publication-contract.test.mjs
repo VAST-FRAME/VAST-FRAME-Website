@@ -5,6 +5,12 @@ import test from "node:test";
 
 const root = path.resolve(import.meta.dirname, "..");
 
+test("the visual system uses Bright Bluish Green as its accent", async () => {
+  const css = await readFile(path.join(root, "app/globals.css"), "utf8");
+  assert.match(css, /--turquoise:\s*#069d9f/i);
+  assert.doesNotMatch(css, /pink|#ff3eab|#d60877/i);
+});
+
 test("public documentation reads only immutable published revisions", async () => {
   const source = await readFile(path.join(root, "lib/knowledge/public.ts"), "utf8");
   assert.match(source, /spaces\.visibility = 'public'/);

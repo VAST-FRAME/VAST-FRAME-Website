@@ -23,7 +23,7 @@ export default function GamesPage() {
         <p>We announce facts when they are useful to players—not to fill a calendar.</p>
       </section>
       <section className="game-feature section-rule">
-        <MediaPlaceholder slot="SPLINTERHEART_GAME_INDEX" ratio="16 / 10" tone="pink" />
+        <MediaPlaceholder slot="SPLINTERHEART_GAME_INDEX" ratio="16 / 10" tone="turquoise" />
         <div className="game-feature__copy">
           <p className="eyebrow">01 / {splinterheart.status}</p>
           <h2 className="display display--section">{splinterheart.name}</h2>

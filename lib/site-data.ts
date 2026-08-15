@@ -1,4 +1,4 @@
-export type MediaTone = "neutral" | "pink" | "checker";
+export type MediaTone = "neutral" | "turquoise" | "checker";
 
 export const publicNavigation = [
   { href: "/", label: "Home" },
