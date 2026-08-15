@@ -9,15 +9,36 @@ export const metadata: Metadata = {
     "Rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
 };
 
+const homeCaptures = {
+  threshold: {
+    slot: "THRESHOLD_MATERIAL_RESPONSE_HOME",
+    title: "BRDF and subsurface material study",
+    tone: "neutral",
+  },
+  atrium: {
+    slot: "ATRIUM_CELESTIAL_FIELD_HOME",
+    title: "Atmosphere and celestial field",
+    tone: "checker",
+  },
+  eclipse: {
+    slot: "ECLIPSE_UV_PIPELINE_HOME",
+    title: "Scene preparation and UV output",
+    tone: "turquoise",
+  },
+  causality: {
+    slot: "CAUSALITY_PROPAGATION_HOME",
+    title: "Energy and fire propagation",
+    tone: "neutral",
+  },
+} as const;
+
 export default function Home() {
   return (
     <PublicShell active="/">
       <section className="home-hero frame-grid">
-        <p className="eyebrow home-hero__eyebrow">VASTFRAME / Technology studio</p>
+        <p className="eyebrow home-hero__eyebrow">VASTFRAME / Unity technology</p>
         <h1 className="display home-hero__title">
-          Real-time systems.
-          <br />
-          <em>Built together.</em>
+          Cutting-edge tech for Unity.
         </h1>
         <p className="home-hero__intro">
           VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.
@@ -26,21 +47,11 @@ export default function Home() {
           <ArrowLink href="/sdk">Explore the SDK</ArrowLink>
           <ArrowLink href="/docs">Read the documentation</ArrowLink>
         </div>
-        <MediaPlaceholder slot="SDK_SYSTEMS_HERO" ratio="4 / 5" tone="turquoise" className="home-hero__media">
+        <MediaPlaceholder slot="SDK_INTEGRATED_STACK_HERO" ratio="21 / 9" tone="checker" className="home-hero__media">
           <span className="placeholder-title">Threshold / Atrium / Eclipse / Causality</span>
-          <span className="placeholder-note">Technical capture pending</span>
+          <span className="placeholder-note">Wide production scene / all four systems visible in one frame</span>
         </MediaPlaceholder>
         <p className="home-hero__index mono">VF / 001</p>
-      </section>
-
-      <section className="manifesto frame-grid section-rule">
-        <p className="eyebrow">The studio</p>
-        <p className="manifesto__statement">
-          We build foundational technology for worlds that need more than off-the-shelf answers.
-        </p>
-        <p className="manifesto__aside">
-          Threshold, Atrium, Eclipse, and Causality are developed as one production stack.
-        </p>
       </section>
 
       <section className="technology section-rule">
@@ -53,13 +64,20 @@ export default function Home() {
           {sdkProducts.map((product) => (
             <article className="product-tile" key={product.name}>
               <span className="mono product-tile__index">{product.index}</span>
+              <MediaPlaceholder
+                slot={homeCaptures[product.slug].slot}
+                ratio="4 / 3"
+                tone={homeCaptures[product.slug].tone}
+                className="product-tile__media"
+              >
+                <span className="placeholder-kicker">{homeCaptures[product.slug].title}</span>
+              </MediaPlaceholder>
               <span className="eyebrow">{product.kind}</span>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
             </article>
           ))}
         </div>
-        <div className="section-action"><ArrowLink href="/sdk">Explore the SDK</ArrowLink></div>
       </section>
     </PublicShell>
   );

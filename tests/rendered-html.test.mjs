@@ -28,14 +28,22 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   const html = await response.text();
 
   assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
-  assert.match(html, /Real-time systems/);
-  assert.match(html, /Built together/);
+  assert.match(html, /Cutting-edge tech for Unity/i);
+  assert.match(html, /VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
   assert.match(html, /Atrium/);
   assert.match(html, /Causality/);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
-  assert.match(html, /SDK_SYSTEMS_HERO/);
+  assert.match(html, /SDK_INTEGRATED_STACK_HERO/);
+  for (const slot of [
+    "THRESHOLD_MATERIAL_RESPONSE_HOME",
+    "ATRIUM_CELESTIAL_FIELD_HOME",
+    "ECLIPSE_UV_PIPELINE_HOME",
+    "CAUSALITY_PROPAGATION_HOME",
+  ]) {
+    assert.match(html, new RegExp(slot));
+  }
   assert.match(html, /aria-label="SDK navigation"/i);
   for (const href of ["/sdk", "/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
@@ -43,7 +51,15 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
+  assert.doesNotMatch(html, /off-the-shelf answers|The studio/i);
   assert.doesNotMatch(html, /devlog|publishing|Splinterheart|Worlds with weight|News, when there is news|Independent games|href="\/games/i);
+});
+
+test("uses one safe line-height for oversized display headings", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /--display-leading:\s*0\.86/);
+  assert.match(css, /\.display\s*\{[^}]*line-height:\s*var\(--display-leading\)/s);
+  assert.doesNotMatch(css, /line-height:\s*0\.79/);
 });
 
 test("hides the Games index from anonymous visitors", async () => {
