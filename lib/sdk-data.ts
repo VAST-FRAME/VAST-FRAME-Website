@@ -15,6 +15,8 @@ export type SdkProduct = {
   name: string;
   description: string;
   statement: string;
+  previewVideo: string;
+  previewPoster?: string;
   capabilities: ReadonlyArray<{ title: string; items: readonly string[] }>;
   media: readonly ShowcaseMedia[];
 };
@@ -26,6 +28,7 @@ export const sdkProducts: readonly SdkProduct[] = [
     name: "Threshold",
     description: "A high-fidelity renderer for authored light, responsive materials, reflection, geometry, and spatial depth.",
     statement: "Make every light source, surface, and shadow carry its weight.",
+    previewVideo: "/media/threshold-preview.mp4",
     capabilities: [
       { title: "Shadow architecture", items: ["PCSS shadows", "Shadow caching", "Indirect and contact shadows", "Ray-traced shadow paths"] },
       { title: "Lighting and GI", items: ["GTAO", "Light probes and APV", "Directional lightmap specular", "Analytic local GI", "Shadowed area lights"] },
@@ -47,6 +50,8 @@ export const sdkProducts: readonly SdkProduct[] = [
     name: "Atrium",
     description: "A physically based atmosphere and celestial renderer for skies that behave like part of the world.",
     statement: "The world does not stop at the horizon.",
+    previewVideo: "/media/atrium-aurora.mp4",
+    previewPoster: "/media/atrium-aurora-poster.png",
     capabilities: [
       { title: "Atmosphere", items: ["Physically based sky rendering", "Aerial perspective", "Continuous time-of-day response"] },
       { title: "Celestial field", items: ["Sun, moon, and celestial bodies", "Milky Way rendering", "Astronomical light direction"] },
@@ -67,6 +72,8 @@ export const sdkProducts: readonly SdkProduct[] = [
     name: "Eclipse",
     description: "Production infrastructure for baking, visibility, packing, and streaming large authored spaces.",
     statement: "Build the scene once. Let the pipeline carry it.",
+    previewVideo: "/media/atrium-aurora.mp4",
+    previewPoster: "/media/atrium-aurora-poster.png",
     capabilities: [
       { title: "Scene preparation", items: ["Scene processing pipeline", "Deterministic production passes", "Validation-oriented outputs"] },
       { title: "Lighting production", items: ["Integrated lightmapper", "Directional bake data", "Iteration-focused bake workflow"] },
@@ -87,6 +94,7 @@ export const sdkProducts: readonly SdkProduct[] = [
     name: "Causality",
     description: "A systemic simulation framework for energy, fire, air, surfaces, objects, and characters.",
     statement: "A world is convincing when one change can become another.",
+    previewVideo: "/media/causality-preview.mp4",
     capabilities: [
       { title: "Energy", items: ["Electric arc simulation", "Conductive path response", "Energy-driven interactions"] },
       { title: "Fire", items: ["Fire propagation", "Material-aware response", "Heat and ignition state"] },

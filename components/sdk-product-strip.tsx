@@ -128,10 +128,10 @@ export function SdkProductStrip({ activeSlug }: { activeSlug?: string }) {
                 loop
                 playsInline
                 preload="metadata"
-                poster="/media/atrium-aurora-poster.png"
+                poster={product.previewPoster}
                 aria-hidden="true"
               >
-                <source src="/media/atrium-aurora.mp4" type="video/mp4" />
+                <source src={product.previewVideo} type="video/mp4" />
               </video>
             </div>
             <h3>{product.name}</h3>
