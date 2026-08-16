@@ -39,13 +39,6 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.match(html, /Causality/);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   assert.doesNotMatch(html, /SDK_INTEGRATED_STACK_HERO|Four systems\. One stack\./i);
-  for (const slot of [
-    "THRESHOLD_MATERIAL_RESPONSE_NAV",
-    "ECLIPSE_UV_PIPELINE_NAV",
-    "CAUSALITY_PROPAGATION_NAV",
-  ]) {
-    assert.match(html, new RegExp(slot));
-  }
   assert.match(html, /atrium-aurora\.mp4/);
   assert.match(html, /aria-label="Primary navigation"/i);
   for (const href of ["/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
@@ -124,12 +117,12 @@ test("gives every SDK product card its named color identity", async () => {
 
   for (const product of ["threshold", "atrium", "eclipse", "causality"]) {
     assert.match(html, new RegExp(`product-tile product-tile--${product}`));
-    if (product === "atrium") assert.match(html, /product-tile__motion/);
-    else assert.match(html, new RegExp(`media-placeholder--${product}`));
   }
+
+  assert.equal((html.match(/product-tile__motion/g) ?? []).length, 4);
 });
 
-test("uses the Atrium aurora clip as an accessible hover preview", async () => {
+test("uses one-at-a-time hover and mobile viewport video previews", async () => {
   const html = await (await render()).text();
   const source = await readFile(new URL("../components/sdk-product-strip.tsx", import.meta.url), "utf8");
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
@@ -139,6 +132,11 @@ test("uses the Atrium aurora clip as an accessible hover preview", async () => {
   assert.match(html, /src="\/media\/atrium-aurora\.mp4"/i);
   assert.match(source, /onMouseEnter=\{\(\) => playPreview\(product\.slug\)\}/);
   assert.match(source, /onFocus=\{\(\) => playPreview\(product\.slug\)\}/);
+  assert.match(source, /new IntersectionObserver/);
+  assert.match(source, /intersectionRatio/);
+  assert.match(source, />= 0\.6/);
+  assert.match(source, /pointer: coarse/);
+  assert.match(source, /connection\?\.saveData/);
   assert.match(source, /prefers-reduced-motion: reduce/);
   assert.match(css, /\.product-tile__motion video\s*\{[^}]*object-fit:\s*cover[^}]*object-position:\s*48% 50%/s);
 });
@@ -216,7 +214,7 @@ for (const [slug, name, slot] of [
     assert.match(html, /Rendering showcase/);
     assert.match(html, /class="product-strip product-strip--navigation"/);
     assert.match(html, /aria-label="SDK products"/);
-    assert.match(html, new RegExp(`href="/sdk/${slug}" aria-current="page"`));
+    assert.match(html, new RegExp(`href="/sdk/${slug}"[^>]*aria-current="page"`));
     assert.ok(html.indexOf('class="technology-hero frame-grid"') < html.indexOf('class="product-strip product-strip--navigation"'));
     assert.ok(html.indexOf('class="product-strip product-strip--navigation"') < html.indexOf('class="technology-lead-media"'));
     assert.doesNotMatch(html, /technology-subnav|technology-next|Made for|real worlds/i);

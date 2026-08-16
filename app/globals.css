@@ -331,7 +331,7 @@ button, input, textarea, select { font: inherit; }
   object-position: 48% 50%;
   transition: filter 220ms ease;
 }
-.product-tile--atrium:is(:hover, :focus-visible) .product-tile__motion video {
+.product-tile:is(:hover, :focus-visible) .product-tile__motion video {
   filter: saturate(1.12) contrast(1.04);
 }
 .product-tile h3 { margin: 1rem 0; color: var(--product-accent); font-family: var(--condensed); font-size: clamp(2rem, 15cqi, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
