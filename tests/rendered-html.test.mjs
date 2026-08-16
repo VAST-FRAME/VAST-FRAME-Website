@@ -36,7 +36,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.match(html, /Atrium/);
   assert.match(html, /Causality/);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
-  assert.match(html, /SDK_INTEGRATED_STACK_HERO/);
+  assert.doesNotMatch(html, /SDK_INTEGRATED_STACK_HERO|Four systems\. One stack\./i);
   for (const slot of [
     "THRESHOLD_MATERIAL_RESPONSE_NAV",
     "ATRIUM_CELESTIAL_FIELD_NAV",
@@ -61,7 +61,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.match(html, /Made for/);
   assert.match(html, /real worlds/i);
   assert.equal((homeSource.match(/Read the documentation/gi) ?? []).length, 1);
-  assert.doesNotMatch(homeSource, /home-hero__actions/);
+  assert.doesNotMatch(homeSource, /home-hero|MediaPlaceholder/);
 });
 
 test("uses one safe line-height for oversized display headings", async () => {
@@ -77,14 +77,13 @@ test("keeps emphasized display text in the surrounding typeface", async () => {
   assert.match(css, /\.technology-proof h2 em\s*\{[^}]*font-family:\s*inherit[^}]*font-style:\s*italic/s);
 });
 
-test("keeps the home hero and media typography collision-safe across aspect ratios", async () => {
+test("keeps product titles at the Home heading scale without forced clipping", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
-  assert.match(css, /\.home-hero__title\s*\{[^}]*grid-column:\s*1\s*\/\s*13[^}]*grid-row:\s*2/s);
-  assert.doesNotMatch(css, /\.home-hero__actions/);
+  assert.match(css, /\.display--section\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)/s);
+  assert.match(css, /\.technology-hero__title\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)[^}]*white-space:\s*normal/s);
+  assert.doesNotMatch(css, /\.home-hero/);
   assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);
-  assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*16\s*\/\s*9\s*!important/s);
-  assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*4\s*\/\s*3\s*!important/s);
 });
 
 test("keeps public sections free of ornamental labels and frame borders", async () => {
@@ -379,7 +378,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(response.headers.get("vary"), /RSC/i);
   assert.match(response.headers.get("vary"), /Cookie/i);
-  assert.match(await response.text(), /Four systems\. One stack\./i);
+  assert.match(await response.text(), /Cutting-edge tech for Unity\./i);
 });
 
 test("rejects cross-site preview unlock submissions", async () => {
