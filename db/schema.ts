@@ -17,6 +17,130 @@ export const studioMembers = sqliteTable(
   (table) => [uniqueIndex("idx_studio_members_email").on(table.email)],
 );
 
+export const commercialProducts = sqliteTable("commercial_products", {
+  key: text("key").primaryKey(),
+  name: text("name").notNull(),
+  availability: text("availability", { enum: ["development", "available", "planned", "retired"] }).notNull(),
+  priceLabel: text("price_label").notNull(),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const customerUsers = sqliteTable(
+  "customer_users",
+  {
+    id: text("id").primaryKey(),
+    email: text("email").notNull(),
+    displayName: text("display_name").notNull(),
+    lastSeenAt: text("last_seen_at"),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [uniqueIndex("idx_customer_users_email").on(table.email)],
+);
+
+export const customerOrganizations = sqliteTable("customer_organizations", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const customerOrganizationMemberships = sqliteTable(
+  "customer_organization_memberships",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id").notNull(),
+    userId: text("user_id").notNull(),
+    role: text("role", { enum: ["owner", "admin", "member"] }).notNull(),
+    status: text("status", { enum: ["invited", "active", "disabled"] }).notNull(),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [
+    uniqueIndex("idx_customer_memberships_organization_user").on(table.organizationId, table.userId),
+    index("idx_customer_memberships_user_status").on(table.userId, table.status),
+  ],
+);
+
+export const productLicenses = sqliteTable(
+  "product_licenses",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id").notNull(),
+    productKey: text("product_key").notNull(),
+    state: text("state", { enum: ["active", "refunded", "revoked"] }).notNull(),
+    assignmentStatus: text("assignment_status", { enum: ["unassigned", "development", "released"] }).notNull(),
+    assignedTitle: text("assigned_title"),
+    purchasedAt: text("purchased_at").notNull(),
+    updatesEndAt: text("updates_end_at").notNull(),
+    releasedAt: text("released_at"),
+    externalOrderId: text("external_order_id"),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [
+    index("idx_product_licenses_organization_state").on(table.organizationId, table.state),
+    index("idx_product_licenses_product_state").on(table.productKey, table.state),
+  ],
+);
+
+export const productReleases = sqliteTable(
+  "product_releases",
+  {
+    id: text("id").primaryKey(),
+    productKey: text("product_key").notNull(),
+    version: text("version").notNull(),
+    channel: text("channel", { enum: ["stable", "preview"] }).notNull(),
+    status: text("status", { enum: ["draft", "published", "withdrawn"] }).notNull(),
+    unityVersion: text("unity_version").notNull(),
+    filename: text("filename").notNull(),
+    objectKey: text("object_key").notNull(),
+    contentType: text("content_type").notNull().default("application/gzip"),
+    sizeBytes: integer("size_bytes").notNull(),
+    checksumSha256: text("checksum_sha256").notNull(),
+    releaseNotes: text("release_notes").notNull().default(""),
+    publishedAt: text("published_at"),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [
+    uniqueIndex("idx_product_releases_product_version_channel").on(table.productKey, table.version, table.channel),
+    index("idx_product_releases_product_status_published").on(table.productKey, table.status, table.publishedAt),
+  ],
+);
+
+export const customerOrders = sqliteTable(
+  "customer_orders",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id").notNull(),
+    provider: text("provider").notNull(),
+    externalOrderId: text("external_order_id").notNull(),
+    status: text("status", { enum: ["pending", "paid", "refunded", "failed"] }).notNull(),
+    amountMinor: integer("amount_minor").notNull(),
+    currency: text("currency").notNull(),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [
+    uniqueIndex("idx_customer_orders_provider_external").on(table.provider, table.externalOrderId),
+    index("idx_customer_orders_organization_created").on(table.organizationId, table.createdAt),
+  ],
+);
+
+export const productDownloadEvents = sqliteTable(
+  "product_download_events",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id").notNull(),
+    userId: text("user_id").notNull(),
+    releaseId: text("release_id").notNull(),
+    createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => [index("idx_product_download_events_organization_created").on(table.organizationId, table.createdAt)],
+);
+
 export const loreEntries = sqliteTable(
   "lore_entries",
   {

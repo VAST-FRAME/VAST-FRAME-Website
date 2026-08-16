@@ -15,6 +15,13 @@
       "when": 1786823386965,
       "tag": "0001_dapper_cardiac",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1786892912695,
+      "tag": "0002_good_rocket_raccoon",
+      "breakpoints": true
     }
   ]
 }

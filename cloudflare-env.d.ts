@@ -24,9 +24,20 @@ interface Fetcher {
   fetch(request: Request): Promise<Response>;
 }
 
+interface R2ObjectBody {
+  body: ReadableStream;
+  httpEtag: string;
+  writeHttpMetadata(headers: Headers): void;
+}
+
+interface R2Bucket {
+  get(key: string): Promise<R2ObjectBody | null>;
+}
+
 declare module "cloudflare:workers" {
   export const env: {
     DB: D1Database;
+    PRODUCTS: R2Bucket;
     ASSETS: Fetcher;
     WORKBENCH_BOOTSTRAP_EMAIL?: string;
   };

@@ -61,18 +61,47 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(homeSource, /home-hero|MediaPlaceholder/);
 });
 
-test("uses four direct primary navigation links without an SDK submenu", async () => {
+test("uses direct public navigation without an SDK submenu", async () => {
   const html = await (await render()).text();
 
   assert.match(
     html,
-    /aria-label="Primary navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>/i,
+    /aria-label="Primary navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
   );
   assert.match(
     html,
-    /aria-label="Mobile navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>/i,
+    /aria-label="Mobile navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
   );
   assert.doesNotMatch(html, /sdk-nav|mobile-sdk-nav|>SDK\s*\+?<\/|SDK navigation/i);
+});
+
+test("presents four independently licensed products with the shipping terms", async () => {
+  const response = await render("/pricing");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  for (const product of ["Threshold", "Atrium", "Eclipse", "Causality"]) {
+    assert.match(html, new RegExp(`<h2>${product}</h2>`, "i"));
+  }
+  assert.match(html, /Perpetual license/i);
+  assert.match(html, /Two years of updates/i);
+  assert.match(html, /One shipped product/i);
+  assert.match(html, /Unlimited internal (?:R&amp;D|use)/i);
+  assert.match(html, /licensed independently/i);
+  assert.match(html, /does not change the price/i);
+  assert.doesNotMatch(html, /bundle|discount/i);
+});
+
+test("redirects anonymous customer account visitors to secure sign-in", async () => {
+  const response = await render("/account");
+  assert.equal(response.status, 307);
+  assert.match(response.headers.get("location") ?? "", /^\/signin-with-chatgpt\?return_to=%2Faccount$/);
+});
+
+test("rejects anonymous product download requests", async () => {
+  const response = await render("/api/account/downloads/release-test");
+  assert.equal(response.status, 401);
+  assert.match(await response.text(), /Authentication required/i);
 });
 
 test("uses one safe line-height for oversized display headings", async () => {

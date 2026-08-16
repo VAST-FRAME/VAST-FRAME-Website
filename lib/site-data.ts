@@ -10,8 +10,10 @@ export type MediaTone =
 export const publicNavigation = [
   { href: "/", label: "Main" },
   { href: "/docs", label: "Docs" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/jobs", label: "Jobs" },
   { href: "/contact", label: "Contact" },
+  { href: "/account", label: "Account" },
 ] as const;
 
 export const splinterheart = {
