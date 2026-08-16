@@ -94,6 +94,17 @@ test("keeps product titles at the Home heading scale without forced clipping", a
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);
 });
 
+test("gives every SDK product card the same track and content geometry", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.product-strip\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.match(css, /\.product-tile\s*\{[^}]*min-width:\s*0[^}]*container-type:\s*inline-size/s);
+  assert.match(css, /\.product-tile h3\s*\{[^}]*font-size:\s*clamp\(2rem,\s*15cqi,\s*4\.75rem\)/s);
+  assert.match(css, /\.product-tile:not\(:last-child\)::after\s*\{[^}]*position:\s*absolute[^}]*width:\s*1px/s);
+  assert.doesNotMatch(css, /\.product-tile\s*\{[^}]*border-right:\s*1px/s);
+  assert.match(css, /@media \(max-width:\s*900px\)[\s\S]*?\.product-strip\s*\{[^}]*repeat\(2,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.doesNotMatch(css, /\.product-strip\s*\{[^}]*repeat\(4,\s*1fr\)/s);
+});
+
 test("keeps public sections free of ornamental labels and frame borders", async () => {
   const home = await (await render()).text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
