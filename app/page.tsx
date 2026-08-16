@@ -1,35 +1,12 @@
 import type { Metadata } from "next";
 import { ArrowLink, PublicShell } from "@/components/public-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
-import { sdkProducts } from "@/lib/site-data";
+import { SdkProductStrip } from "@/components/sdk-product-strip";
 
 export const metadata: Metadata = {
   title: { absolute: "VASTFRAME — Real-Time Technology Studio" },
   description: "Integrated real-time technology for Unity.",
 };
-
-const homeCaptures = {
-  threshold: {
-    slot: "THRESHOLD_MATERIAL_RESPONSE_HOME",
-    title: "BRDF and subsurface material study",
-    tone: "neutral",
-  },
-  atrium: {
-    slot: "ATRIUM_CELESTIAL_FIELD_HOME",
-    title: "Atmosphere and celestial field",
-    tone: "checker",
-  },
-  eclipse: {
-    slot: "ECLIPSE_UV_PIPELINE_HOME",
-    title: "Scene preparation and UV output",
-    tone: "turquoise",
-  },
-  causality: {
-    slot: "CAUSALITY_PROPAGATION_HOME",
-    title: "Energy and fire propagation",
-    tone: "neutral",
-  },
-} as const;
 
 export default function Home() {
   return (
@@ -51,26 +28,13 @@ export default function Home() {
         <div className="section-heading frame-grid">
           <h2 className="display display--section">Four systems. One stack.</h2>
         </div>
-        <div className="product-strip">
-          {sdkProducts.map((product) => (
-            <a className="product-tile" href={`/sdk/${product.slug}`} key={product.name}>
-              <MediaPlaceholder
-                slot={homeCaptures[product.slug].slot}
-                ratio="4 / 3"
-                tone={homeCaptures[product.slug].tone}
-                className="product-tile__media"
-              >
-                <span className="placeholder-kicker">{homeCaptures[product.slug].title}</span>
-              </MediaPlaceholder>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <span className="arrow-link product-tile__link">
-                <span>Explore {product.name}</span>
-                <span aria-hidden="true">↗</span>
-              </span>
-            </a>
-          ))}
-        </div>
+        <SdkProductStrip />
+      </section>
+
+      <section className="technology-proof frame-grid section-rule">
+        <h2>Made for<br /><em>real worlds.</em></h2>
+        <p>The SDK exists to solve production problems encountered in complex real-time projects. Each system is designed to work as part of one coherent stack.</p>
+        <ArrowLink href="/docs">Read the documentation</ArrowLink>
       </section>
     </PublicShell>
   );

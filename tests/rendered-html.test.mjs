@@ -37,10 +37,10 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   assert.match(html, /SDK_INTEGRATED_STACK_HERO/);
   for (const slot of [
-    "THRESHOLD_MATERIAL_RESPONSE_HOME",
-    "ATRIUM_CELESTIAL_FIELD_HOME",
-    "ECLIPSE_UV_PIPELINE_HOME",
-    "CAUSALITY_PROPAGATION_HOME",
+    "THRESHOLD_MATERIAL_RESPONSE_NAV",
+    "ATRIUM_CELESTIAL_FIELD_NAV",
+    "ECLIPSE_UV_PIPELINE_NAV",
+    "CAUSALITY_PROPAGATION_NAV",
   ]) {
     assert.match(html, new RegExp(slot));
   }
@@ -57,6 +57,8 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, /Snowfall|Backrooms/i);
   assert.doesNotMatch(html, /off-the-shelf answers|The studio/i);
   assert.doesNotMatch(html, /devlog|publishing|Splinterheart|Worlds with weight|News, when there is news|Independent games|href="\/games/i);
+  assert.match(html, /Made for/);
+  assert.match(html, /real worlds/i);
 });
 
 test("uses one safe line-height for oversized display headings", async () => {
@@ -150,8 +152,10 @@ for (const [slug, name, slot] of [
     assert.match(html, new RegExp(name));
     assert.match(html, new RegExp(slot));
     assert.match(html, /Rendering showcase/);
-    assert.match(html, /class="technology-subnav"/);
-    assert.match(html, /aria-label="SDK product navigation"/);
+    assert.match(html, /class="product-strip product-strip--navigation"/);
+    assert.match(html, /aria-label="SDK products"/);
+    assert.match(html, new RegExp(`href="/sdk/${slug}" aria-current="page"`));
+    assert.doesNotMatch(html, /technology-subnav|technology-next|Made for|real worlds/i);
     assert.doesNotMatch(html, /Every image has a job|production capture briefs|decorative boxes/i);
     assert.match(html, new RegExp(`/docs/${slug}`));
     assert.doesNotMatch(html, /Splinterheart|href="\/games/i);

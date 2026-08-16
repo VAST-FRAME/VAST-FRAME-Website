@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { ArrowLink, PublicShell } from "@/components/public-shell";
+import { SdkProductStrip } from "@/components/sdk-product-strip";
 import { getSdkProduct, sdkProducts } from "@/lib/sdk-data";
-import { sdkNavigation } from "@/lib/site-data";
 
 type ProductPageProps = { params: Promise<{ product: string }> };
 
@@ -29,13 +29,7 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
   return (
     <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
-        <nav className="technology-subnav" aria-label="SDK product navigation">
-          {sdkNavigation.map((item) => (
-            <a href={item.href} aria-current={item.href === `/sdk/${product.slug}` ? "page" : undefined} key={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <SdkProductStrip activeSlug={product.slug} />
 
         <header className="technology-hero frame-grid">
           <p className="mono technology-hero__kind">{product.kind}</p>
@@ -89,19 +83,6 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
           </div>
         </section>
 
-        <section className="technology-proof frame-grid section-rule">
-          <h2>Made for<br /><em>real worlds.</em></h2>
-          <p>The SDK exists to solve production problems encountered in complex real-time projects. Each system is designed to work as part of one coherent stack.</p>
-          <ArrowLink href={`/docs/${product.slug}`}>Read the documentation</ArrowLink>
-        </section>
-
-        <nav className="technology-next section-rule" aria-label="SDK products">
-          {sdkProducts.map((item) => (
-            <a href={`/sdk/${item.slug}`} aria-current={item.slug === product.slug ? "page" : undefined} key={item.slug}>
-              <strong>{item.name}</strong><small>{item.kind}</small>
-            </a>
-          ))}
-        </nav>
       </article>
     </PublicShell>
   );
