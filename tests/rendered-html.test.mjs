@@ -30,6 +30,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
 
   assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
   assert.match(html, /Cutting-edge tech for Unity/i);
+  assert.match(html, /VASTFRAME SDK/i);
   assert.doesNotMatch(html, /VASTFRAME builds rendering|Rendering, atmosphere, scene processing, and simulation/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
@@ -60,7 +61,9 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, /devlog|publishing|Splinterheart|Worlds with weight|News, when there is news|Independent games|href="\/games/i);
   assert.match(html, /Made for/);
   assert.match(html, /real worlds/i);
-  assert.equal((homeSource.match(/Read the documentation/gi) ?? []).length, 1);
+  assert.match(html, /class="technology-hero frame-grid technology-hero--overview"/);
+  assert.ok(html.indexOf('class="technology-hero frame-grid technology-hero--overview"') < html.indexOf('class="product-strip product-strip--navigation"'));
+  assert.match(html, /technology-hero__actions[\s\S]*Read the documentation/i);
   assert.doesNotMatch(homeSource, /home-hero|MediaPlaceholder/);
 });
 
@@ -81,9 +84,10 @@ test("keeps product titles at the Home heading scale without forced clipping", a
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.display--section\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)/s);
   assert.match(css, /\.technology-hero__title\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)[^}]*white-space:\s*normal/s);
-  assert.match(css, /\.technology-hero\s*\{[^}]*min-height:\s*auto[^}]*align-content:\s*start[^}]*padding-top:\s*clamp\(2rem,\s*4vh,\s*3rem\)/s);
+  assert.match(css, /\.technology-hero\s*\{[^}]*height:\s*clamp\(26\.25rem,\s*38svh,\s*30rem\)[^}]*min-height:\s*0[^}]*align-content:\s*center[^}]*padding-top:\s*clamp\(2rem,\s*4\.5svh,\s*4rem\)/s);
   assert.match(css, /\.technology-hero__statement\s*\{[^}]*font-size:\s*clamp\(1\.75rem,\s*2\.5cqi,\s*3rem\)/s);
   assert.doesNotMatch(css, /\.technology-hero\s*\{[^}]*90svh/s);
+  assert.match(css, /\.product-tile\s*\{[^}]*min-height:\s*clamp\(30rem,\s*50svh,\s*38rem\)/s);
   assert.doesNotMatch(css, /\.home-hero/);
   assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);

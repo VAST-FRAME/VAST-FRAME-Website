@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MediaPlaceholder } from "@/components/media-placeholder";
-import { ArrowLink, PublicShell } from "@/components/public-shell";
+import { PublicShell } from "@/components/public-shell";
+import { SdkHero } from "@/components/sdk-hero";
 import { SdkProductStrip } from "@/components/sdk-product-strip";
 import { getSdkProduct, sdkProducts } from "@/lib/sdk-data";
 
@@ -29,16 +30,13 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
   return (
     <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
-        <header className="technology-hero frame-grid">
-          <p className="mono technology-hero__kind">{product.kind}</p>
-          <h1 className="display technology-hero__title">{product.name}</h1>
-          <p className="technology-hero__statement">{product.statement}</p>
-          <p className="technology-hero__description">{product.description}</p>
-          <div className="technology-hero__actions">
-            <ArrowLink href={`/docs/${product.slug}`}>Read the documentation</ArrowLink>
-            <span className="status-chip">In active development</span>
-          </div>
-        </header>
+        <SdkHero
+          kind={product.kind}
+          title={product.name}
+          statement={product.statement}
+          description={product.description}
+          documentationHref={`/docs/${product.slug}`}
+        />
 
         <SdkProductStrip activeSlug={product.slug} />
 
