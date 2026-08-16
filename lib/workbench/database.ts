@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { gameWikiDocuments } from "@/lib/knowledge/game-wiki-documents";
 import { knowledgeSpaces } from "@/lib/knowledge/model";
 import { sdkDocuments } from "@/lib/knowledge/sdk-documents";
 
@@ -145,8 +146,10 @@ let schemaReady: Promise<void> | null = null;
 async function seedKnowledge(database: D1Database): Promise<void> {
   const seedStatements: D1PreparedStatement[] = knowledgeSpaces.map((space) =>
     database.prepare(
-      `INSERT OR IGNORE INTO knowledge_spaces (id, key, title, description, visibility)
-       VALUES (?1, ?2, ?3, ?4, ?5)`,
+      `INSERT INTO knowledge_spaces (id, key, title, description, visibility)
+       VALUES (?1, ?2, ?3, ?4, ?5)
+       ON CONFLICT(id) DO UPDATE SET key=excluded.key, title=excluded.title,
+         description=excluded.description, visibility=excluded.visibility, updated_at=CURRENT_TIMESTAMP`,
     ).bind(space.id, space.key, space.title, space.description, space.visibility),
   );
 
@@ -167,6 +170,30 @@ async function seedKnowledge(database: D1Database): Promise<void> {
           version_label, publication_status, nav_order, change_kind, authored_by
         ) VALUES (?1, ?2, 1, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, 'published', ?11, 'publish', 'system-seed')`,
       ).bind(`revision-${document.id}-1`, document.id, fullSlug, parent?.id ?? null, document.productKey, document.entryType, document.title, document.summary, document.body, document.versionLabel, document.navOrder),
+    );
+  }
+
+  const wikiDocumentByPath = new Map(
+    gameWikiDocuments.map((document) => [`${document.spaceKey}/${document.slug}`, document]),
+  );
+  const spaceIdByKey = new Map(knowledgeSpaces.map((space) => [space.key, space.id]));
+  for (const document of gameWikiDocuments) {
+    const parent = document.parentSlug
+      ? wikiDocumentByPath.get(`${document.spaceKey}/${document.parentSlug}`)
+      : null;
+    seedStatements.push(
+      database.prepare(
+        `INSERT OR IGNORE INTO knowledge_entries (
+          id, space_id, slug, parent_id, product_key, entry_type, title, summary, body,
+          version_label, publication_status, nav_order, revision, published_revision, created_by, updated_by
+        ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, 'internal', 'draft', ?10, 1, NULL, 'system-seed', 'system-seed')`,
+      ).bind(document.id, spaceIdByKey.get(document.spaceKey), document.slug, parent?.id ?? null, document.projectKey, document.entryType, document.title, document.summary, document.body, document.navOrder),
+      database.prepare(
+        `INSERT OR IGNORE INTO knowledge_entry_revisions (
+          id, entry_id, revision, slug, parent_id, product_key, entry_type, title, summary, body,
+          version_label, publication_status, nav_order, change_kind, authored_by
+        ) VALUES (?1, ?2, 1, ?3, ?4, ?5, ?6, ?7, ?8, ?9, 'internal', 'draft', ?10, 'create', 'system-seed')`,
+      ).bind(`revision-${document.id}-1`, document.id, document.slug, parent?.id ?? null, document.projectKey, document.entryType, document.title, document.summary, document.body, document.navOrder),
     );
   }
 
@@ -215,7 +242,7 @@ export async function getWorkbenchMetrics(): Promise<WorkbenchMetrics> {
   await ensureWorkbenchSchema();
   const database = getD1();
   const [privateEntries, publishedDocs, docDrafts, activeMembers] = await database.batch([
-    database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-splinterheart-lore' AND publication_status != 'archived'"),
+    database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries entries JOIN knowledge_spaces spaces ON spaces.id = entries.space_id WHERE spaces.visibility = 'private' AND entries.publication_status != 'archived'"),
     database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-sdk-docs' AND publication_status = 'published'"),
     database.prepare("SELECT COUNT(*) AS count FROM knowledge_entries WHERE space_id = 'space-sdk-docs' AND publication_status IN ('draft','review')"),
     database.prepare("SELECT COUNT(*) AS count FROM studio_members WHERE status = 'active'"),

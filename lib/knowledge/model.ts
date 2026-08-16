@@ -1,8 +1,22 @@
-export const knowledgeSpaceKeys = ["splinterheart-lore", "sdk-docs"] as const;
+export const knowledgeSpaceKeys = ["splinterheart-lore", "snowfall-lore", "sdk-docs"] as const;
 export type KnowledgeSpaceKey = (typeof knowledgeSpaceKeys)[number];
 export type KnowledgeVisibility = "private" | "public";
 export type PublicationStatus = "draft" | "review" | "published" | "archived";
-export type KnowledgeEntryType = "overview" | "concept" | "guide" | "reference" | "lore";
+export type KnowledgeEntryType =
+  | "overview"
+  | "concept"
+  | "guide"
+  | "reference"
+  | "lore"
+  | "category"
+  | "character"
+  | "enemy"
+  | "weapon"
+  | "location"
+  | "faction"
+  | "story"
+  | "system"
+  | "production";
 
 export type KnowledgeSpace = {
   id: string;
@@ -51,8 +65,15 @@ export const knowledgeSpaces: readonly KnowledgeSpace[] = [
   {
     id: "space-splinterheart-lore",
     key: "splinterheart-lore",
-    title: "Splinterheart lore",
-    description: "Private canon, worldbuilding, narrative, and gameplay knowledge.",
+    title: "Splinterheart wiki",
+    description: "Private characters, enemies, weapons, story, systems, and production knowledge.",
+    visibility: "private",
+  },
+  {
+    id: "space-snowfall-lore",
+    key: "snowfall-lore",
+    title: "Snowfall wiki",
+    description: "Private worldbuilding, narrative, gameplay, and production knowledge for Snowfall.",
     visibility: "private",
   },
   {

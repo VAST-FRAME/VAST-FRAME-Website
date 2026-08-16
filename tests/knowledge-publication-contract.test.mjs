@@ -18,6 +18,30 @@ test("the visual system keeps turquoise for VASTFRAME and assigns each SDK produ
   assert.match(css, /\.technology--causality\s*\{[^}]*var\(--causality\)/s);
 });
 
+test("seeds editable Splinterheart wiki categories and starter articles", async () => {
+  const model = await readFile(path.join(root, "lib/knowledge/model.ts"), "utf8");
+  const documents = await readFile(path.join(root, "lib/knowledge/game-wiki-documents.ts"), "utf8");
+  const database = await readFile(path.join(root, "lib/workbench/database.ts"), "utf8");
+  const workspace = await readFile(path.join(root, "components/knowledge-workspace.tsx"), "utf8");
+
+  assert.match(model, /"splinterheart-lore", "snowfall-lore", "sdk-docs"/);
+  assert.match(model, /title: "Splinterheart wiki"/);
+  assert.match(model, /title: "Snowfall wiki"/);
+  for (const category of ["Characters", "Enemies", "Weapons", "Locations", "Factions", "Story", "Systems", "Production"]) {
+    assert.match(documents, new RegExp(`"${category}"`));
+  }
+  for (const article of ["Block", "Rake", "Inquisitor", "Wraith", "Staple Cannon", "Arc Launcher", "Minigun", "Shotgun", "Fists"]) {
+    assert.match(documents, new RegExp(`title: "${article}"`));
+  }
+  assert.match(documents, /touch points for electrical arcs/i);
+  assert.match(documents, /superheated into shrapnel/i);
+  assert.match(documents, /must be acquired like any other weapon/i);
+  assert.match(database, /INSERT OR IGNORE INTO knowledge_entries/);
+  assert.match(database, /INSERT OR IGNORE INTO knowledge_entry_revisions/);
+  assert.match(workspace, /Splinterheart wiki/);
+  assert.match(workspace, /Snowfall wiki/);
+});
+
 test("public documentation reads only immutable published revisions", async () => {
   const source = await readFile(path.join(root, "lib/knowledge/public.ts"), "utf8");
   assert.match(source, /spaces\.visibility = 'public'/);

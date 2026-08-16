@@ -4,7 +4,7 @@ import { prepareAuditEvent } from "@/lib/workbench/audit";
 import { requireWorkbenchAccess } from "@/lib/workbench/auth";
 import { requireWorkbenchMutation, workbenchFailure } from "@/lib/workbench/http";
 
-const entryTypes = ["overview", "concept", "guide", "reference", "lore"] as const;
+const entryTypes = ["overview", "concept", "guide", "reference", "lore", "category", "character", "enemy", "weapon", "location", "faction", "story", "system", "production"] as const;
 
 export async function GET(request: Request) {
   try {
@@ -34,8 +34,12 @@ export async function POST(request: Request) {
     const title = payload.title?.trim() ?? "";
     const summary = payload.summary?.trim() ?? "";
     const body = payload.body?.trim() ?? "";
-    const entryType = payload.entryType ?? (spaceKey === "sdk-docs" ? "guide" : "lore");
-    const productKey = payload.productKey?.trim() || null;
+    const entryType = payload.entryType ?? (spaceKey === "sdk-docs" ? "guide" : "category");
+    const productKey = spaceKey === "splinterheart-lore"
+      ? "splinterheart"
+      : spaceKey === "snowfall-lore"
+        ? "snowfall"
+        : payload.productKey?.trim() || null;
     const versionLabel = payload.versionLabel?.trim() || (spaceKey === "sdk-docs" ? "0.x / development" : "internal");
     const navOrder = Math.max(0, Math.min(10000, Number(payload.navOrder ?? 100)));
     if (!knowledgeSpaceKeys.includes(spaceKey)) return Response.json({ error: "Choose a valid knowledge space." }, { status: 400 });

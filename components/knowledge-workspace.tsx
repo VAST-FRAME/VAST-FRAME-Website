@@ -6,7 +6,13 @@ import { workbenchMutationHeaders } from "@/lib/workbench/request";
 import type { WorkbenchRole } from "@/lib/workbench/auth";
 
 const products = ["threshold", "atrium", "eclipse", "causality"];
-const entryTypes: KnowledgeEntryType[] = ["overview", "concept", "guide", "reference", "lore"];
+const documentationEntryTypes: KnowledgeEntryType[] = ["overview", "concept", "guide", "reference"];
+const wikiEntryTypes: KnowledgeEntryType[] = ["category", "character", "enemy", "weapon", "location", "faction", "story", "system", "production", "lore"];
+const spaceOptions: ReadonlyArray<{ key: KnowledgeSpaceKey; label: string; title: string; projectKey: string; visibility: string }> = [
+  { key: "splinterheart-lore", label: "Splinterheart", title: "Splinterheart wiki", projectKey: "splinterheart", visibility: "Always private" },
+  { key: "snowfall-lore", label: "Snowfall", title: "Snowfall wiki", projectKey: "snowfall", visibility: "Always private" },
+  { key: "sdk-docs", label: "Public docs", title: "SDK documentation", projectKey: "threshold", visibility: "Published is public" },
+];
 
 type Editor = {
   id: string | null; title: string; summary: string; body: string; productKey: string; entryType: KnowledgeEntryType;
@@ -14,7 +20,8 @@ type Editor = {
 };
 
 function emptyEditor(space: KnowledgeSpaceKey): Editor {
-  return { id: null, title: "", summary: "", body: "", productKey: space === "sdk-docs" ? "threshold" : "splinterheart", entryType: space === "sdk-docs" ? "guide" : "lore", versionLabel: space === "sdk-docs" ? "0.x / development" : "internal", navOrder: 100, parentId: "", expectedRevision: 0, publicationStatus: "draft" };
+  const option = spaceOptions.find((candidate) => candidate.key === space) ?? spaceOptions[0];
+  return { id: null, title: "", summary: "", body: "", productKey: option.projectKey, entryType: space === "sdk-docs" ? "guide" : "category", versionLabel: space === "sdk-docs" ? "0.x / development" : "internal", navOrder: 100, parentId: "", expectedRevision: 0, publicationStatus: "draft" };
 }
 
 export function KnowledgeWorkspace({ role }: { role: WorkbenchRole }) {
@@ -31,6 +38,8 @@ export function KnowledgeWorkspace({ role }: { role: WorkbenchRole }) {
   const [saving, setSaving] = useState(false);
   const canWrite = role !== "viewer";
   const canPublish = role === "admin" || role === "editor";
+  const activeSpace = spaceOptions.find((option) => option.key === space) ?? spaceOptions[0];
+  const parentTitles = useMemo(() => new Map(entries.map((entry) => [entry.id, entry.title])), [entries]);
 
   const loadEntries = useCallback(async (nextSpace: KnowledgeSpaceKey) => {
     setLoading(true);
@@ -137,16 +146,16 @@ export function KnowledgeWorkspace({ role }: { role: WorkbenchRole }) {
   return (
     <div className="knowledge-workspace">
       <aside className="knowledge-browser">
-        <header><div><span className="workbench-kicker">Knowledge space</span><strong>{space === "sdk-docs" ? "SDK documentation" : "Splinterheart lore"}</strong></div>{canWrite ? <button type="button" onClick={() => { setEditor(emptyEditor(space)); setRevisions([]); }}>New entry</button> : null}</header>
-        <div className="knowledge-space-tabs"><button className={space === "splinterheart-lore" ? "is-active" : ""} type="button" onClick={() => changeSpace("splinterheart-lore")}>Private lore</button><button className={space === "sdk-docs" ? "is-active" : ""} type="button" onClick={() => changeSpace("sdk-docs")}>Public docs</button></div>
+        <header><div><span className="workbench-kicker">Knowledge space</span><strong>{activeSpace.title}</strong></div>{canWrite ? <button type="button" onClick={() => { setEditor(emptyEditor(space)); setRevisions([]); }}>New entry</button> : null}</header>
+        <div className="knowledge-space-tabs">{spaceOptions.map((option) => <button className={space === option.key ? "is-active" : ""} type="button" onClick={() => changeSpace(option.key)} key={option.key}>{option.label}</button>)}</div>
         <label className="knowledge-search"><span className="sr-only">Search current knowledge space</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search this space…" /></label>
-        <div className="knowledge-browser__meta"><span>{loading ? "Loading" : `${filtered.length} entries`}</span><span>{space === "sdk-docs" ? "Published is public" : "Always private"}</span></div>
-        <div className="knowledge-entry-list">{filtered.map((entry) => <button type="button" className={editor.id === entry.id ? "is-active" : ""} onClick={() => void selectEntry(entry)} key={entry.id}><span className={`knowledge-state knowledge-state--${entry.publicationStatus}`} /><span><strong>{entry.title}</strong><small>{entry.productKey} · {entry.entryType}</small></span><em>r{entry.revision}</em></button>)}{!loading && filtered.length === 0 ? <p>No entries in this view.</p> : null}</div>
+        <div className="knowledge-browser__meta"><span>{loading ? "Loading" : `${filtered.length} entries`}</span><span>{activeSpace.visibility}</span></div>
+        <div className="knowledge-entry-list">{filtered.map((entry) => <button type="button" className={editor.id === entry.id ? "is-active" : ""} onClick={() => void selectEntry(entry)} key={entry.id}><span className={`knowledge-state knowledge-state--${entry.publicationStatus}`} /><span><strong>{entry.title}</strong><small>{entry.parentSlug ? `${parentTitles.get(entry.parentSlug) ?? "Nested"} · ` : ""}{entry.entryType}</small></span><em>r{entry.revision}</em></button>)}{!loading && filtered.length === 0 ? <p>No entries in this view.</p> : null}</div>
       </aside>
       <section className="knowledge-editor">
         <header><div><span className="workbench-kicker">{editor.id ? `Revision ${editor.expectedRevision}` : "New record"}</span><strong>{editor.publicationStatus}</strong></div><div>{editor.id && canWrite && editor.publicationStatus === "draft" ? <button type="button" onClick={() => void setEditorialStatus("review")} disabled={saving}>Submit review</button> : null}{editor.id && canPublish && editor.publicationStatus !== "archived" ? <button type="button" onClick={() => void setEditorialStatus("archived")} disabled={saving}>Archive</button> : null}{editor.id && canPublish && editor.publicationStatus === "archived" ? <button type="button" onClick={() => void setEditorialStatus("draft")} disabled={saving}>Restore draft</button> : null}{space === "sdk-docs" && editor.id && canPublish ? <button type="button" onClick={() => void publishEntry()} disabled={saving || editor.publicationStatus === "published" || editor.publicationStatus === "archived"}>Publish</button> : null}<button className="workbench-button--primary" type="button" onClick={() => void saveEntry()} disabled={!canWrite || saving || editor.publicationStatus === "archived"}>{saving ? "Working…" : "Save revision"}</button></div></header>
         <div className="knowledge-editor__body">
-          <div className="knowledge-editor__context"><label><span>Product</span>{space === "sdk-docs" ? <select value={editor.productKey} onChange={(event) => setEditor({ ...editor, productKey: event.target.value })}>{products.map((product) => <option key={product}>{product}</option>)}</select> : <input value={editor.productKey} onChange={(event) => setEditor({ ...editor, productKey: event.target.value })} />}</label><label><span>Type</span><select value={editor.entryType} onChange={(event) => setEditor({ ...editor, entryType: event.target.value as KnowledgeEntryType })}>{entryTypes.filter((type) => space === "sdk-docs" ? type !== "lore" : type === "lore").map((type) => <option key={type}>{type}</option>)}</select></label><label><span>Parent</span><select value={editor.parentId} onChange={(event) => setEditor({ ...editor, parentId: event.target.value })}><option value="">Top level</option>{entries.filter((entry) => entry.id !== editor.id && (!editor.productKey || entry.productKey === editor.productKey)).map((entry) => <option value={entry.id} key={entry.id}>{entry.title}</option>)}</select></label><label><span>Version</span><input value={editor.versionLabel} onChange={(event) => setEditor({ ...editor, versionLabel: event.target.value })} /></label><label><span>Order</span><input type="number" value={editor.navOrder} onChange={(event) => setEditor({ ...editor, navOrder: Number(event.target.value) })} /></label></div>
+          <div className="knowledge-editor__context"><label><span>{space === "sdk-docs" ? "Product" : "Project"}</span>{space === "sdk-docs" ? <select value={editor.productKey} onChange={(event) => setEditor({ ...editor, productKey: event.target.value })}>{products.map((product) => <option key={product}>{product}</option>)}</select> : <input value={editor.productKey} readOnly />}</label><label><span>Type</span><select value={editor.entryType} onChange={(event) => setEditor({ ...editor, entryType: event.target.value as KnowledgeEntryType })}>{(space === "sdk-docs" ? documentationEntryTypes : wikiEntryTypes).map((type) => <option key={type}>{type}</option>)}</select></label><label><span>Parent</span><select value={editor.parentId} onChange={(event) => setEditor({ ...editor, parentId: event.target.value })}><option value="">Top level</option>{entries.filter((entry) => entry.id !== editor.id && (!editor.productKey || entry.productKey === editor.productKey)).map((entry) => <option value={entry.id} key={entry.id}>{entry.title}</option>)}</select></label><label><span>Version</span><input value={editor.versionLabel} onChange={(event) => setEditor({ ...editor, versionLabel: event.target.value })} /></label><label><span>Order</span><input type="number" value={editor.navOrder} onChange={(event) => setEditor({ ...editor, navOrder: Number(event.target.value) })} /></label></div>
           <label className="field"><span>Title</span><input value={editor.title} onChange={(event) => setEditor({ ...editor, title: event.target.value })} disabled={!canWrite} /></label>
           <label className="field"><span>Summary</span><textarea rows={3} value={editor.summary} onChange={(event) => setEditor({ ...editor, summary: event.target.value })} disabled={!canWrite} /></label>
           <label className="field"><span>Markdown body</span><textarea className="knowledge-body-input" rows={24} value={editor.body} onChange={(event) => setEditor({ ...editor, body: event.target.value })} disabled={!canWrite} /></label>

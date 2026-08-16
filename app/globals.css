@@ -730,7 +730,7 @@ button, input, textarea, select { font: inherit; }
 .knowledge-editor > header button { min-height: 2.4rem; padding: 0 0.85rem; border: 1px solid var(--wb-line); background: transparent; color: #fff; font-family: var(--mono); font-size: 0.55rem; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 .knowledge-editor > header button.workbench-button--primary { border-color: var(--turquoise); background: var(--turquoise); color: var(--ink); }
 .knowledge-editor > header > div:last-child { display: flex; gap: 0.6rem; }
-.knowledge-space-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--wb-line); }
+.knowledge-space-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--wb-line); }
 .knowledge-space-tabs button { min-height: 3rem; border: 0; border-right: 1px solid var(--wb-line); background: transparent; color: var(--wb-muted); font-family: var(--mono); font-size: 0.56rem; text-transform: uppercase; cursor: pointer; }
 .knowledge-space-tabs button:last-child { border-right: 0; }
 .knowledge-space-tabs button.is-active { background: var(--turquoise); color: var(--ink); font-weight: 700; }
