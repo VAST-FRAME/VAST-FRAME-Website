@@ -5,22 +5,22 @@ const sdkNavigationCaptures = {
   threshold: {
     slot: "THRESHOLD_MATERIAL_RESPONSE_NAV",
     title: "BRDF and subsurface material study",
-    tone: "neutral",
+    tone: "threshold",
   },
   atrium: {
     slot: "ATRIUM_CELESTIAL_FIELD_NAV",
     title: "Atmosphere and celestial field",
-    tone: "checker",
+    tone: "atrium",
   },
   eclipse: {
     slot: "ECLIPSE_UV_PIPELINE_NAV",
     title: "Scene preparation and UV output",
-    tone: "turquoise",
+    tone: "eclipse",
   },
   causality: {
     slot: "CAUSALITY_PROPAGATION_NAV",
     title: "Energy and fire propagation",
-    tone: "neutral",
+    tone: "causality",
   },
 } as const;
 
@@ -32,7 +32,7 @@ export function SdkProductStrip({ activeSlug }: { activeSlug?: string }) {
 
         return (
           <a
-            className="product-tile"
+            className={`product-tile product-tile--${product.slug}`}
             href={`/sdk/${product.slug}`}
             aria-current={activeSlug === product.slug ? "page" : undefined}
             key={product.name}

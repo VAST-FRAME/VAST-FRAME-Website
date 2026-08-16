@@ -34,11 +34,11 @@ export const sdkProducts: readonly SdkProduct[] = [
     ],
     media: [
       { slot: "THRESHOLD_SHADOW_ARCHITECTURE_HERO", ratio: "21 / 9", tone: "checker", title: "A single scene carrying every shadow path", direction: "Wide architectural frame: hard-to-soft PCSS transitions, cached distance shadows, contact grounding, and a ray-traced hero shadow.", size: "wide" },
-      { slot: "THRESHOLD_AREA_LIGHT_VOLUME", ratio: "4 / 5", tone: "turquoise", title: "Area light volume study", direction: "Vertical interior composition with several shaped emitters, visible penumbra variation, and glossy response.", size: "portrait" },
+      { slot: "THRESHOLD_AREA_LIGHT_VOLUME", ratio: "4 / 5", tone: "threshold", title: "Area light volume study", direction: "Vertical interior composition with several shaped emitters, visible penumbra variation, and glossy response.", size: "portrait" },
       { slot: "THRESHOLD_MATERIAL_SSS_CLOSEUP", ratio: "1 / 1", tone: "neutral", title: "Material response under pressure", direction: "Macro comparison of BRDF lobes and preintegrated SSS on production materials.", size: "square" },
       { slot: "THRESHOLD_WATER_REFLECTION_CORRIDOR", ratio: "16 / 10", tone: "neutral", title: "Water and layered reflection", direction: "Low camera across moving water combining SSR, analytic fallback, tessellated surface detail, and shadowed lighting.", size: "half" },
       { slot: "THRESHOLD_GI_PROBE_TRANSITION", ratio: "3 / 2", tone: "checker", title: "Lighting through a changing space", direction: "Indoor-to-outdoor path showing APV, light probes, GTAO, and analytic local GI continuity.", size: "half" },
-      { slot: "THRESHOLD_RECONSTRUCTION_COMPARISON", ratio: "21 / 9", tone: "turquoise", title: "Reconstruction paths, matched frame", direction: "Three-panel crop prepared for native, DLSS/FSR, and STP comparison at identical camera and exposure.", size: "wide" },
+      { slot: "THRESHOLD_RECONSTRUCTION_COMPARISON", ratio: "21 / 9", tone: "threshold", title: "Reconstruction paths, matched frame", direction: "Three-panel crop prepared for native, DLSS/FSR, and STP comparison at identical camera and exposure.", size: "wide" },
     ],
   },
   {
@@ -54,10 +54,10 @@ export const sdkProducts: readonly SdkProduct[] = [
       { title: "Distant phenomena", items: ["Aurora borealis", "Distant lightning", "Weather-scale visual events"] },
     ],
     media: [
-      { slot: "ATRIUM_ATMOSPHERE_HERO", ratio: "21 / 9", tone: "turquoise", title: "Atmosphere from ground to orbit", direction: "Extreme-wide horizon with layered aerial perspective, a low sun, cloud silhouettes, and visible celestial depth.", size: "wide" },
+      { slot: "ATRIUM_ATMOSPHERE_HERO", ratio: "21 / 9", tone: "atrium", title: "Atmosphere from ground to orbit", direction: "Extreme-wide horizon with layered aerial perspective, a low sun, cloud silhouettes, and visible celestial depth.", size: "wide" },
       { slot: "ATRIUM_CELESTIAL_NIGHT_FIELD", ratio: "3 / 2", tone: "checker", title: "Celestial night field", direction: "Night exposure balancing the Milky Way, moonlight, stars, and grounded landscape values.", size: "half" },
       { slot: "ATRIUM_SIX_DIRECTION_CLOUD_LIGHTING", ratio: "4 / 5", tone: "neutral", title: "Cloud sequence under changing light", direction: "Tall cloud formation with directional-light study markers and a clear read on self-shadowing.", size: "portrait" },
-      { slot: "ATRIUM_AURORA_WEATHER_EVENT", ratio: "1 / 1", tone: "turquoise", title: "Aurora as a world event", direction: "Square environmental frame pairing aurora curtains with reflective terrain and readable atmospheric falloff.", size: "square" },
+      { slot: "ATRIUM_AURORA_WEATHER_EVENT", ratio: "1 / 1", tone: "atrium", title: "Aurora as a world event", direction: "Square environmental frame pairing aurora curtains with reflective terrain and readable atmospheric falloff.", size: "square" },
       { slot: "ATRIUM_DISTANT_LIGHTNING_TIMELINE", ratio: "21 / 8", tone: "checker", title: "Distant lightning sequence", direction: "Four-beat panoramic sequence showing buildup, illumination, strike silhouette, and atmospheric decay.", size: "wide" },
     ],
   },
@@ -76,9 +76,9 @@ export const sdkProducts: readonly SdkProduct[] = [
     media: [
       { slot: "ECLIPSE_SCENE_PIPELINE_HERO", ratio: "21 / 9", tone: "checker", title: "A world moving through the pipeline", direction: "Panoramic editor view with scene regions, bake state, visibility state, and streaming boundaries composed as one production frame.", size: "wide" },
       { slot: "ECLIPSE_LIGHTMAP_DIRECTIONAL_RESULT", ratio: "3 / 2", tone: "neutral", title: "Directional bake result", direction: "Final lit environment beside compact diagnostic overlays for directionality and texel use.", size: "half" },
-      { slot: "ECLIPSE_UV_PACKING_INSPECTION", ratio: "1 / 1", tone: "turquoise", title: "UV packing inspection", direction: "Dense but legible atlas with utilization, padding, and problem-island callouts.", size: "square" },
+      { slot: "ECLIPSE_UV_PACKING_INSPECTION", ratio: "1 / 1", tone: "eclipse", title: "UV packing inspection", direction: "Dense but legible atlas with utilization, padding, and problem-island callouts.", size: "square" },
       { slot: "ECLIPSE_HSR_CUTAWAY", ratio: "4 / 5", tone: "neutral", title: "Hidden-surface removal cutaway", direction: "Vertical exploded building showing retained shell geometry and removed occluded surfaces.", size: "portrait" },
-      { slot: "ECLIPSE_STREAMING_REGION_MAP", ratio: "21 / 8", tone: "turquoise", title: "Area streaming at world scale", direction: "Long-form topographic view of loaded, warming, and dormant regions around a player path.", size: "wide" },
+      { slot: "ECLIPSE_STREAMING_REGION_MAP", ratio: "21 / 8", tone: "eclipse", title: "Area streaming at world scale", direction: "Long-form topographic view of loaded, warming, and dormant regions around a player path.", size: "wide" },
     ],
   },
   {
@@ -95,10 +95,10 @@ export const sdkProducts: readonly SdkProduct[] = [
     ],
     media: [
       { slot: "CAUSALITY_CHAIN_REACTION_HERO", ratio: "21 / 9", tone: "neutral", title: "One event becoming another", direction: "Wide readable chain: electrical fault, ignition, air movement, NPC response, and structural failure across one space.", size: "wide" },
-      { slot: "CAUSALITY_ELECTRIC_ARC_NETWORK", ratio: "4 / 5", tone: "turquoise", title: "Electric arc network", direction: "Vertical machinery stack with branching conductive paths, contact points, and energy falloff.", size: "portrait" },
+      { slot: "CAUSALITY_ELECTRIC_ARC_NETWORK", ratio: "4 / 5", tone: "causality", title: "Electric arc network", direction: "Vertical machinery stack with branching conductive paths, contact points, and energy falloff.", size: "portrait" },
       { slot: "CAUSALITY_FIRE_SURFACE_PROPAGATION", ratio: "3 / 2", tone: "checker", title: "Fire reading the surface", direction: "Material transition study showing ignition, spread rate, residue, and influence zones.", size: "half" },
       { slot: "CAUSALITY_AIR_SIMULATION_SLICE", ratio: "1 / 1", tone: "neutral", title: "Air simulation slice", direction: "Diagnostic volume through a room visualizing flow, heat, and obstruction without losing the environment.", size: "square" },
-      { slot: "CAUSALITY_NPC_SYSTEMIC_RESPONSE", ratio: "16 / 10", tone: "turquoise", title: "NPC response to a changing world", direction: "Gameplay-width composition of perception, avoidance, and interaction triggered by the same simulated event.", size: "half" },
+      { slot: "CAUSALITY_NPC_SYSTEMIC_RESPONSE", ratio: "16 / 10", tone: "causality", title: "NPC response to a changing world", direction: "Gameplay-width composition of perception, avoidance, and interaction triggered by the same simulated event.", size: "half" },
       { slot: "CAUSALITY_DESTRUCTION_SEQUENCE", ratio: "21 / 8", tone: "checker", title: "Destruction with history", direction: "Four-stage sequence from intact structure through stress, fracture, and persistent aftermath.", size: "wide" },
     ],
   },

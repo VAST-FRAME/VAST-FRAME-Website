@@ -119,6 +119,15 @@ test("gives every SDK product card the same track and content geometry", async (
   assert.doesNotMatch(css, /\.product-strip\s*\{[^}]*repeat\(4,\s*1fr\)/s);
 });
 
+test("gives every SDK product card its named color identity", async () => {
+  const html = await (await render()).text();
+
+  for (const product of ["threshold", "atrium", "eclipse", "causality"]) {
+    assert.match(html, new RegExp(`product-tile product-tile--${product}`));
+    assert.match(html, new RegExp(`media-placeholder--${product}`));
+  }
+});
+
 test("keeps public sections free of ornamental labels and frame borders", async () => {
   const home = await (await render()).text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");

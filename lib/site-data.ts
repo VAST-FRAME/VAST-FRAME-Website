@@ -1,4 +1,11 @@
-export type MediaTone = "neutral" | "turquoise" | "checker";
+export type MediaTone =
+  | "neutral"
+  | "turquoise"
+  | "checker"
+  | "threshold"
+  | "atrium"
+  | "eclipse"
+  | "causality";
 
 export const publicNavigation = [
   { href: "/", label: "Main" },

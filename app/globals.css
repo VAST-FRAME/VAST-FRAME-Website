@@ -8,6 +8,10 @@
   --muted: #aaa8a3;
   --turquoise: #069d9f;
   --turquoise-deep: #007f82;
+  --threshold: #ff4fa3;
+  --atrium: #54b8ff;
+  --eclipse: #ff8738;
+  --causality: #ad8bff;
   --line-dark: rgba(244, 242, 237, 0.17);
   --line-light: rgba(10, 10, 11, 0.2);
   --site-max-width: 92rem;
@@ -202,7 +206,11 @@ button, input, textarea, select { font: inherit; }
 }
 
 .media-placeholder--neutral { background: #77777b; color: #19191b; }
-.media-placeholder--turquoise { background: var(--turquoise); color: var(--ink); }
+.media-placeholder--turquoise { --media-accent: var(--turquoise); background: var(--media-accent); color: var(--ink); }
+.media-placeholder--threshold { --media-accent: var(--threshold); background: var(--media-accent); color: var(--ink); }
+.media-placeholder--atrium { --media-accent: var(--atrium); background: var(--media-accent); color: var(--ink); }
+.media-placeholder--eclipse { --media-accent: var(--eclipse); background: var(--media-accent); color: var(--ink); }
+.media-placeholder--causality { --media-accent: var(--causality); background: var(--media-accent); color: var(--ink); }
 .media-placeholder--checker {
   color: var(--paper-bright);
   background-color: #343438;
@@ -245,7 +253,15 @@ button, input, textarea, select { font: inherit; }
 }
 
 .media-placeholder--turquoise .media-placeholder__slot,
-.media-placeholder--turquoise .media-placeholder__ratio { color: var(--turquoise); }
+.media-placeholder--turquoise .media-placeholder__ratio,
+.media-placeholder--threshold .media-placeholder__slot,
+.media-placeholder--threshold .media-placeholder__ratio,
+.media-placeholder--atrium .media-placeholder__slot,
+.media-placeholder--atrium .media-placeholder__ratio,
+.media-placeholder--eclipse .media-placeholder__slot,
+.media-placeholder--eclipse .media-placeholder__ratio,
+.media-placeholder--causality .media-placeholder__slot,
+.media-placeholder--causality .media-placeholder__ratio { color: var(--media-accent); }
 .media-placeholder__slot { left: 0.7rem; }
 .media-placeholder__ratio { right: 0.7rem; }
 .media-placeholder__content {
@@ -289,20 +305,24 @@ button, input, textarea, select { font: inherit; }
 .section-note { color: var(--muted); font-size: 0.8rem; }
 
 .product-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); }
-.product-tile { position: relative; display: flex; min-width: 0; min-height: clamp(30rem, 50svh, 38rem); flex-direction: column; padding: clamp(1.25rem, 1.6vw, 1.75rem); color: inherit; text-decoration: none; container-type: inline-size; }
+.product-tile { --product-accent: var(--turquoise); position: relative; display: flex; min-width: 0; min-height: clamp(30rem, 50svh, 38rem); flex-direction: column; padding: clamp(1.25rem, 1.6vw, 1.75rem); color: inherit; text-decoration: none; container-type: inline-size; }
+.product-tile--threshold { --product-accent: var(--threshold); }
+.product-tile--atrium { --product-accent: var(--atrium); }
+.product-tile--eclipse { --product-accent: var(--eclipse); }
+.product-tile--causality { --product-accent: var(--causality); }
 .product-tile:not(:last-child)::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: var(--line-dark); pointer-events: none; }
 .product-tile__index { display: block; margin-bottom: 1.35rem; color: var(--muted); }
 .product-tile__media { width: 100%; margin-bottom: clamp(1.5rem, 2.5vh, 2.25rem); }
 .product-tile__media .media-placeholder__content { padding: 1rem; }
 .product-tile__media .placeholder-kicker { max-width: 20ch; }
-.product-tile h3 { margin: 1rem 0; font-family: var(--condensed); font-size: clamp(2rem, 15cqi, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
+.product-tile h3 { margin: 1rem 0; color: var(--product-accent); font-family: var(--condensed); font-size: clamp(2rem, 15cqi, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
 .product-tile p { max-width: 24rem; margin: 0 0 2rem; color: var(--muted); font-size: 0.85rem; }
 .product-tile__link { width: 100%; margin-top: auto; }
-.product-tile:is(:hover, :focus-visible) .product-tile__link { color: var(--turquoise); padding-inline: 0.55rem; }
-.product-tile:focus-visible { outline: 2px solid var(--turquoise); outline-offset: -2px; }
+.product-tile:is(:hover, :focus-visible) .product-tile__link { color: var(--product-accent); padding-inline: 0.55rem; }
+.product-tile:focus-visible { outline: 2px solid var(--product-accent); outline-offset: -2px; }
 .technology .product-strip--navigation { border-top: 0; }
-.technology .product-tile[aria-current="page"] { box-shadow: inset 0 0.3rem 0 var(--technology-accent); }
-.technology .product-tile[aria-current="page"] .product-tile__link { color: var(--technology-accent); }
+.technology .product-tile[aria-current="page"] { box-shadow: inset 0 0.3rem 0 var(--product-accent); }
+.technology .product-tile[aria-current="page"] .product-tile__link { color: var(--product-accent); }
 
 .page-intro { min-height: min(52rem, calc(100svh - var(--header-height))); align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
 .page-intro .eyebrow { grid-column: 1 / 4; }
@@ -356,9 +376,10 @@ button, input, textarea, select { font: inherit; }
 .sdk-principle__action { grid-column: 9 / 13; margin-top: 4rem; }
 
 .technology { --technology-accent: var(--turquoise); }
-.technology--atrium { --technology-accent: #a69dff; }
-.technology--eclipse { --technology-accent: #ff755c; }
-.technology--causality { --technology-accent: #f0d44f; }
+.technology--threshold { --technology-accent: var(--threshold); }
+.technology--atrium { --technology-accent: var(--atrium); }
+.technology--eclipse { --technology-accent: var(--eclipse); }
+.technology--causality { --technology-accent: var(--causality); }
 .technology-hero { height: clamp(26.25rem, 38svh, 30rem); min-height: 0; align-content: center; padding-top: clamp(2rem, 4.5svh, 4rem); padding-bottom: clamp(2rem, 4.5svh, 4rem); }
 .technology-hero > .eyebrow { grid-column: 1 / 5; }
 .technology-hero__title { grid-column: 1 / 13; max-width: 100%; margin: clamp(1.5rem, 3svh, 2.75rem) 0 clamp(1.75rem, 3.5svh, 3rem); color: var(--technology-accent); font-size: clamp(3.25rem, 7cqi, 7.5rem); white-space: normal; }
