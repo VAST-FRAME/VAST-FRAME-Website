@@ -329,11 +329,10 @@ button, input, textarea, select { font: inherit; }
   height: 100%;
   object-fit: cover;
   object-position: 48% 50%;
-  transition: filter 220ms ease, transform 700ms ease;
+  transition: filter 220ms ease;
 }
 .product-tile--atrium:is(:hover, :focus-visible) .product-tile__motion video {
   filter: saturate(1.12) contrast(1.04);
-  transform: scale(1.015);
 }
 .product-tile h3 { margin: 1rem 0; color: var(--product-accent); font-family: var(--condensed); font-size: clamp(2rem, 15cqi, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
 .product-tile p { max-width: 24rem; margin: 0 0 2rem; color: var(--muted); font-size: 0.85rem; }
@@ -346,7 +345,6 @@ button, input, textarea, select { font: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .product-tile__motion video { transition: none; }
-  .product-tile--atrium:is(:hover, :focus-visible) .product-tile__motion video { transform: none; }
 }
 
 .page-intro { min-height: min(52rem, calc(100svh - var(--header-height))); align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
