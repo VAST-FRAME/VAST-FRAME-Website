@@ -5,7 +5,6 @@ export type CommercialProduct = {
   name: string;
   description: string;
   availability: "development" | "available" | "planned";
-  independentPriceUsd: number;
   studioPriceUsd: number;
   priceLabel: string;
 };
@@ -16,36 +15,32 @@ export const commercialProducts: readonly CommercialProduct[] = [
     name: "Threshold",
     description: "High-fidelity authored lighting, materials, reflection, geometry, and spatial depth.",
     availability: "development",
-    independentPriceUsd: 249,
-    studioPriceUsd: 899,
-    priceLabel: "Independent $249 / Studio $899",
+    studioPriceUsd: 2799,
+    priceLabel: "Studio $2,799 / Enterprise contact",
   },
   {
     key: "atrium",
     name: "Atrium",
     description: "Physically based atmosphere, celestial rendering, clouds, and distant phenomena.",
     availability: "development",
-    independentPriceUsd: 99,
-    studioPriceUsd: 349,
-    priceLabel: "Independent $99 / Studio $349",
+    studioPriceUsd: 799,
+    priceLabel: "Studio $799 / Enterprise contact",
   },
   {
     key: "eclipse",
     name: "Eclipse",
     description: "Scene processing, baking, UV preparation, visibility, packing, and area streaming.",
     availability: "development",
-    independentPriceUsd: 199,
-    studioPriceUsd: 699,
-    priceLabel: "Independent $199 / Studio $699",
+    studioPriceUsd: 799,
+    priceLabel: "Studio $799 / Enterprise contact",
   },
   {
     key: "causality",
     name: "Causality",
     description: "Systemic simulation for energy, fire, air, surfaces, objects, and characters.",
     availability: "development",
-    independentPriceUsd: 199,
-    studioPriceUsd: 699,
-    priceLabel: "Independent $199 / Studio $699",
+    studioPriceUsd: 799,
+    priceLabel: "Studio $799 / Enterprise contact",
   },
 ] as const;
 

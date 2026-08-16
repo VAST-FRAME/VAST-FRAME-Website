@@ -66,16 +66,16 @@ test("uses direct public navigation without an SDK submenu", async () => {
 
   assert.match(
     html,
-    /aria-label="Primary navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
+    /aria-label="Primary navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>FAQ<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
   );
   assert.match(
     html,
-    /aria-label="Mobile navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
+    /aria-label="Mobile navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Pricing<\/a>[\s\S]*?>FAQ<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>[\s\S]*?>Account<\/a>/i,
   );
   assert.doesNotMatch(html, /sdk-nav|mobile-sdk-nav|>SDK\s*\+?<\/|SDK navigation/i);
 });
 
-test("presents four independently licensed products with per-title company tiers", async () => {
+test("presents selective Studio and Enterprise per-title licensing", async () => {
   const response = await render("/pricing");
   assert.equal(response.status, 200);
   const html = await response.text();
@@ -87,17 +87,33 @@ test("presents four independently licensed products with per-title company tiers
   assert.match(html, /Perpetual use/i);
   assert.match(html, /Two years of updates/i);
   assert.match(html, /One (?:commercial )?title/i);
-  for (const price of [99, 199, 249, 349, 699, 899]) {
+  for (const price of ["799", "2,799"]) {
     assert.match(visibleHtml, new RegExp(`\\$${price}`));
   }
-  assert.match(html, /Independent/i);
   assert.match(html, /Studio/i);
   assert.match(html, /Enterprise/i);
+  assert.match(html, /Under \$10M/i);
+  assert.match(html, /Over \$10M/i);
+  assert.doesNotMatch(html, /<dt>Independent|>Indie</i);
   assert.doesNotMatch(html, /Internal use/i);
   assert.doesNotMatch(html, /<dt>Release<\/dt>/i);
   assert.match(html, /licensed independently/i);
   assert.match(html, /does not change the price/i);
   assert.doesNotMatch(html, /bundle|discount/i);
+});
+
+test("publishes a categorized FAQ with licensing guidance", async () => {
+  const response = await render("/faq");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  for (const category of ["Licensing", "Products", "Purchasing and accounts", "Support"]) {
+    assert.match(html, new RegExp(category, "i"));
+  }
+  assert.match(html, /What does one license cover/i);
+  assert.match(html, /two-year update window/i);
+  assert.match(html, /under \$10 million/i);
+  assert.match(html, /over \$10 million/i);
 });
 
 test("redirects anonymous customer account visitors to secure sign-in", async () => {
