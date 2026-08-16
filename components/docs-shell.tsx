@@ -26,7 +26,7 @@ export async function DocsShell({ productKey, activeSlug, children }: { productK
               );
             })}
           </nav>
-          <footer><span>Public documentation</span><a href="/sdk">SDK showcase ↗</a></footer>
+          <footer><span>Public documentation</span><a href="/">SDK showcase ↗</a></footer>
         </aside>
         <main className="docs-main">{children}</main>
       </div>

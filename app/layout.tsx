@@ -7,8 +7,7 @@ export const metadata: Metadata = {
     default: "VASTFRAME — Real-Time Technology Studio",
     template: "%s — VASTFRAME",
   },
-  description:
-    "VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
+  description: "Integrated real-time technology for Unity.",
   robots: {
     index: false,
     follow: false,
@@ -16,16 +15,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "VASTFRAME — Real-Time Technology Studio",
-    description:
-      "Rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
+    description: "Integrated real-time technology for Unity.",
     type: "website",
     siteName: "VASTFRAME",
   },
   twitter: {
     card: "summary",
     title: "VASTFRAME — Real-Time Technology Studio",
-    description:
-      "Rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
+    description: "Integrated real-time technology for Unity.",
   },
 };
 

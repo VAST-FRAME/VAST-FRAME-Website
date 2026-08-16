@@ -11,7 +11,6 @@ export const developerNavigation = [
 ] as const;
 
 export const sdkNavigation = [
-  { href: "/sdk", label: "Overview" },
   { href: "/sdk/threshold", label: "Threshold" },
   { href: "/sdk/atrium", label: "Atrium" },
   { href: "/sdk/eclipse", label: "Eclipse" },

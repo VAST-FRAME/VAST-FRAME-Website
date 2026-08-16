@@ -29,7 +29,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
 
   assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
   assert.match(html, /Cutting-edge tech for Unity/i);
-  assert.match(html, /VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds/i);
+  assert.doesNotMatch(html, /VASTFRAME builds rendering|Rendering, atmosphere, scene processing, and simulation/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
   assert.match(html, /Atrium/);
@@ -45,8 +45,12 @@ test("renders an SDK-first VASTFRAME home page", async () => {
     assert.match(html, new RegExp(slot));
   }
   assert.match(html, /aria-label="SDK navigation"/i);
-  for (const href of ["/sdk", "/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
+  for (const href of ["/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
+  }
+  assert.doesNotMatch(html, /href="\/sdk"|>Overview</i);
+  for (const name of ["Threshold", "Atrium", "Eclipse", "Causality"]) {
+    assert.match(html, new RegExp(`Explore(?:\\s|<!--.*?-->)*${name}`, "i"));
   }
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
@@ -71,9 +75,7 @@ test("keeps emphasized display text in the surrounding typeface", async () => {
 test("keeps the home hero and media typography collision-safe across aspect ratios", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.home-hero__title\s*\{[^}]*grid-column:\s*1\s*\/\s*13[^}]*grid-row:\s*2/s);
-  assert.match(css, /\.home-hero__intro\s*\{[^}]*grid-column:\s*1\s*\/\s*7[^}]*grid-row:\s*3/s);
   assert.match(css, /\.home-hero__actions\s*\{[^}]*grid-column:\s*9\s*\/\s*13[^}]*grid-row:\s*3/s);
-  assert.doesNotMatch(css, /\.home-hero__intro\s*\{[^}]*grid-row:\s*2/s);
   assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);
   assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*16\s*\/\s*9\s*!important/s);
@@ -82,12 +84,15 @@ test("keeps the home hero and media typography collision-safe across aspect rati
 
 test("keeps public sections free of ornamental labels and frame borders", async () => {
   const home = await (await render()).text();
-  const sdk = await (await render("/sdk")).text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
   assert.doesNotMatch(home, /home-hero__eyebrow|home-hero__index|product-tile__index|VASTFRAME \/ Unity technology/);
-  assert.doesNotMatch(sdk, /sdk-product__index|Open roles \/ 00|Shared production stack/);
   assert.doesNotMatch(css, /\.site\s*\{[^}]*border-inline/s);
+});
+
+test("does not retain a redundant SDK overview route", async () => {
+  const response = await render("/sdk");
+  assert.equal(response.status, 404);
 });
 
 test("hides the Games index from anonymous visitors", async () => {
@@ -306,13 +311,13 @@ test("redirects password-protected visitors to the preview gate", async () => {
 });
 
 test("renders a no-store, noindex password screen", async () => {
-  const response = await render("/__access?return_to=%2Fsdk", {}, protectedEnvironment);
+  const response = await render("/__access?return_to=%2Fdocs", {}, protectedEnvironment);
   assert.equal(response.status, 200);
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(response.headers.get("x-robots-tag"), /noindex/i);
   const html = await response.text();
   assert.match(html, /Step inside/);
-  assert.match(html, /name="return_to" type="hidden" value="\/sdk"/);
+  assert.match(html, /name="return_to" type="hidden" value="\/docs"/);
   assert.match(html, /#069d9f/i);
   assert.doesNotMatch(html, /#ff3fa6/i);
 });
@@ -341,12 +346,12 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
         origin: "https://public-preview.example",
         "sec-fetch-site": "same-origin",
       },
-      body: "password=test-preview-password&return_to=%2Fsdk",
+      body: "password=test-preview-password&return_to=%2F",
     },
     protectedEnvironment,
   );
   assert.equal(unlock.status, 303);
-  assert.equal(unlock.headers.get("location"), "http://localhost/sdk");
+  assert.equal(unlock.headers.get("location"), "http://localhost/");
   const setCookie = unlock.headers.get("set-cookie");
   assert.match(setCookie, /__Host-vastframe_access=/);
   assert.match(setCookie, /HttpOnly/i);
@@ -355,7 +360,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
 
   const cookie = setCookie.split(";", 1)[0];
   const response = await render(
-    "/sdk",
+    "/",
     { headers: { cookie } },
     protectedEnvironment,
   );
@@ -363,7 +368,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(response.headers.get("vary"), /RSC/i);
   assert.match(response.headers.get("vary"), /Cookie/i);
-  assert.match(await response.text(), /Systems shaped/);
+  assert.match(await response.text(), /Four systems\. One stack\./i);
 });
 
 test("rejects cross-site preview unlock submissions", async () => {

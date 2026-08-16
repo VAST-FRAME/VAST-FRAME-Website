@@ -5,8 +5,7 @@ import { sdkProducts } from "@/lib/site-data";
 
 export const metadata: Metadata = {
   title: { absolute: "VASTFRAME — Real-Time Technology Studio" },
-  description:
-    "Rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.",
+  description: "Integrated real-time technology for Unity.",
 };
 
 const homeCaptures = {
@@ -39,11 +38,7 @@ export default function Home() {
         <h1 className="display home-hero__title">
           Cutting-edge tech for Unity.
         </h1>
-        <p className="home-hero__intro">
-          VASTFRAME builds rendering, atmosphere, scene-processing, and simulation technology for ambitious real-time worlds.
-        </p>
         <div className="home-hero__actions">
-          <ArrowLink href="/sdk">Explore the SDK</ArrowLink>
           <ArrowLink href="/docs">Read the documentation</ArrowLink>
         </div>
         <MediaPlaceholder slot="SDK_INTEGRATED_STACK_HERO" ratio="21 / 9" tone="checker" className="home-hero__media">
@@ -55,11 +50,10 @@ export default function Home() {
       <section className="technology section-rule">
         <div className="section-heading frame-grid">
           <h2 className="display display--section">Four systems. One stack.</h2>
-          <p className="section-note">Rendering, atmosphere, scene processing, and simulation.</p>
         </div>
         <div className="product-strip">
           {sdkProducts.map((product) => (
-            <article className="product-tile" key={product.name}>
+            <a className="product-tile" href={`/sdk/${product.slug}`} key={product.name}>
               <MediaPlaceholder
                 slot={homeCaptures[product.slug].slot}
                 ratio="4 / 3"
@@ -70,7 +64,11 @@ export default function Home() {
               </MediaPlaceholder>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-            </article>
+              <span className="arrow-link product-tile__link">
+                <span>Explore {product.name}</span>
+                <span aria-hidden="true">↗</span>
+              </span>
+            </a>
           ))}
         </div>
       </section>
