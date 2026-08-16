@@ -81,6 +81,9 @@ test("keeps product titles at the Home heading scale without forced clipping", a
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.display--section\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)/s);
   assert.match(css, /\.technology-hero__title\s*\{[^}]*font-size:\s*clamp\(3\.25rem,\s*7cqi,\s*7\.5rem\)[^}]*white-space:\s*normal/s);
+  assert.match(css, /\.technology-hero\s*\{[^}]*min-height:\s*auto[^}]*align-content:\s*start[^}]*padding-top:\s*clamp\(2rem,\s*4vh,\s*3rem\)/s);
+  assert.match(css, /\.technology-hero__statement\s*\{[^}]*font-size:\s*clamp\(1\.75rem,\s*2\.5cqi,\s*3rem\)/s);
+  assert.doesNotMatch(css, /\.technology-hero\s*\{[^}]*90svh/s);
   assert.doesNotMatch(css, /\.home-hero/);
   assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);

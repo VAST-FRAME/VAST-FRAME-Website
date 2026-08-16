@@ -391,13 +391,13 @@ button, input, textarea, select { font: inherit; }
 .technology--atrium { --technology-accent: #a69dff; }
 .technology--eclipse { --technology-accent: #ff755c; }
 .technology--causality { --technology-accent: #f0d44f; }
-.technology-hero { min-height: calc(90svh - var(--header-height)); align-content: center; padding-top: 5rem; padding-bottom: 5rem; }
+.technology-hero { min-height: auto; align-content: start; padding-top: clamp(2rem, 4vh, 3rem); padding-bottom: clamp(2rem, 4vh, 3rem); }
 .technology-hero > .eyebrow { grid-column: 1 / 5; }
 .technology-hero__kind { grid-column: 10 / 13; justify-self: end; color: var(--muted); text-transform: uppercase; }
-.technology-hero__title { grid-column: 1 / 13; max-width: 100%; margin: clamp(4rem, 9vh, 8rem) 0 3rem; color: var(--technology-accent); font-size: clamp(3.25rem, 7cqi, 7.5rem); white-space: normal; }
-.technology-hero__statement { grid-column: 2 / 8; margin: 0; font-family: var(--sans); font-size: clamp(2rem, 4vw, 4.4rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
+.technology-hero__title { grid-column: 1 / 13; max-width: 100%; margin: clamp(1.25rem, 2.5vh, 2rem) 0 clamp(1.5rem, 3vh, 2.5rem); color: var(--technology-accent); font-size: clamp(3.25rem, 7cqi, 7.5rem); white-space: normal; }
+.technology-hero__statement { grid-column: 2 / 8; margin: 0; font-family: var(--sans); font-size: clamp(1.75rem, 2.5cqi, 3rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
 .technology-hero__description { grid-column: 8 / 12; align-self: end; margin: 0; color: var(--muted); font-size: 1rem; }
-.technology-hero__actions { grid-column: 8 / 13; display: flex; align-items: center; gap: 1.5rem; margin-top: 3rem; }
+.technology-hero__actions { grid-column: 8 / 13; display: flex; align-items: center; gap: 1.5rem; margin-top: clamp(1rem, 2vh, 1.5rem); }
 .technology-lead-media { padding: var(--page-pad); border-top: 1px solid var(--line-dark); }
 .technology-media--hero .media-placeholder__content { max-width: 65rem; margin: auto; }
 .technology-media--hero .placeholder-title { max-width: 12ch; }
