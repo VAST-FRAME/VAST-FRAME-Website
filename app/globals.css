@@ -10,6 +10,8 @@
   --turquoise-deep: #007f82;
   --line-dark: rgba(244, 242, 237, 0.17);
   --line-light: rgba(10, 10, 11, 0.2);
+  --site-max-width: 92rem;
+  --site-outer-gap: clamp(2rem, 4vw, 4rem);
   --page-pad: clamp(1rem, 3vw, 3.5rem);
   --header-height: 4.75rem;
   --display-leading: 0.86;
@@ -41,8 +43,16 @@ button, input, textarea, select { font: inherit; }
 
 :focus-visible { outline: 2px solid var(--turquoise); outline-offset: 4px; }
 
-.site { min-height: 100vh; overflow: clip; background: var(--ink); }
-.site--paper { background: var(--paper); color: var(--ink); }
+.site {
+  width: min(calc(100% - var(--site-outer-gap)), var(--site-max-width));
+  min-height: 100vh;
+  margin-inline: auto;
+  overflow: clip;
+  border-inline: 1px solid var(--line-dark);
+  background: var(--ink);
+  container-type: inline-size;
+}
+.site--paper { border-color: var(--line-light); background: var(--paper); color: var(--ink); }
 
 .site-header {
   position: relative;
@@ -159,7 +169,7 @@ button, input, textarea, select { font: inherit; }
 .display {
   margin: 0;
   font-family: var(--condensed);
-  font-size: clamp(4rem, 12vw, 11.5rem);
+  font-size: clamp(4rem, 12cqi, 11.5rem);
   font-weight: 900;
   letter-spacing: -0.075em;
   line-height: var(--display-leading);
@@ -167,9 +177,9 @@ button, input, textarea, select { font: inherit; }
 }
 
 .display em { font-family: inherit; font-style: italic; font-weight: inherit; text-transform: inherit; }
-.display--page { font-size: clamp(4rem, 10vw, 9.5rem); }
-.display--section { font-size: clamp(3.25rem, 7vw, 7.5rem); }
-.display--article { font-size: clamp(4rem, 9vw, 9rem); }
+.display--page { font-size: clamp(4rem, 10cqi, 9.5rem); }
+.display--section { font-size: clamp(3.25rem, 7cqi, 7.5rem); }
+.display--article { font-size: clamp(4rem, 9cqi, 9rem); }
 
 .lede {
   margin: 0;
@@ -309,7 +319,7 @@ button, input, textarea, select { font: inherit; }
 }
 
 .home-hero__eyebrow { grid-column: 1 / 5; align-self: start; }
-.home-hero__title { grid-column: 1 / 13; grid-row: 2; max-width: 12ch; margin: 5rem 0 2rem; font-size: clamp(4rem, min(11vw, 20svh), 11rem); }
+.home-hero__title { grid-column: 1 / 13; grid-row: 2; max-width: 12ch; margin: 5rem 0 2rem; font-size: clamp(4rem, min(11cqi, 20svh), 11rem); }
 .home-hero__intro { grid-column: 1 / 7; grid-row: 3; align-self: start; max-width: 32rem; margin: 0; font-size: 1rem; }
 .home-hero__actions { grid-column: 9 / 13; grid-row: 3; display: flex; flex-direction: column; align-items: flex-start; gap: 1.25rem; }
 .home-hero__media { grid-column: 1 / 13; grid-row: 4; width: 100%; margin-top: 4rem; }
@@ -334,7 +344,7 @@ button, input, textarea, select { font: inherit; }
 .product-tile__media { width: 100%; margin-bottom: 2rem; }
 .product-tile__media .media-placeholder__content { padding: 1rem; }
 .product-tile__media .placeholder-kicker { max-width: 20ch; }
-.product-tile h3 { margin: 1rem 0; font-family: var(--condensed); font-size: clamp(2.5rem, 4vw, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
+.product-tile h3 { margin: 1rem 0; font-family: var(--condensed); font-size: clamp(2.5rem, 4cqi, 4.75rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
 .product-tile p { max-width: 24rem; margin: 0; color: var(--muted); font-size: 0.85rem; }
 
 .page-intro { min-height: min(52rem, calc(100svh - var(--header-height))); align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
@@ -948,6 +958,7 @@ button, input, textarea, select { font: inherit; }
 
 @media (max-width: 620px) {
   :root { --header-height: 4rem; }
+  .site { width: 100%; border-inline: 0; }
   .display { font-size: clamp(3.4rem, 19vw, 6rem); }
   .display--section { font-size: clamp(3rem, 16vw, 5rem); }
   .frame-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
