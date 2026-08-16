@@ -36,7 +36,6 @@ export default function Home() {
   return (
     <PublicShell active="/">
       <section className="home-hero frame-grid">
-        <p className="eyebrow home-hero__eyebrow">VASTFRAME / Unity technology</p>
         <h1 className="display home-hero__title">
           Cutting-edge tech for Unity.
         </h1>
@@ -51,19 +50,16 @@ export default function Home() {
           <span className="placeholder-title">Threshold / Atrium / Eclipse / Causality</span>
           <span className="placeholder-note">Wide production scene / all four systems visible in one frame</span>
         </MediaPlaceholder>
-        <p className="home-hero__index mono">VF / 001</p>
       </section>
 
       <section className="technology section-rule">
         <div className="section-heading frame-grid">
-          <p className="eyebrow">VASTFRAME SDK</p>
           <h2 className="display display--section">Four systems. One stack.</h2>
           <p className="section-note">Rendering, atmosphere, scene processing, and simulation.</p>
         </div>
         <div className="product-strip">
           {sdkProducts.map((product) => (
             <article className="product-tile" key={product.name}>
-              <span className="mono product-tile__index">{product.index}</span>
               <MediaPlaceholder
                 slot={homeCaptures[product.slug].slot}
                 ratio="4 / 3"
@@ -72,7 +68,6 @@ export default function Home() {
               >
                 <span className="placeholder-kicker">{homeCaptures[product.slug].title}</span>
               </MediaPlaceholder>
-              <span className="eyebrow">{product.kind}</span>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
             </article>

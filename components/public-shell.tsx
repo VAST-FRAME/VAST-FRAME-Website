@@ -102,17 +102,14 @@ export async function PublicShell({ active, children, inverted = false }: Public
 }
 
 export function PageIntro({
-  eyebrow,
   title,
   body,
 }: {
-  eyebrow: string;
   title: ReactNode;
   body: string;
 }) {
   return (
     <section className="page-intro frame-grid">
-      <p className="eyebrow">{eyebrow}</p>
       <h1 className="display display--page">{title}</h1>
       <p className="lede">{body}</p>
     </section>

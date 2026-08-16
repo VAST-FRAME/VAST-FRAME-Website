@@ -12,20 +12,17 @@ export default function ContactPage() {
   return (
     <PublicShell active="/contact" inverted>
       <PageIntro
-        eyebrow="Contact"
         title={<>Contact<br /><em>us.</em></>}
         body="For portfolios, press, business, and general studio inquiries, send us an email."
       />
       <section className="contact-list section-rule">
         <a className="contact-row" href={`mailto:${contactEmail}`}>
-          <span className="mono">01</span>
           <span>Email</span>
           <strong>{contactEmail}</strong>
           <span aria-hidden="true">↗</span>
         </a>
       </section>
       <section className="contact-note frame-grid section-rule">
-        <p className="eyebrow">VASTFRAME</p>
         <p>Independent game studio.<br />Working remotely.</p>
       </section>
     </PublicShell>

@@ -22,7 +22,7 @@ export default async function ProductDocsPage({ params }: Props) {
       <article className="docs-article">
         <header><p className="docs-breadcrumb"><a href="/docs">Docs</a><span>/</span>{product.name}</p><span className="status-chip">{document.versionLabel}</span><h1>{document.title}</h1><p>{document.summary}</p></header>
         <DocumentBody body={document.body} />
-        <footer><p className="eyebrow">Continue reading</p>{related.map((item) => <a href={`/docs/${key}/${item.slug}`} key={item.id}><strong>{item.title}</strong><span>{item.summary}</span><b>↗</b></a>)}</footer>
+        <footer>{related.map((item) => <a href={`/docs/${key}/${item.slug}`} key={item.id}><strong>{item.title}</strong><span>{item.summary}</span><b>↗</b></a>)}</footer>
       </article>
     </DocsShell>
   );

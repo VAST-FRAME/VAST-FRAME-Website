@@ -80,6 +80,16 @@ test("keeps the home hero and media typography collision-safe across aspect rati
   assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*4\s*\/\s*3\s*!important/s);
 });
 
+test("keeps public sections free of ornamental labels and frame borders", async () => {
+  const home = await (await render()).text();
+  const sdk = await (await render("/sdk")).text();
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.doesNotMatch(home, /home-hero__eyebrow|home-hero__index|product-tile__index|VASTFRAME \/ Unity technology/);
+  assert.doesNotMatch(sdk, /sdk-product__index|Open roles \/ 00|Shared production stack/);
+  assert.doesNotMatch(css, /\.site\s*\{[^}]*border-inline/s);
+});
+
 test("hides the Games index from anonymous visitors", async () => {
   const response = await render("/games");
   assert.equal(response.status, 404);
@@ -353,7 +363,7 @@ test("unlocks the protected site with an HttpOnly host cookie", async () => {
   assert.match(response.headers.get("cache-control"), /no-store/i);
   assert.match(response.headers.get("vary"), /RSC/i);
   assert.match(response.headers.get("vary"), /Cookie/i);
-  assert.match(await response.text(), /VASTFRAME SDK/);
+  assert.match(await response.text(), /Systems shaped/);
 });
 
 test("rejects cross-site preview unlock submissions", async () => {

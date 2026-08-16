@@ -11,14 +11,12 @@ export default async function DocsHomePage() {
   return (
     <DocsShell>
       <header className="docs-home-hero">
-        <p className="eyebrow">VASTFRAME SDK</p>
         <h1>Documentation.</h1>
         <p>Technical reference for Threshold, Atrium, Eclipse, and Causality, covering system architecture, capabilities, integration guidance, and APIs.</p>
       </header>
       <section className="docs-product-grid">
         {sdkProducts.map((product) => (
           <a href={`/docs/${product.slug}`} key={product.slug}>
-            <span className="mono">{product.index} / {product.kind}</span>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <small>{documents.filter((document) => document.productKey === product.slug).length} articles →</small>

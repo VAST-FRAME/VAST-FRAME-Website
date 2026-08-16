@@ -22,14 +22,9 @@ export default async function SplinterheartPage() {
           <span className="placeholder-kicker">A game by VASTFRAME</span>
           <span className="project-wordmark">Splinterheart</span>
         </MediaPlaceholder>
-        <div className="project-hero__caption">
-          <span className="eyebrow">{splinterheart.releaseDate} / {splinterheart.platforms}</span>
-          <span className="mono">Image slot 01 / Key art</span>
-        </div>
       </section>
 
       <section className="project-statement frame-grid section-rule">
-        <p className="eyebrow">Splinterheart</p>
         <h1 className="display display--page">Something is taking shape.</h1>
         <p className="lede">{splinterheart.statement}</p>
       </section>
@@ -41,7 +36,6 @@ export default async function SplinterheartPage() {
       </section>
 
       <section className="project-footer-cta section-rule frame-grid">
-        <p className="eyebrow">Development updates</p>
         <h2>Splinterheart news will live on Steam.</h2>
         <ArrowLink href="/contact">Contact the studio</ArrowLink>
       </section>

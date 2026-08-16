@@ -20,7 +20,7 @@ export async function DocsShell({ productKey, activeSlug, children }: { productK
               const documents = publicDocuments.filter((document) => document.productKey === key).sort((a, b) => a.navOrder - b.navOrder);
               return (
                 <details open={productKey === key} key={key}>
-                  <summary><span>{product.index}</span>{product.name}</summary>
+                  <summary>{product.name}</summary>
                   <div>{documents.map((document) => <a href={`/docs/${key}${document.slug === "overview" ? "" : `/${document.slug}`}`} aria-current={productKey === key && activeSlug === document.slug ? "page" : undefined} key={document.id}>{document.title.replace(`${product.name} `, "")}</a>)}</div>
                 </details>
               );
