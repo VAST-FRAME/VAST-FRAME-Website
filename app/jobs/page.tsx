@@ -11,7 +11,7 @@ export default function JobsPage() {
     <PublicShell active="/jobs">
       <PageIntro
         title={<>VASTFRAME,<br />small team.</>}
-        body="We look for people who like making cool things. If this describes you, we'd love to see your work, whether or not there are any listed jobs."
+        body="We look for people who like making cool things. If this describes you, we'd love to see your work, whether or not there are any listed roles."
       />
       <section className="empty-state section-rule frame-grid">
         <h2>No openings right now.</h2>

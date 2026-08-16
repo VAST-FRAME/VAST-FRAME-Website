@@ -454,8 +454,8 @@ button, input, textarea, select { font: inherit; }
 .empty-state .arrow-link { grid-column: 10 / 13; align-self: end; }
 
 .contact-list { padding: 4rem var(--page-pad) 8rem; }
-.contact-row { display: grid; grid-template-columns: 1fr 2fr 2rem; align-items: center; gap: 1rem; min-height: 8rem; border-bottom: 1px solid var(--line-light); text-decoration: none; }
-.contact-row:first-child { border-top: 1px solid var(--line-light); }
+.contact-row { display: grid; grid-template-columns: 1fr 2fr 2rem; align-items: center; gap: 1rem; min-height: 8rem; border-bottom: 1px solid var(--line-dark); text-decoration: none; }
+.contact-row:first-child { border-top: 1px solid var(--line-dark); }
 .contact-row > span:first-child { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .contact-row strong { font-family: var(--condensed); font-size: clamp(1.6rem, 4vw, 4rem); font-weight: 700; letter-spacing: -0.05em; }
 .contact-row > span:last-child { font-size: 1.4rem; transition: transform 160ms ease; }

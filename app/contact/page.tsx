@@ -10,9 +10,9 @@ const contactEmail = "contact@vastframe.com";
 
 export default function ContactPage() {
   return (
-    <PublicShell active="/contact" inverted>
+    <PublicShell active="/contact">
       <PageIntro
-        title={<>Contact<br /><em>us.</em></>}
+        title={<>Contact us.</>}
         body="For portfolios, press, business, and general studio inquiries, send us an email."
       />
       <section className="contact-list section-rule">
