@@ -41,12 +41,12 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, /SDK_INTEGRATED_STACK_HERO|Four systems\. One stack\./i);
   for (const slot of [
     "THRESHOLD_MATERIAL_RESPONSE_NAV",
-    "ATRIUM_CELESTIAL_FIELD_NAV",
     "ECLIPSE_UV_PIPELINE_NAV",
     "CAUSALITY_PROPAGATION_NAV",
   ]) {
     assert.match(html, new RegExp(slot));
   }
+  assert.match(html, /atrium-aurora\.mp4/);
   assert.match(html, /aria-label="Primary navigation"/i);
   for (const href of ["/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
@@ -124,8 +124,23 @@ test("gives every SDK product card its named color identity", async () => {
 
   for (const product of ["threshold", "atrium", "eclipse", "causality"]) {
     assert.match(html, new RegExp(`product-tile product-tile--${product}`));
-    assert.match(html, new RegExp(`media-placeholder--${product}`));
+    if (product === "atrium") assert.match(html, /product-tile__motion/);
+    else assert.match(html, new RegExp(`media-placeholder--${product}`));
   }
+});
+
+test("uses the Atrium aurora clip as an accessible hover preview", async () => {
+  const html = await (await render()).text();
+  const source = await readFile(new URL("../components/sdk-product-strip.tsx", import.meta.url), "utf8");
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.match(html, /<video[^>]*muted[^>]*loop[^>]*playsinline/i);
+  assert.match(html, /poster="\/media\/atrium-aurora-poster\.png"/i);
+  assert.match(html, /src="\/media\/atrium-aurora\.mp4"/i);
+  assert.match(source, /onMouseEnter=\{\(\) => playPreview\(product\.slug\)\}/);
+  assert.match(source, /onFocus=\{\(\) => playPreview\(product\.slug\)\}/);
+  assert.match(source, /prefers-reduced-motion: reduce/);
+  assert.match(css, /\.product-tile__motion video\s*\{[^}]*object-fit:\s*cover[^}]*object-position:\s*48% 50%/s);
 });
 
 test("keeps public sections free of ornamental labels and frame borders", async () => {
