@@ -148,7 +148,7 @@ button, input, textarea, select { font: inherit; }
 }
 
 .display em { font-family: inherit; font-style: italic; font-weight: inherit; text-transform: inherit; }
-.display--page { font-size: clamp(4rem, 10cqi, 9.5rem); }
+.display--page { font-size: clamp(3.25rem, 7cqi, 7.5rem); }
 .display--section { font-size: clamp(3.25rem, 7cqi, 7.5rem); }
 .display--article { font-size: clamp(4rem, 9cqi, 9rem); }
 
@@ -347,10 +347,10 @@ button, input, textarea, select { font: inherit; }
   .product-tile__motion video { transition: none; }
 }
 
-.page-intro { min-height: min(52rem, calc(100svh - var(--header-height))); align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
+.page-intro { height: clamp(26.25rem, 38svh, 30rem); min-height: 0; align-content: center; padding-top: clamp(2rem, 4.5svh, 4rem); padding-bottom: clamp(2rem, 4.5svh, 4rem); }
 .page-intro .eyebrow { grid-column: 1 / 4; }
-.page-intro .display { grid-column: 2 / 11; margin: 4rem 0; }
-.page-intro .lede { grid-column: 7 / 12; }
+.page-intro .display { grid-column: 1 / 13; margin: clamp(1.5rem, 3svh, 2.75rem) 0 clamp(1.75rem, 3.5svh, 3rem); }
+.page-intro .lede { grid-column: 2 / 9; font-size: clamp(1.4rem, 2.25cqi, 2.4rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.05; }
 
 .game-feature { display: grid; grid-template-columns: 1.55fr 1fr; gap: clamp(2rem, 6vw, 8rem); padding: clamp(3rem, 6vw, 6rem) var(--page-pad) clamp(6rem, 10vw, 10rem); }
 .game-feature__copy { align-self: center; }
@@ -462,33 +462,32 @@ button, input, textarea, select { font: inherit; }
 .contact-note .eyebrow { grid-column: 1 / 4; }
 .contact-note p:last-child { grid-column: 4 / 10; margin: 0; font-size: 1.25rem; }
 
-.pricing-hero { min-height: 34rem; align-content: center; padding-top: clamp(4rem, 8vw, 8rem); padding-bottom: clamp(4rem, 8vw, 8rem); }
-.pricing-hero h1 { grid-column: 1 / 9; }
-.pricing-hero > p { grid-column: 9 / 13; align-self: end; margin: 0; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.35rem); }
-.license-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.license-summary article { min-height: 13rem; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; border-right: 1px solid var(--line-dark); }
-.license-summary article:last-child { border-right: 0; }
-.license-summary strong { max-width: 13rem; font-family: var(--condensed); font-size: 1.75rem; letter-spacing: -0.04em; line-height: 0.95; text-transform: uppercase; }
-.license-summary span { max-width: 18rem; margin-top: auto; color: var(--muted); font-size: 0.78rem; }
+.license-overview { min-height: 26rem; align-content: center; gap: 3rem; padding-top: clamp(4rem, 7vw, 7rem); padding-bottom: clamp(4rem, 7vw, 7rem); }
+.license-overview h2,
+.pricing-eligibility h2 { grid-column: 1 / 8; margin: 0; font-family: var(--condensed); font-size: clamp(3rem, 5.5cqi, 5.5rem); letter-spacing: -0.06em; line-height: 0.88; text-transform: uppercase; }
+.license-overview > div,
+.pricing-eligibility > div { grid-column: 9 / 13; display: grid; gap: 1.25rem; }
+.license-overview p,
+.pricing-eligibility p { margin: 0; color: var(--muted); font-size: 0.85rem; }
 .pricing-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.pricing-card { --pricing-accent: var(--turquoise); min-width: 0; min-height: 43rem; display: flex; flex-direction: column; gap: 2rem; padding: clamp(1.25rem, 2vw, 2rem); border-right: 1px solid var(--line-dark); }
+.pricing-card { --pricing-accent: var(--turquoise); min-width: 0; min-height: 38rem; display: flex; flex-direction: column; gap: 2rem; padding: clamp(1.25rem, 2vw, 2rem); border-right: 1px solid var(--line-dark); container-type: inline-size; }
 .pricing-card:last-child { border-right: 0; }
 .pricing-card--threshold { --pricing-accent: var(--threshold); }
 .pricing-card--atrium { --pricing-accent: var(--atrium); }
 .pricing-card--eclipse { --pricing-accent: var(--eclipse); }
 .pricing-card--causality { --pricing-accent: var(--causality); }
-.pricing-card h2 { margin: 0 0 1rem; color: var(--pricing-accent); font-family: var(--condensed); font-size: clamp(2.25rem, 5cqi, 4.6rem); letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
+.pricing-card h2 { max-width: 100%; margin: 0 0 1rem; color: var(--pricing-accent); font-family: var(--condensed); font-size: clamp(2rem, 13cqi, 3.5rem); letter-spacing: -0.055em; line-height: 0.9; overflow-wrap: anywhere; text-transform: uppercase; }
 .pricing-card p { margin: 0; color: var(--muted); font-size: 0.82rem; }
-.pricing-card__price { margin-top: auto; font-family: var(--condensed); font-size: clamp(1.7rem, 3cqi, 2.6rem); letter-spacing: -0.04em; line-height: 1; }
-.pricing-card dl { margin: 0; border-top: 1px solid var(--line-dark); }
-.pricing-card dl div { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 0.75rem; padding: 0.72rem 0; border-bottom: 1px solid var(--line-dark); }
-.pricing-card dt { color: var(--muted); font-family: var(--mono); font-size: 0.55rem; text-transform: uppercase; }
-.pricing-card dd { margin: 0; font-size: 0.7rem; }
+.pricing-card__tiers { margin: auto 0 0; border-top: 1px solid var(--line-dark); }
+.pricing-tier { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line-dark); }
+.pricing-tier dt { display: grid; gap: 0.2rem; color: var(--paper); font-family: var(--mono); font-size: 0.63rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.pricing-tier dt small { color: var(--muted); font-size: 0.5rem; font-weight: 400; letter-spacing: 0; }
+.pricing-tier dd { display: grid; justify-items: end; margin: 0; }
+.pricing-tier dd strong { color: var(--pricing-accent); font-family: var(--condensed); font-size: clamp(2rem, 12cqi, 3.25rem); letter-spacing: -0.055em; line-height: 0.8; }
+.pricing-tier dd span { margin-top: 0.35rem; color: var(--muted); font-family: var(--mono); font-size: 0.48rem; text-transform: uppercase; }
+.pricing-tier dd a { color: var(--pricing-accent); font-family: var(--mono); font-size: 0.65rem; font-weight: 700; text-underline-offset: 0.25rem; text-transform: uppercase; }
 .pricing-card .arrow-link { width: 100%; color: var(--pricing-accent); }
-.license-definition { min-height: 34rem; align-content: center; padding-top: 6rem; padding-bottom: 6rem; }
-.license-definition h2 { grid-column: 1 / 8; margin: 0; font-family: var(--condensed); font-size: clamp(3.5rem, 7cqi, 7rem); letter-spacing: -0.065em; line-height: 0.85; text-transform: uppercase; }
-.license-definition > div { grid-column: 9 / 13; display: grid; gap: 1.5rem; }
-.license-definition p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.pricing-eligibility { min-height: 26rem; align-content: center; gap: 3rem; padding-top: clamp(4rem, 7vw, 7rem); padding-bottom: clamp(4rem, 7vw, 7rem); }
 
 .account-heading { display: flex; align-items: end; justify-content: space-between; gap: 3rem; min-height: 18rem; padding: clamp(3rem, 6vw, 6rem) var(--page-pad) 3rem; }
 .account-heading > div:first-child > span,
@@ -956,7 +955,7 @@ button, input, textarea, select { font: inherit; }
   .product-tile:nth-child(2n)::after { display: none; }
   .product-tile:nth-child(-n + 2) { border-bottom: 1px solid var(--line-dark); }
   .page-intro .display { grid-column: 1 / 13; }
-  .page-intro .lede { grid-column: 5 / 13; }
+  .page-intro .lede { grid-column: 2 / 9; }
   .game-feature { grid-template-columns: 1fr; }
   .system-map { grid-template-columns: 1fr; }
   .project-gallery { grid-template-columns: 1fr; }
@@ -975,16 +974,13 @@ button, input, textarea, select { font: inherit; }
   .technology-shot--portrait,
   .technology-shot--square { grid-column: span 5; }
   .technology-proof h2 { grid-column: 2 / 10; }
-  .pricing-hero h1 { grid-column: 1 / 9; }
-  .pricing-hero > p { grid-column: 9 / 13; }
-  .license-summary,
   .pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .license-summary article:nth-child(2),
   .pricing-card:nth-child(2) { border-right: 0; }
-  .license-summary article:nth-child(-n + 2),
   .pricing-card:nth-child(-n + 2) { border-bottom: 1px solid var(--line-dark); }
-  .license-definition h2 { grid-column: 1 / 8; }
-  .license-definition > div { grid-column: 8 / 13; }
+  .license-overview h2,
+  .pricing-eligibility h2 { grid-column: 1 / 8; }
+  .license-overview > div,
+  .pricing-eligibility > div { grid-column: 8 / 13; }
   .docs-layout { grid-template-columns: 15rem minmax(0, 1fr); }
   .empty-state h2 { grid-column: 3 / 13; }
   .empty-state > p:not(.eyebrow) { grid-column: 4 / 10; }
@@ -1017,6 +1013,7 @@ button, input, textarea, select { font: inherit; }
   :root { --header-height: 4rem; }
   .site { width: 100%; }
   .display { font-size: clamp(3.4rem, 19vw, 6rem); }
+  .display--page { font-size: clamp(3rem, 16vw, 5rem); }
   .display--section { font-size: clamp(3rem, 16vw, 5rem); }
   .frame-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .manifesto > .eyebrow,
@@ -1048,8 +1045,8 @@ button, input, textarea, select { font: inherit; }
   .product-strip { grid-template-columns: 1fr; }
   .product-tile { min-height: 32rem; border-right: 0; border-bottom: 1px solid var(--line-dark); }
   .product-tile::after { display: none; }
-  .page-intro { min-height: auto; padding-top: 5rem; padding-bottom: 5rem; }
-  .page-intro .display { margin: 3rem 0; }
+  .page-intro { height: auto; min-height: 22rem; padding-top: 3rem; padding-bottom: 3rem; }
+  .page-intro .display { margin: 2rem 0; }
   .project-hero { padding: 1rem; }
   .system-map__track li { grid-template-columns: 2.3rem 1fr; }
   .system-map__track small { grid-column: 2; }
@@ -1106,18 +1103,16 @@ button, input, textarea, select { font: inherit; }
   .docs-article__back a:last-child { justify-self: start; }
   .contact-row { grid-template-columns: 1fr 1rem; padding: 1.2rem 0; }
   .contact-row strong { grid-column: 1 / 3; overflow-wrap: anywhere; }
-  .pricing-hero { min-height: auto; gap: 3rem; }
-  .pricing-hero h1,
-  .pricing-hero > p,
-  .license-definition h2,
-  .license-definition > div { grid-column: 1 / 7; }
-  .license-summary,
+  .page-intro .lede,
+  .license-overview h2,
+  .license-overview > div,
+  .pricing-eligibility h2,
+  .pricing-eligibility > div { grid-column: 1 / 7; }
   .pricing-grid { grid-template-columns: 1fr; }
-  .license-summary article,
   .pricing-card { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line-dark); }
-  .license-summary article { min-height: 11rem; }
-  .pricing-card { min-height: 38rem; }
-  .license-definition { gap: 3rem; }
+  .pricing-card { min-height: 34rem; }
+  .license-overview,
+  .pricing-eligibility { gap: 3rem; }
   .account-heading { min-height: auto; align-items: flex-start; flex-direction: column; }
   .account-identity { justify-items: start; }
   .account-nav { grid-template-columns: repeat(2, 1fr); }

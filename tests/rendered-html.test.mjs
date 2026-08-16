@@ -75,18 +75,26 @@ test("uses direct public navigation without an SDK submenu", async () => {
   assert.doesNotMatch(html, /sdk-nav|mobile-sdk-nav|>SDK\s*\+?<\/|SDK navigation/i);
 });
 
-test("presents four independently licensed products with the shipping terms", async () => {
+test("presents four independently licensed products with per-title company tiers", async () => {
   const response = await render("/pricing");
   assert.equal(response.status, 200);
   const html = await response.text();
+  const visibleHtml = html.replaceAll("<!-- -->", "");
 
   for (const product of ["Threshold", "Atrium", "Eclipse", "Causality"]) {
     assert.match(html, new RegExp(`<h2>${product}</h2>`, "i"));
   }
-  assert.match(html, /Perpetual license/i);
+  assert.match(html, /Perpetual use/i);
   assert.match(html, /Two years of updates/i);
-  assert.match(html, /One shipped product/i);
-  assert.match(html, /Unlimited internal (?:R&amp;D|use)/i);
+  assert.match(html, /One (?:commercial )?title/i);
+  for (const price of [99, 199, 249, 349, 699, 899]) {
+    assert.match(visibleHtml, new RegExp(`\\$${price}`));
+  }
+  assert.match(html, /Independent/i);
+  assert.match(html, /Studio/i);
+  assert.match(html, /Enterprise/i);
+  assert.doesNotMatch(html, /Internal use/i);
+  assert.doesNotMatch(html, /<dt>Release<\/dt>/i);
   assert.match(html, /licensed independently/i);
   assert.match(html, /does not change the price/i);
   assert.doesNotMatch(html, /bundle|discount/i);
