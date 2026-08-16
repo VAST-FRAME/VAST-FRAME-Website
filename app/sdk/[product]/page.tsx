@@ -31,7 +31,6 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
     <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
         <SdkHero
-          kind={product.kind}
           title={product.name}
           statement={product.statement}
           description={product.description}

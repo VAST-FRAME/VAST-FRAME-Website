@@ -1,7 +1,6 @@
 import { ArrowLink } from "@/components/public-shell";
 
 type SdkHeroProps = {
-  kind: string;
   title: string;
   description: string;
   documentationHref: string;
@@ -9,7 +8,6 @@ type SdkHeroProps = {
 };
 
 export function SdkHero({
-  kind,
   title,
   description,
   documentationHref,
@@ -17,7 +15,6 @@ export function SdkHero({
 }: SdkHeroProps) {
   return (
     <header className={`technology-hero frame-grid${statement ? "" : " technology-hero--overview"}`}>
-      <p className="mono technology-hero__kind">{kind}</p>
       <h1 className="display technology-hero__title">{title}</h1>
       {statement ? <p className="technology-hero__statement">{statement}</p> : null}
       <p className="technology-hero__description">{description}</p>

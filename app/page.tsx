@@ -13,7 +13,6 @@ export default function Home() {
     <PublicShell active="/">
       <section className="technology technology--sdk">
         <SdkHero
-          kind="Unity technology"
           title="VASTFRAME SDK"
           description="Cutting-edge tech for Unity."
           documentationHref="/docs"

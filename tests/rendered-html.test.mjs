@@ -31,6 +31,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
   assert.match(html, /Cutting-edge tech for Unity/i);
   assert.match(html, /VASTFRAME SDK/i);
+  assert.doesNotMatch(html, /Unity technology|technology-hero__kind/i);
   assert.doesNotMatch(html, /VASTFRAME builds rendering|Rendering, atmosphere, scene processing, and simulation/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
@@ -161,6 +162,7 @@ for (const [slug, name, slot] of [
     assert.equal(response.status, 200);
     const html = await response.text();
     assert.match(html, new RegExp(name));
+    assert.doesNotMatch(html, /Rendering system|Sky and atmosphere|Scene pipeline|World simulation|technology-hero__kind/i);
     assert.match(html, new RegExp(slot));
     assert.match(html, /Rendering showcase/);
     assert.match(html, /class="product-strip product-strip--navigation"/);

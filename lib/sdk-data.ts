@@ -13,7 +13,6 @@ export type SdkProduct = {
   index: string;
   slug: "threshold" | "atrium" | "eclipse" | "causality";
   name: string;
-  kind: string;
   description: string;
   statement: string;
   capabilities: ReadonlyArray<{ title: string; items: readonly string[] }>;
@@ -25,7 +24,6 @@ export const sdkProducts: readonly SdkProduct[] = [
     index: "01",
     slug: "threshold",
     name: "Threshold",
-    kind: "Rendering system",
     description: "A high-fidelity renderer for authored light, responsive materials, reflection, geometry, and spatial depth.",
     statement: "Make every light source, surface, and shadow carry its weight.",
     capabilities: [
@@ -47,7 +45,6 @@ export const sdkProducts: readonly SdkProduct[] = [
     index: "02",
     slug: "atrium",
     name: "Atrium",
-    kind: "Sky and atmosphere",
     description: "A physically based atmosphere and celestial renderer for skies that behave like part of the world.",
     statement: "The world does not stop at the horizon.",
     capabilities: [
@@ -68,7 +65,6 @@ export const sdkProducts: readonly SdkProduct[] = [
     index: "03",
     slug: "eclipse",
     name: "Eclipse",
-    kind: "Scene pipeline",
     description: "Production infrastructure for baking, visibility, packing, and streaming large authored spaces.",
     statement: "Build the scene once. Let the pipeline carry it.",
     capabilities: [
@@ -89,7 +85,6 @@ export const sdkProducts: readonly SdkProduct[] = [
     index: "04",
     slug: "causality",
     name: "Causality",
-    kind: "World simulation",
     description: "A systemic simulation framework for energy, fire, air, surfaces, objects, and characters.",
     statement: "A world is convincing when one change can become another.",
     capabilities: [

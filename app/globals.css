@@ -393,7 +393,6 @@ button, input, textarea, select { font: inherit; }
 .technology--causality { --technology-accent: #f0d44f; }
 .technology-hero { height: clamp(26.25rem, 38svh, 30rem); min-height: 0; align-content: center; padding-top: clamp(2rem, 4.5svh, 4rem); padding-bottom: clamp(2rem, 4.5svh, 4rem); }
 .technology-hero > .eyebrow { grid-column: 1 / 5; }
-.technology-hero__kind { grid-column: 10 / 13; justify-self: end; color: var(--muted); text-transform: uppercase; }
 .technology-hero__title { grid-column: 1 / 13; max-width: 100%; margin: clamp(1.5rem, 3svh, 2.75rem) 0 clamp(1.75rem, 3.5svh, 3rem); color: var(--technology-accent); font-size: clamp(3.25rem, 7cqi, 7.5rem); white-space: normal; }
 .technology-hero__statement { grid-column: 2 / 8; margin: 0; font-family: var(--sans); font-size: clamp(1.75rem, 2.5cqi, 3rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1; }
 .technology-hero__description { grid-column: 8 / 12; align-self: end; margin: 0; color: var(--muted); font-size: 1rem; }
@@ -955,7 +954,6 @@ button, input, textarea, select { font: inherit; }
   .sdk-product__actions { min-width: 0; }
   .sdk-principle__action { grid-column: 1 / 7; margin-top: 2rem; }
   .technology-hero { display: flex; height: auto; min-height: auto; flex-direction: column; align-items: flex-start; padding-top: clamp(2.5rem, 8svh, 4rem); padding-bottom: clamp(2.5rem, 8svh, 4rem); }
-  .technology-hero__kind { order: 1; margin-top: 1rem; }
   .technology-hero__title { order: 2; margin: 2.5rem 0 1.5rem; font-size: clamp(3rem, 16vw, 5rem); }
   .technology-hero__statement { order: 3; }
   .technology-hero__description { order: 4; margin-top: 2rem; }
