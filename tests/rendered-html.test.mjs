@@ -68,6 +68,18 @@ test("keeps emphasized display text in the surrounding typeface", async () => {
   assert.match(css, /\.technology-proof h2 em\s*\{[^}]*font-family:\s*inherit[^}]*font-style:\s*italic/s);
 });
 
+test("keeps the home hero and media typography collision-safe across aspect ratios", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.home-hero__title\s*\{[^}]*grid-column:\s*1\s*\/\s*13[^}]*grid-row:\s*2/s);
+  assert.match(css, /\.home-hero__intro\s*\{[^}]*grid-column:\s*1\s*\/\s*7[^}]*grid-row:\s*3/s);
+  assert.match(css, /\.home-hero__actions\s*\{[^}]*grid-column:\s*9\s*\/\s*13[^}]*grid-row:\s*3/s);
+  assert.doesNotMatch(css, /\.home-hero__intro\s*\{[^}]*grid-row:\s*2/s);
+  assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
+  assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);
+  assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*16\s*\/\s*9\s*!important/s);
+  assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*4\s*\/\s*3\s*!important/s);
+});
+
 test("hides the Games index from anonymous visitors", async () => {
   const response = await render("/games");
   assert.equal(response.status, 404);
