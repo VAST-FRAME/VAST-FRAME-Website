@@ -47,7 +47,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   ]) {
     assert.match(html, new RegExp(slot));
   }
-  assert.match(html, /aria-label="SDK navigation"/i);
+  assert.match(html, /aria-label="Primary navigation"/i);
   for (const href of ["/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
   }
@@ -66,6 +66,20 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.ok(html.indexOf('class="technology-hero frame-grid technology-hero--overview"') < html.indexOf('class="product-strip product-strip--navigation"'));
   assert.match(html, /technology-hero__actions[\s\S]*Read the documentation/i);
   assert.doesNotMatch(homeSource, /home-hero|MediaPlaceholder/);
+});
+
+test("uses four direct primary navigation links without an SDK submenu", async () => {
+  const html = await (await render()).text();
+
+  assert.match(
+    html,
+    /aria-label="Primary navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>/i,
+  );
+  assert.match(
+    html,
+    /aria-label="Mobile navigation"[\s\S]*?>Main<\/a>[\s\S]*?>Docs<\/a>[\s\S]*?>Jobs<\/a>[\s\S]*?>Contact<\/a>/i,
+  );
+  assert.doesNotMatch(html, /sdk-nav|mobile-sdk-nav|>SDK\s*\+?<\/|SDK navigation/i);
 });
 
 test("uses one safe line-height for oversized display headings", async () => {

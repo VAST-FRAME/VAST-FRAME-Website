@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages -- Full document navigation is intentional behind the preview access gateway. */
 import type { ReactNode } from "react";
-import { developerNavigation, publicNavigation, sdkNavigation } from "@/lib/site-data";
+import { publicNavigation } from "@/lib/site-data";
 import { getWorkbenchAccess } from "@/lib/workbench/auth";
 
 type PublicShellProps = {
@@ -11,12 +11,6 @@ type PublicShellProps = {
 
 export async function PublicShell({ active, children, inverted = false }: PublicShellProps) {
   const developerAccess = await getWorkbenchAccess();
-  const sdkIsActive = active?.startsWith("/sdk") || active?.startsWith("/docs");
-  const leadingNavigation = [
-    publicNavigation[0],
-    ...(developerAccess ? developerNavigation : []),
-  ];
-  const trailingNavigation = publicNavigation.slice(1);
 
   return (
     <div className={inverted ? "site site--paper" : "site"}>
@@ -25,29 +19,7 @@ export async function PublicShell({ active, children, inverted = false }: Public
           VAST<span>FRAME</span>
         </a>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {leadingNavigation.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              aria-current={active === item.href ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
-          <details className="sdk-nav">
-            <summary aria-current={sdkIsActive ? "page" : undefined}>
-              <span>SDK</span>
-              <b aria-hidden="true">+</b>
-            </summary>
-            <div className="sdk-nav__panel" aria-label="SDK navigation">
-              {sdkNavigation.map((item) => (
-                <a key={item.href} href={item.href} aria-current={active === item.href ? "page" : undefined}>
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </details>
-          {trailingNavigation.map((item) => (
+          {publicNavigation.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -60,21 +32,12 @@ export async function PublicShell({ active, children, inverted = false }: Public
         <details className="mobile-nav">
           <summary aria-label="Open navigation">Menu</summary>
           <nav aria-label="Mobile navigation">
-            {leadingNavigation.map((item) => (
-              <a key={item.href} href={item.href}>
-                {item.label}
-              </a>
-            ))}
-            <details className="mobile-sdk-nav">
-              <summary>SDK <span aria-hidden="true">+</span></summary>
-              <div aria-label="Mobile SDK navigation">
-                {sdkNavigation.map((item) => (
-                  <a key={item.href} href={item.href}>{item.label}</a>
-                ))}
-              </div>
-            </details>
-            {trailingNavigation.map((item) => (
-              <a key={item.href} href={item.href}>
+            {publicNavigation.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                aria-current={active === item.href ? "page" : undefined}
+              >
                 {item.label}
               </a>
             ))}
