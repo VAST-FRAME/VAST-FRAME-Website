@@ -26,6 +26,7 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
+  const homeSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
   assert.match(html, /<title>VASTFRAME — Real-Time Technology Studio<\/title>/i);
   assert.match(html, /Cutting-edge tech for Unity/i);
@@ -59,6 +60,8 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, /devlog|publishing|Splinterheart|Worlds with weight|News, when there is news|Independent games|href="\/games/i);
   assert.match(html, /Made for/);
   assert.match(html, /real worlds/i);
+  assert.equal((homeSource.match(/Read the documentation/gi) ?? []).length, 1);
+  assert.doesNotMatch(homeSource, /home-hero__actions/);
 });
 
 test("uses one safe line-height for oversized display headings", async () => {
@@ -77,7 +80,7 @@ test("keeps emphasized display text in the surrounding typeface", async () => {
 test("keeps the home hero and media typography collision-safe across aspect ratios", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.home-hero__title\s*\{[^}]*grid-column:\s*1\s*\/\s*13[^}]*grid-row:\s*2/s);
-  assert.match(css, /\.home-hero__actions\s*\{[^}]*grid-column:\s*9\s*\/\s*13[^}]*grid-row:\s*3/s);
+  assert.doesNotMatch(css, /\.home-hero__actions/);
   assert.match(css, /\.media-placeholder\s*\{[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.placeholder-title[\s\S]*font-size:\s*clamp\([^;]*cqi/s);
   assert.match(css, /\.home-hero__media\s*\{[^}]*--media-ratio:\s*16\s*\/\s*9\s*!important/s);
@@ -155,6 +158,8 @@ for (const [slug, name, slot] of [
     assert.match(html, /class="product-strip product-strip--navigation"/);
     assert.match(html, /aria-label="SDK products"/);
     assert.match(html, new RegExp(`href="/sdk/${slug}" aria-current="page"`));
+    assert.ok(html.indexOf('class="technology-hero frame-grid"') < html.indexOf('class="product-strip product-strip--navigation"'));
+    assert.ok(html.indexOf('class="product-strip product-strip--navigation"') < html.indexOf('class="technology-lead-media"'));
     assert.doesNotMatch(html, /technology-subnav|technology-next|Made for|real worlds/i);
     assert.doesNotMatch(html, /Every image has a job|production capture briefs|decorative boxes/i);
     assert.match(html, new RegExp(`/docs/${slug}`));

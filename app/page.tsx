@@ -15,9 +15,6 @@ export default function Home() {
         <h1 className="display home-hero__title">
           Cutting-edge tech for Unity.
         </h1>
-        <div className="home-hero__actions">
-          <ArrowLink href="/docs">Read the documentation</ArrowLink>
-        </div>
         <MediaPlaceholder slot="SDK_INTEGRATED_STACK_HERO" ratio="21 / 9" tone="checker" className="home-hero__media">
           <span className="placeholder-title">Threshold / Atrium / Eclipse / Causality</span>
           <span className="placeholder-note">Wide production scene / all four systems visible in one frame</span>

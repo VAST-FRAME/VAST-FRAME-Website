@@ -29,8 +29,6 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
   return (
     <PublicShell active={`/sdk/${product.slug}`}>
       <article className={`technology technology--${product.slug}`}>
-        <SdkProductStrip activeSlug={product.slug} />
-
         <header className="technology-hero frame-grid">
           <p className="mono technology-hero__kind">{product.kind}</p>
           <h1 className="display technology-hero__title">{product.name}</h1>
@@ -41,6 +39,8 @@ export default async function SdkProductPage({ params }: ProductPageProps) {
             <span className="status-chip">In active development</span>
           </div>
         </header>
+
+        <SdkProductStrip activeSlug={product.slug} />
 
         <section className="technology-lead-media">
           <MediaPlaceholder
