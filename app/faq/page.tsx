@@ -42,8 +42,12 @@ const faqCategories = [
     title: "Products",
     questions: [
       {
-        question: "Are Threshold, Atrium, Eclipse, and Causality separate products?",
+        question: "Are Threshold, Eclipse, and Causality separate products?",
         answer: "Yes. Each product may be licensed independently, and each has its own documentation, releases, and entitlement.",
+      },
+      {
+        question: "Is atmosphere a separate product?",
+        answer: "No. Physically based atmosphere, celestial rendering, clouds, aurora, and distant phenomena are included in Threshold.",
       },
       {
         question: "Can the products be used together?",

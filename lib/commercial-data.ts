@@ -1,4 +1,4 @@
-export type CommercialProductKey = "threshold" | "atrium" | "eclipse" | "causality" | "mesh-graph";
+export type CommercialProductKey = "threshold" | "eclipse" | "causality" | "mesh-graph";
 
 export type CommercialProduct = {
   key: CommercialProductKey;
@@ -13,34 +13,26 @@ export const commercialProducts: readonly CommercialProduct[] = [
   {
     key: "threshold",
     name: "Threshold",
-    description: "High-fidelity authored lighting, materials, reflection, geometry, and spatial depth.",
+    description: "High-fidelity authored lighting, materials, reflection, geometry, atmosphere, and celestial rendering.",
     availability: "development",
-    studioPriceUsd: 2799,
-    priceLabel: "Studio $2,799 / Enterprise contact",
-  },
-  {
-    key: "atrium",
-    name: "Atrium",
-    description: "Physically based atmosphere, celestial rendering, clouds, and distant phenomena.",
-    availability: "development",
-    studioPriceUsd: 799,
-    priceLabel: "Studio $799 / Enterprise contact",
+    studioPriceUsd: 3799,
+    priceLabel: "Studio $3,799 / Enterprise contact",
   },
   {
     key: "eclipse",
     name: "Eclipse",
     description: "Scene processing, baking, UV preparation, visibility, packing, and area streaming.",
     availability: "development",
-    studioPriceUsd: 799,
-    priceLabel: "Studio $799 / Enterprise contact",
+    studioPriceUsd: 1399,
+    priceLabel: "Studio $1,399 / Enterprise contact",
   },
   {
     key: "causality",
     name: "Causality",
     description: "Systemic simulation for energy, fire, air, surfaces, objects, and characters.",
     availability: "development",
-    studioPriceUsd: 799,
-    priceLabel: "Studio $799 / Enterprise contact",
+    studioPriceUsd: 1399,
+    priceLabel: "Studio $1,399 / Enterprise contact",
   },
 ] as const;
 

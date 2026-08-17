@@ -14,7 +14,7 @@ export const sdkDocuments: readonly SeedDocument[] = [
     id: "docs-threshold-overview", slug: "overview", parentSlug: null, productKey: "threshold", entryType: "overview", navOrder: 10,
     title: "Threshold overview", summary: "The rendering system, its capability boundaries, and how to evaluate it.",
     body: `## What Threshold owns
-Threshold is VASTFRAME's high-fidelity rendering system. It brings shadow filtering, lighting acquisition, material response, geometry detail, reflection, water, and reconstruction into one production surface.
+Threshold is VASTFRAME's high-fidelity rendering system. It brings shadow filtering, lighting acquisition, material response, geometry detail, reflection, water, reconstruction, physically based atmosphere, clouds, and celestial presentation into one production surface.
 
 > Development documentation: Threshold is pre-1.0. Public contracts and supported combinations may change as validation closes.
 
@@ -24,6 +24,8 @@ Threshold is VASTFRAME's high-fidelity rendering system. It brings shadow filter
 - Materials: high-fidelity BRDF response, preintegrated subsurface scattering, and a toon-shading path.
 - Surfaces: GPU tessellation, water, screen-space reflection, and analytic reflection fallback.
 - Reconstruction: integration paths for DLSS, FSR, and STP.
+- Atmosphere: physically based sky, aerial perspective, celestial bodies, and Milky Way presentation.
+- Clouds and phenomena: dynamically lit six-directional cloud sequences, aurora, and distant lightning.
 
 ## Evaluation order
 Start with the shadow architecture, then verify lighting continuity, material response, reflection fallback, and reconstruction behavior in the target production profile. Each capability page will grow alongside validated examples and capture evidence.`,
@@ -68,15 +70,12 @@ DLSS, FSR, and STP integrations must be evaluated with the exact motion-vector, 
   },
   {
     ...shared,
-    id: "docs-atrium-overview", slug: "overview", parentSlug: null, productKey: "atrium", entryType: "overview", navOrder: 10,
-    title: "Atrium overview", summary: "Physical atmosphere, celestial presentation, cloud sequences, and distant phenomena.",
-    body: `## What Atrium owns
-Atrium renders the world above and beyond the playable space: physically based atmosphere, celestial bodies, the Milky Way, dynamically lit cloud sequences, aurora, and distant lightning.
+    id: "docs-threshold-atmosphere-overview", slug: "atmosphere-and-sky", parentSlug: "overview", productKey: "threshold", entryType: "overview", navOrder: 40,
+    title: "Atmosphere and sky", summary: "Physical atmosphere, celestial presentation, cloud sequences, and distant phenomena inside Threshold.",
+    body: `## A continuous rendering system
+Threshold renders the world above and beyond the playable space: physically based atmosphere, celestial bodies, the Milky Way, dynamically lit cloud sequences, aurora, and distant lightning.
 
-> Development documentation: Atrium is pre-1.0. Capture evidence and authoring contracts will be published as their validation closes.
-
-## Design principle
-Sky presentation should remain continuous with the lighting and exposure of the world beneath it. Atmosphere, clouds, and celestial light are evaluated together, not as unrelated background layers.
+Sky presentation remains continuous with the lighting and exposure of the world beneath it. Atmosphere, clouds, and celestial light are evaluated as part of Threshold rather than as unrelated background layers.
 
 ## Capability map
 - Physically based sky and aerial perspective.
@@ -86,8 +85,8 @@ Sky presentation should remain continuous with the lighting and exposure of the 
   },
   {
     ...shared,
-    id: "docs-atrium-atmosphere", slug: "atmosphere-and-celestial-field", parentSlug: "overview", productKey: "atrium", entryType: "concept", navOrder: 20,
-    title: "Atmosphere and celestial field", summary: "The relationship between atmospheric depth, time, light direction, and astronomical presentation.",
+    id: "docs-threshold-atmosphere", slug: "atmosphere-and-celestial-field", parentSlug: "atmosphere-and-sky", productKey: "threshold", entryType: "concept", navOrder: 50,
+    title: "Atmosphere and celestial field", summary: "The relationship between atmospheric depth, time, light direction, and astronomical presentation in Threshold.",
     body: `## Atmospheric continuity
 The useful test is not a perfect clear noon. Evaluate sunrise, high noon, dusk, night, high altitude, and long-distance silhouettes under one exposure strategy.
 
@@ -102,7 +101,7 @@ Sun, moon, stars, and the Milky Way must retain plausible hierarchy without prev
   },
   {
     ...shared,
-    id: "docs-atrium-phenomena", slug: "clouds-and-distant-phenomena", parentSlug: "overview", productKey: "atrium", entryType: "guide", navOrder: 30,
+    id: "docs-threshold-phenomena", slug: "clouds-and-distant-phenomena", parentSlug: "atmosphere-and-sky", productKey: "threshold", entryType: "guide", navOrder: 60,
     title: "Clouds and distant phenomena", summary: "Production use of six-directional cloud data, aurora, and distant lightning.",
     body: `## Six-directional cloud sequences
 Six-directional data allows a prepared cloud sequence to respond quickly to changing illumination. Evaluate sequence cadence, directional-light changes, self-shadowing, and transitions between authored states.
@@ -210,7 +209,7 @@ Physics destruction participates in the same causal record. Changed geometry can
   },
 ] as const;
 
-export const documentationProducts = ["threshold", "atrium", "eclipse", "causality"] as const;
+export const documentationProducts = ["threshold", "eclipse", "causality"] as const;
 
 export function documentsForProduct(productKey: string) {
   return sdkDocuments.filter((document) => document.productKey === productKey).sort((a, b) => a.navOrder - b.navOrder);

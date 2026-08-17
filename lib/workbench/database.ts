@@ -198,6 +198,30 @@ async function seedKnowledge(database: D1Database): Promise<void> {
   }
 
   await database.batch(seedStatements);
+  const thresholdOverview = sdkDocuments.find((document) => document.id === "docs-threshold-overview");
+  if (thresholdOverview) {
+    await database.batch([
+      database.prepare(
+        `INSERT OR IGNORE INTO knowledge_entry_revisions (
+          id, entry_id, revision, slug, parent_id, product_key, entry_type, title, summary, body,
+          version_label, publication_status, nav_order, change_kind, authored_by
+        ) VALUES ('revision-docs-threshold-overview-2', ?1, 2, ?2, NULL, ?3, ?4, ?5, ?6, ?7, ?8, 'published', ?9, 'publish', 'system-migration')`,
+      ).bind(thresholdOverview.id, `${thresholdOverview.productKey}/${thresholdOverview.slug}`, thresholdOverview.productKey,
+        thresholdOverview.entryType, thresholdOverview.title, thresholdOverview.summary, thresholdOverview.body,
+        thresholdOverview.versionLabel, thresholdOverview.navOrder),
+      database.prepare(
+        `UPDATE knowledge_entries
+         SET title=?1, summary=?2, body=?3, revision=2, published_revision=2,
+           updated_by='system-migration', updated_at=CURRENT_TIMESTAMP
+         WHERE id='docs-threshold-overview' AND revision=1 AND updated_by='system-seed'`,
+      ).bind(thresholdOverview.title, thresholdOverview.summary, thresholdOverview.body),
+    ]);
+  }
+  await database.prepare(
+    `UPDATE knowledge_entries
+     SET publication_status='archived', published_revision=NULL, updated_by='system-migration', updated_at=CURRENT_TIMESTAMP
+     WHERE space_id='space-sdk-docs' AND product_key='atrium' AND updated_by='system-seed'`,
+  ).run();
   await database.prepare(
     `INSERT OR IGNORE INTO knowledge_entries (
       id, space_id, slug, parent_id, product_key, entry_type, title, summary, body,

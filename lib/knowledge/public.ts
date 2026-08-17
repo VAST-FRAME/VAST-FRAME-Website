@@ -1,4 +1,4 @@
-import { sdkDocuments } from "./sdk-documents";
+import { documentationProducts, sdkDocuments } from "./sdk-documents";
 
 export type PublicSdkDocument = {
   id: string; slug: string; parentSlug: string | null; productKey: string; entryType: string;
@@ -35,7 +35,8 @@ export async function getPublicSdkDocuments(): Promise<PublicSdkDocument[]> {
     if (result.results.length === 0) return fallbackDocuments;
     return result.results.map((row) => ({ id: row.id, slug: row.slug, parentSlug: row.parent_slug, productKey: row.product_key,
       entryType: row.entry_type, title: row.title, summary: row.summary, body: row.body, versionLabel: row.version_label,
-      navOrder: row.nav_order, publishedRevision: row.published_revision }));
+      navOrder: row.nav_order, publishedRevision: row.published_revision }))
+      .filter((document) => documentationProducts.some((product) => product === document.productKey));
   } catch {
     return fallbackDocuments;
   }

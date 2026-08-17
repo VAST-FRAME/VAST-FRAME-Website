@@ -9,11 +9,10 @@ test("the visual system keeps turquoise for VASTFRAME and assigns each SDK produ
   const css = await readFile(path.join(root, "app/globals.css"), "utf8");
   assert.match(css, /--turquoise:\s*#069d9f/i);
   assert.match(css, /--threshold:\s*#d9578a/i);
-  assert.match(css, /--atrium:\s*#78c5f0/i);
+  assert.match(css, /--threshold-sky:\s*#78c5f0/i);
   assert.match(css, /--eclipse:\s*#f56f52/i);
   assert.match(css, /--causality:\s*#7859f5/i);
   assert.match(css, /\.technology--threshold\s*\{[^}]*var\(--threshold\)/s);
-  assert.match(css, /\.technology--atrium\s*\{[^}]*var\(--atrium\)/s);
   assert.match(css, /\.technology--eclipse\s*\{[^}]*var\(--eclipse\)/s);
   assert.match(css, /\.technology--causality\s*\{[^}]*var\(--causality\)/s);
 });

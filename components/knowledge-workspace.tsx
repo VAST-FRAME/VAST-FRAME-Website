@@ -5,7 +5,7 @@ import type { KnowledgeEntry, KnowledgeEntryType, KnowledgeRelationship, Knowled
 import { workbenchMutationHeaders } from "@/lib/workbench/request";
 import type { WorkbenchRole } from "@/lib/workbench/auth";
 
-const products = ["threshold", "atrium", "eclipse", "causality"];
+const products = ["threshold", "eclipse", "causality"];
 const documentationEntryTypes: KnowledgeEntryType[] = ["overview", "concept", "guide", "reference"];
 const wikiEntryTypes: KnowledgeEntryType[] = ["category", "character", "enemy", "weapon", "location", "faction", "story", "system", "production", "lore"];
 const spaceOptions: ReadonlyArray<{ key: KnowledgeSpaceKey; label: string; title: string; projectKey: string; visibility: string }> = [

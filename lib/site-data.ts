@@ -3,7 +3,7 @@ export type MediaTone =
   | "turquoise"
   | "checker"
   | "threshold"
-  | "atrium"
+  | "sky"
   | "eclipse"
   | "causality";
 

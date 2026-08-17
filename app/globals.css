@@ -9,7 +9,7 @@
   --turquoise: #069d9f;
   --turquoise-deep: #007f82;
   --threshold: #d9578a;
-  --atrium: #78c5f0;
+  --threshold-sky: #78c5f0;
   --eclipse: #f56f52;
   --causality: #7859f5;
   --line-dark: rgba(244, 242, 237, 0.17);
@@ -208,7 +208,7 @@ button, input, textarea, select { font: inherit; }
 .media-placeholder--neutral { background: #77777b; color: #19191b; }
 .media-placeholder--turquoise { --media-accent: var(--turquoise); background: var(--media-accent); color: var(--ink); }
 .media-placeholder--threshold { --media-accent: var(--threshold); background: var(--media-accent); color: var(--ink); }
-.media-placeholder--atrium { --media-accent: var(--atrium); background: var(--media-accent); color: var(--ink); }
+.media-placeholder--sky { --media-accent: var(--threshold-sky); background: var(--media-accent); color: var(--ink); }
 .media-placeholder--eclipse { --media-accent: var(--eclipse); background: var(--media-accent); color: var(--ink); }
 .media-placeholder--causality { --media-accent: var(--causality); background: var(--media-accent); color: var(--ink); }
 .media-placeholder--checker {
@@ -256,8 +256,8 @@ button, input, textarea, select { font: inherit; }
 .media-placeholder--turquoise .media-placeholder__ratio,
 .media-placeholder--threshold .media-placeholder__slot,
 .media-placeholder--threshold .media-placeholder__ratio,
-.media-placeholder--atrium .media-placeholder__slot,
-.media-placeholder--atrium .media-placeholder__ratio,
+.media-placeholder--sky .media-placeholder__slot,
+.media-placeholder--sky .media-placeholder__ratio,
 .media-placeholder--eclipse .media-placeholder__slot,
 .media-placeholder--eclipse .media-placeholder__ratio,
 .media-placeholder--causality .media-placeholder__slot,
@@ -304,10 +304,9 @@ button, input, textarea, select { font: inherit; }
 .section-heading .section-note { grid-column: 11 / 13; align-self: end; margin: 0; }
 .section-note { color: var(--muted); font-size: 0.8rem; }
 
-.product-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); }
+.product-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); border-bottom: 1px solid var(--line-dark); }
 .product-tile { --product-accent: var(--turquoise); position: relative; display: flex; min-width: 0; min-height: clamp(30rem, 50svh, 38rem); flex-direction: column; padding: clamp(1.25rem, 1.6vw, 1.75rem); color: inherit; text-decoration: none; container-type: inline-size; }
 .product-tile--threshold { --product-accent: var(--threshold); }
-.product-tile--atrium { --product-accent: var(--atrium); }
 .product-tile--eclipse { --product-accent: var(--eclipse); }
 .product-tile--causality { --product-accent: var(--causality); }
 .product-tile:not(:last-child)::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 1px; background: var(--line-dark); pointer-events: none; }
@@ -400,7 +399,6 @@ button, input, textarea, select { font: inherit; }
 
 .technology { --technology-accent: var(--turquoise); }
 .technology--threshold { --technology-accent: var(--threshold); }
-.technology--atrium { --technology-accent: var(--atrium); }
 .technology--eclipse { --technology-accent: var(--eclipse); }
 .technology--causality { --technology-accent: var(--causality); }
 .technology-hero { height: clamp(26.25rem, 38svh, 30rem); min-height: 0; align-content: center; padding-top: clamp(2rem, 4.5svh, 4rem); padding-bottom: clamp(2rem, 4.5svh, 4rem); }
@@ -469,11 +467,10 @@ button, input, textarea, select { font: inherit; }
 .pricing-eligibility > div { grid-column: 9 / 13; display: grid; gap: 1.25rem; }
 .license-overview p,
 .pricing-eligibility p { margin: 0; color: var(--muted); font-size: 0.85rem; }
-.pricing-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .pricing-card { --pricing-accent: var(--turquoise); min-width: 0; min-height: 34rem; display: flex; flex-direction: column; gap: 2rem; padding: clamp(1.25rem, 2vw, 2rem); border-right: 1px solid var(--line-dark); container-type: inline-size; }
 .pricing-card:last-child { border-right: 0; }
 .pricing-card--threshold { --pricing-accent: var(--threshold); }
-.pricing-card--atrium { --pricing-accent: var(--atrium); }
 .pricing-card--eclipse { --pricing-accent: var(--eclipse); }
 .pricing-card--causality { --pricing-accent: var(--causality); }
 .pricing-card h2 { max-width: 100%; margin: 0 0 1rem; color: var(--pricing-accent); font-family: var(--condensed); font-size: clamp(2rem, 13cqi, 3.5rem); letter-spacing: -0.055em; line-height: 0.9; overflow-wrap: anywhere; text-transform: uppercase; }

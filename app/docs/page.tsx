@@ -12,7 +12,7 @@ export default async function DocsHomePage() {
     <DocsShell>
       <header className="docs-home-hero">
         <h1>Documentation.</h1>
-        <p>Technical reference for Threshold, Atrium, Eclipse, and Causality, covering system architecture, capabilities, integration guidance, and APIs.</p>
+        <p>Technical reference for Threshold, Eclipse, and Causality, covering system architecture, capabilities, integration guidance, and APIs.</p>
       </header>
       <section className="docs-product-grid">
         {sdkProducts.map((product) => (

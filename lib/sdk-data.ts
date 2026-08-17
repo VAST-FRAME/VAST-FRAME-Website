@@ -11,7 +11,7 @@ export type ShowcaseMedia = {
 
 export type SdkProduct = {
   index: string;
-  slug: "threshold" | "atrium" | "eclipse" | "causality";
+  slug: "threshold" | "eclipse" | "causality";
   name: string;
   description: string;
   statement: string;
@@ -26,7 +26,7 @@ export const sdkProducts: readonly SdkProduct[] = [
     index: "01",
     slug: "threshold",
     name: "Threshold",
-    description: "A high-fidelity renderer for authored light, responsive materials, reflection, geometry, and spatial depth.",
+    description: "A high-fidelity rendering system for authored light, responsive materials, reflection, geometry, atmosphere, and celestial skies.",
     statement: "Make every light source, surface, and shadow carry its weight.",
     previewVideo: "/media/threshold-preview.mp4",
     capabilities: [
@@ -34,6 +34,8 @@ export const sdkProducts: readonly SdkProduct[] = [
       { title: "Lighting and GI", items: ["GTAO", "Light probes and APV", "Directional lightmap specular", "Analytic local GI", "Shadowed area lights"] },
       { title: "Materials and geometry", items: ["High-fidelity BRDF shading", "Preintegrated subsurface scattering", "GPU tessellation", "Toon-shading path"] },
       { title: "Surfaces and reconstruction", items: ["Water rendering", "Screen-space and analytic reflections", "DLSS, FSR, and STP integration"] },
+      { title: "Atmosphere and sky", items: ["Physically based sky rendering", "Aerial perspective", "Sun, moon, celestial bodies, and Milky Way rendering"] },
+      { title: "Clouds and phenomena", items: ["Dynamically lit six-directional cloud sequences", "Aurora borealis", "Distant lightning"] },
     ],
     media: [
       { slot: "THRESHOLD_SHADOW_ARCHITECTURE_HERO", ratio: "21 / 9", tone: "checker", title: "A single scene carrying every shadow path", direction: "Wide architectural frame: hard-to-soft PCSS transitions, cached distance shadows, contact grounding, and a ray-traced hero shadow.", size: "wide" },
@@ -42,32 +44,15 @@ export const sdkProducts: readonly SdkProduct[] = [
       { slot: "THRESHOLD_WATER_REFLECTION_CORRIDOR", ratio: "16 / 10", tone: "neutral", title: "Water and layered reflection", direction: "Low camera across moving water combining SSR, analytic fallback, tessellated surface detail, and shadowed lighting.", size: "half" },
       { slot: "THRESHOLD_GI_PROBE_TRANSITION", ratio: "3 / 2", tone: "checker", title: "Lighting through a changing space", direction: "Indoor-to-outdoor path showing APV, light probes, GTAO, and analytic local GI continuity.", size: "half" },
       { slot: "THRESHOLD_RECONSTRUCTION_COMPARISON", ratio: "21 / 9", tone: "threshold", title: "Reconstruction paths, matched frame", direction: "Three-panel crop prepared for native, DLSS/FSR, and STP comparison at identical camera and exposure.", size: "wide" },
+      { slot: "THRESHOLD_ATMOSPHERE_HORIZON", ratio: "21 / 9", tone: "sky", title: "Atmosphere from ground to orbit", direction: "Extreme-wide horizon with layered aerial perspective, a low sun, cloud silhouettes, and visible celestial depth.", size: "wide" },
+      { slot: "THRESHOLD_CELESTIAL_NIGHT_FIELD", ratio: "3 / 2", tone: "checker", title: "Celestial night field", direction: "Night exposure balancing the Milky Way, moonlight, stars, and grounded landscape values.", size: "half" },
+      { slot: "THRESHOLD_SIX_DIRECTION_CLOUD_LIGHTING", ratio: "4 / 5", tone: "neutral", title: "Cloud sequence under changing light", direction: "Tall cloud formation with directional-light study markers and a clear read on self-shadowing.", size: "portrait" },
+      { slot: "THRESHOLD_AURORA_WEATHER_EVENT", ratio: "1 / 1", tone: "sky", title: "Aurora as a world event", direction: "Square environmental frame pairing aurora curtains with reflective terrain and readable atmospheric falloff.", size: "square" },
+      { slot: "THRESHOLD_DISTANT_LIGHTNING_TIMELINE", ratio: "21 / 8", tone: "checker", title: "Distant lightning sequence", direction: "Four-beat panoramic sequence showing buildup, illumination, strike silhouette, and atmospheric decay.", size: "wide" },
     ],
   },
   {
     index: "02",
-    slug: "atrium",
-    name: "Atrium",
-    description: "A physically based atmosphere and celestial renderer for skies that behave like part of the world.",
-    statement: "The world does not stop at the horizon.",
-    previewVideo: "/media/atrium-aurora.mp4",
-    previewPoster: "/media/atrium-aurora-poster.png",
-    capabilities: [
-      { title: "Atmosphere", items: ["Physically based sky rendering", "Aerial perspective", "Continuous time-of-day response"] },
-      { title: "Celestial field", items: ["Sun, moon, and celestial bodies", "Milky Way rendering", "Astronomical light direction"] },
-      { title: "Cloud sequences", items: ["Fast six-directional cloud data", "Dynamic lighting", "Production-friendly sequence playback"] },
-      { title: "Distant phenomena", items: ["Aurora borealis", "Distant lightning", "Weather-scale visual events"] },
-    ],
-    media: [
-      { slot: "ATRIUM_ATMOSPHERE_HERO", ratio: "21 / 9", tone: "atrium", title: "Atmosphere from ground to orbit", direction: "Extreme-wide horizon with layered aerial perspective, a low sun, cloud silhouettes, and visible celestial depth.", size: "wide" },
-      { slot: "ATRIUM_CELESTIAL_NIGHT_FIELD", ratio: "3 / 2", tone: "checker", title: "Celestial night field", direction: "Night exposure balancing the Milky Way, moonlight, stars, and grounded landscape values.", size: "half" },
-      { slot: "ATRIUM_SIX_DIRECTION_CLOUD_LIGHTING", ratio: "4 / 5", tone: "neutral", title: "Cloud sequence under changing light", direction: "Tall cloud formation with directional-light study markers and a clear read on self-shadowing.", size: "portrait" },
-      { slot: "ATRIUM_AURORA_WEATHER_EVENT", ratio: "1 / 1", tone: "atrium", title: "Aurora as a world event", direction: "Square environmental frame pairing aurora curtains with reflective terrain and readable atmospheric falloff.", size: "square" },
-      { slot: "ATRIUM_DISTANT_LIGHTNING_TIMELINE", ratio: "21 / 8", tone: "checker", title: "Distant lightning sequence", direction: "Four-beat panoramic sequence showing buildup, illumination, strike silhouette, and atmospheric decay.", size: "wide" },
-    ],
-  },
-  {
-    index: "03",
     slug: "eclipse",
     name: "Eclipse",
     description: "Production infrastructure for baking, visibility, packing, and streaming large authored spaces.",
@@ -89,7 +74,7 @@ export const sdkProducts: readonly SdkProduct[] = [
     ],
   },
   {
-    index: "04",
+    index: "03",
     slug: "causality",
     name: "Causality",
     description: "A systemic simulation framework for energy, fire, air, surfaces, objects, and characters.",

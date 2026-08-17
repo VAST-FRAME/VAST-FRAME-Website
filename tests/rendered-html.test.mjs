@@ -35,17 +35,17 @@ test("renders an SDK-first VASTFRAME home page", async () => {
   assert.doesNotMatch(html, /VASTFRAME builds rendering|Rendering, atmosphere, scene processing, and simulation/i);
   assert.match(html, /Threshold/);
   assert.match(html, /Eclipse/);
-  assert.match(html, /Atrium/);
   assert.match(html, /Causality/);
+  assert.doesNotMatch(html, />Atrium</i);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
   assert.doesNotMatch(html, /SDK_INTEGRATED_STACK_HERO|Four systems\. One stack\./i);
   assert.match(html, /atrium-aurora\.mp4/);
   assert.match(html, /aria-label="Primary navigation"/i);
-  for (const href of ["/sdk/threshold", "/sdk/atrium", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
+  for (const href of ["/sdk/threshold", "/sdk/eclipse", "/sdk/causality", "/docs"]) {
     assert.match(html, new RegExp(`href="${href}"`));
   }
   assert.doesNotMatch(html, /href="\/sdk"|>Overview</i);
-  for (const name of ["Threshold", "Atrium", "Eclipse", "Causality"]) {
+  for (const name of ["Threshold", "Eclipse", "Causality"]) {
     assert.match(html, new RegExp(`Explore(?:\\s|<!--.*?-->)*${name}`, "i"));
   }
   assert.match(html, /<meta name="robots" content="noindex, nofollow, nocache"/i);
@@ -81,13 +81,13 @@ test("presents selective Studio and Enterprise per-title licensing", async () =>
   const html = await response.text();
   const visibleHtml = html.replaceAll("<!-- -->", "");
 
-  for (const product of ["Threshold", "Atrium", "Eclipse", "Causality"]) {
+  for (const product of ["Threshold", "Eclipse", "Causality"]) {
     assert.match(html, new RegExp(`<h2>${product}</h2>`, "i"));
   }
   assert.match(html, /Perpetual use/i);
   assert.match(html, /Two years of updates/i);
   assert.match(html, /One (?:commercial )?title/i);
-  for (const price of ["799", "2,799"]) {
+  for (const price of ["1,399", "3,799"]) {
     assert.match(visibleHtml, new RegExp(`\\$${price}`));
   }
   assert.match(html, /Studio/i);
@@ -95,6 +95,7 @@ test("presents selective Studio and Enterprise per-title licensing", async () =>
   assert.match(html, /Under \$10M/i);
   assert.match(html, /Over \$10M/i);
   assert.doesNotMatch(html, /<dt>Independent|>Indie</i);
+  assert.doesNotMatch(html, />Atrium</i);
   assert.doesNotMatch(html, /Internal use/i);
   assert.doesNotMatch(html, /<dt>Release<\/dt>/i);
   assert.match(html, /licensed independently/i);
@@ -156,23 +157,23 @@ test("keeps product titles at the Home heading scale without forced clipping", a
 
 test("gives every SDK product card the same track and content geometry", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
-  assert.match(css, /\.product-strip\s*\{[^}]*grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.match(css, /\.product-strip\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s);
   assert.match(css, /\.product-tile\s*\{[^}]*min-width:\s*0[^}]*container-type:\s*inline-size/s);
   assert.match(css, /\.product-tile h3\s*\{[^}]*font-size:\s*clamp\(2rem,\s*15cqi,\s*4\.75rem\)/s);
   assert.match(css, /\.product-tile:not\(:last-child\)::after\s*\{[^}]*position:\s*absolute[^}]*width:\s*1px/s);
   assert.doesNotMatch(css, /\.product-tile\s*\{[^}]*border-right:\s*1px/s);
   assert.match(css, /@media \(max-width:\s*900px\)[\s\S]*?\.product-strip\s*\{[^}]*repeat\(2,\s*minmax\(0,\s*1fr\)\)/s);
-  assert.doesNotMatch(css, /\.product-strip\s*\{[^}]*repeat\(4,\s*1fr\)/s);
+  assert.doesNotMatch(css, /\.product-strip\s*\{[^}]*repeat\(3,\s*1fr\)/s);
 });
 
 test("gives every SDK product card its named color identity", async () => {
   const html = await (await render()).text();
 
-  for (const product of ["threshold", "atrium", "eclipse", "causality"]) {
+  for (const product of ["threshold", "eclipse", "causality"]) {
     assert.match(html, new RegExp(`product-tile product-tile--${product}`));
   }
 
-  assert.equal((html.match(/product-tile__motion/g) ?? []).length, 4);
+  assert.equal((html.match(/product-tile__motion/g) ?? []).length, 3);
 });
 
 test("uses one-at-a-time hover and mobile viewport video previews", async () => {
@@ -181,8 +182,8 @@ test("uses one-at-a-time hover and mobile viewport video previews", async () => 
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
 
   assert.match(html, /<video[^>]*muted[^>]*loop[^>]*playsinline/i);
-  assert.match(html, /poster="\/media\/atrium-aurora-poster\.png"/i);
-  assert.match(html, /src="\/media\/atrium-aurora\.mp4"/i);
+  assert.match(html, /src="\/media\/threshold-preview\.mp4"/i);
+  assert.match(html, /src="\/media\/causality-preview\.mp4"/i);
   assert.match(source, /onMouseEnter=\{\(\) => playPreview\(product\.slug\)\}/);
   assert.match(source, /onFocus=\{\(\) => playPreview\(product\.slug\)\}/);
   assert.match(source, /new IntersectionObserver/);
@@ -253,7 +254,6 @@ test("uses one public studio contact address", async () => {
 
 for (const [slug, name, slot] of [
   ["threshold", "Threshold", "THRESHOLD_SHADOW_ARCHITECTURE_HERO"],
-  ["atrium", "Atrium", "ATRIUM_ATMOSPHERE_HERO"],
   ["eclipse", "Eclipse", "ECLIPSE_SCENE_PIPELINE_HERO"],
   ["causality", "Causality", "CAUSALITY_CHAIN_REACTION_HERO"],
 ]) {
@@ -262,7 +262,7 @@ for (const [slug, name, slot] of [
     assert.equal(response.status, 200);
     const html = await response.text();
     assert.match(html, new RegExp(name));
-    assert.doesNotMatch(html, /Rendering system|Sky and atmosphere|Scene pipeline|World simulation|technology-hero__kind/i);
+    assert.doesNotMatch(html, /technology-hero__kind/i);
     assert.match(html, new RegExp(slot));
     assert.match(html, /Rendering showcase/);
     assert.match(html, /class="product-strip product-strip--navigation"/);
@@ -283,9 +283,9 @@ test("publishes a public SDK documentation home without Workbench identity", asy
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /<h1>Documentation\.<\/h1>/i);
-  assert.match(html, /Technical reference for Threshold, Atrium, Eclipse, and Causality/i);
+  assert.match(html, /Technical reference for Threshold, Eclipse, and Causality/i);
   assert.match(html, /Threshold/);
-  assert.match(html, /Atrium/);
+  assert.doesNotMatch(html, />Atrium</i);
   assert.doesNotMatch(html, /Read the system|Publication policy|Public by design|Explicitly published|eventually complete/i);
   assert.doesNotMatch(html, new RegExp(["Firma", "ment"].join(""), "i"));
 });
@@ -299,6 +299,17 @@ test("renders public product documentation and deep-linked technical articles", 
   const html = await article.text();
   assert.match(html, /Percentage-closer soft shadows/);
   assert.match(html, /id="validation-checklist"/);
+
+  const atmosphere = await render("/docs/threshold/atmosphere-and-celestial-field");
+  assert.equal(atmosphere.status, 200);
+  assert.match(await atmosphere.text(), /Atmospheric continuity/);
+});
+
+test("does not expose Atrium as a standalone product", async () => {
+  for (const pathname of ["/sdk/atrium", "/docs/atrium"]) {
+    const response = await render(pathname);
+    assert.equal(response.status, 404);
+  }
 });
 
 test("searches only the published SDK documentation corpus", async () => {
